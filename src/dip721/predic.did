@@ -36,7 +36,6 @@ service : (InitArgs) -> {
   buy : (nat8) -> (Result_1);
   getApprovedDip721 : (nat64) -> (Result_2) query;
   getDepositAddress : () -> (blob) query;
-  getDepositeBalance : (principal) -> (nat64) query;
   getPrices : () -> (vec nat64) query;
   isApprovedForAllDip721 : (principal) -> (bool) query;
   isCustodian : (principal) -> (bool) query;

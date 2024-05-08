@@ -5,7 +5,7 @@ did_file="${root}predic.did"
 dfx canister create predic
 dfx build predic
 candid-extractor "target/wasm32-unknown-unknown/release/predic.wasm" > $did_file
-icp_ledger_canister_id="$(dfx canister id icp_ledger_canister)"
+icp_ledger_canister_id="$(dfx canister id ledger)"
 dfx canister install predic --argument "record{
     name=\"Prediction NFT2\";
     symbol=\"PREDIC2\";
