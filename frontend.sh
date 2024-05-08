@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -e
-# dfx canister create frontend
+dfx canister create frontend
 pushd src/frontend
 npm install
 npm run build
 popd
-# dfx build frontend
+dfx build frontend
 dfx canister install frontend --mode=reinstall
 
 echo "===== VISIT DEFI FRONTEND ====="
