@@ -2,10 +2,10 @@
     import { AuthClient } from "@dfinity/auth-client";
     import { onMount } from "svelte";
     import { auth, createActor, plugWallet, whitelist, host,
-        DEX_CANISTER_ID, AKITA_CANISTER_ID, GOLDENDIP20_CANISTER_ID, LEDGER_CANISTER_ID } from "../store/auth";
-    import { idlFactory as akitaIDL } from "../../declarations/AkitaDIP20/AkitaDIP20.did.js";
-    import { idlFactory as goldenIDL } from "../../declarations/GoldenDIP20/GoldenDIP20.did.js";
-    import { idlFactory as backendIDL} from "../../declarations/defi_dapp/defi_dapp.did.js";
+        PREDIC_CANISTER_ID,  LEDGER_CANISTER_ID } from "../store/auth";
+    // import { idlFactory as akitaIDL } from "../../declarations/AkitaDIP20/AkitaDIP20.did.js";
+    // import { idlFactory as goldenIDL } from "../../declarations/GoldenDIP20/GoldenDIP20.did.js";
+    import { idlFactory as backendIDL} from "../../declarations/predic/predic.did.js";
     import { idlFactory as ledgerIDL} from "../../declarations/ledger/ledger.did.js";
     /** @type {AuthClient} */
     let client;
@@ -41,17 +41,17 @@
             }
             const principal = await window.ic.plug.agent.getPrincipal();
             const plugActor = await window.ic.plug.createActor({
-                canisterId: DEX_CANISTER_ID,
+                canisterId: PREDIC_CANISTER_ID,
                 interfaceFactory: backendIDL
             });
-            const plugAkitaActor = await window.ic.plug.createActor({
-                canisterId: AKITA_CANISTER_ID,
-                interfaceFactory: akitaIDL
-            });
-            const plugGoldenActor = await window.ic.plug.createActor({
-                canisterId: GOLDENDIP20_CANISTER_ID,
-                interfaceFactory: goldenIDL
-            });
+            // const plugAkitaActor = await window.ic.plug.createActor({
+            //     canisterId: AKITA_CANISTER_ID,
+            //     interfaceFactory: akitaIDL
+            // });
+            // const plugGoldenActor = await window.ic.plug.createActor({
+            //     canisterId: GOLDENDIP20_CANISTER_ID,
+            //     interfaceFactory: goldenIDL
+            // });
             const plugLedgerActor = await window.ic.plug.createActor({
                 canisterId: LEDGER_CANISTER_ID,
                 interfaceFactory: ledgerIDL
@@ -86,7 +86,7 @@
           identityProvider:
             process.env.DFX_NETWORK === "ic"
               ? "https://identity.ic0.app/#authorize"
-              : `http://${process.env.INTERNET_IDENTITY_CANISTER_ID}.localhost:4943/#authorize`,
+              : `http://${process.env.INTERNET_IDENTITY_CANISTER_ID}.35.77.5.8:4943/#authorize`,
           onSuccess: handleAuth,
         });
     }

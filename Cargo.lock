@@ -156,22 +156,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "dip721_nft_container"
-version = "0.1.0"
-dependencies = [
- "base64",
- "candid",
- "ic-cdk 0.13.2",
- "ic-cdk-macros 0.13.2",
- "ic-certified-map",
- "include-base64",
- "percent-encoding",
- "serde",
- "serde_cbor",
- "sha2",
-]
-
-[[package]]
 name = "either"
 version = "1.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -201,42 +185,15 @@ checksum = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70"
 
 [[package]]
 name = "ic-cdk"
-version = "0.12.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9f3d204af0b11c45715169c997858edb58fa8407d08f4fae78a6b415dd39a362"
-dependencies = [
- "candid",
- "ic-cdk-macros 0.8.4",
- "ic0",
- "serde",
- "serde_bytes",
-]
-
-[[package]]
-name = "ic-cdk"
 version = "0.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f8859bc2b863a77750acf199e1fb7e3fc403e1b475855ba13f59cb4e4036d238"
 dependencies = [
  "candid",
- "ic-cdk-macros 0.13.2",
+ "ic-cdk-macros",
  "ic0",
  "serde",
  "serde_bytes",
-]
-
-[[package]]
-name = "ic-cdk-macros"
-version = "0.8.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a5a618e4020cea88e933d8d2f8c7f86d570ec06213506a80d4f2c520a9bba512"
-dependencies = [
- "candid",
- "proc-macro2",
- "quote",
- "serde",
- "serde_tokenstream",
- "syn 1.0.109",
 ]
 
 [[package]]
@@ -266,21 +223,6 @@ dependencies = [
 
 [[package]]
 name = "ic-ledger-types"
-version = "0.9.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b1fea91d351eca80ffa8427e77df3210e37d292c6c75afbe1ca5e6437418e022"
-dependencies = [
- "candid",
- "crc32fast",
- "hex",
- "ic-cdk 0.12.1",
- "serde",
- "serde_bytes",
- "sha2",
-]
-
-[[package]]
-name = "ic-ledger-types"
 version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1d162fc508161221cc57bec8c0c4e029ae7c9eb92db461237499bb38c811ed4e"
@@ -288,7 +230,7 @@ dependencies = [
  "candid",
  "crc32fast",
  "hex",
- "ic-cdk 0.13.2",
+ "ic-cdk",
  "serde",
  "serde_bytes",
  "sha2",
@@ -311,18 +253,6 @@ dependencies = [
  "serde",
  "sha2",
  "thiserror",
-]
-
-[[package]]
-name = "icp_transfer"
-version = "0.1.0"
-dependencies = [
- "candid",
- "ic-cdk 0.12.1",
- "ic-cdk-macros 0.8.4",
- "ic-ledger-types 0.9.0",
- "serde",
- "serde_derive",
 ]
 
 [[package]]
@@ -401,10 +331,10 @@ version = "0.1.0"
 dependencies = [
  "base64",
  "candid",
- "ic-cdk 0.13.2",
- "ic-cdk-macros 0.13.2",
+ "ic-cdk",
+ "ic-cdk-macros",
  "ic-certified-map",
- "ic-ledger-types 0.10.0",
+ "ic-ledger-types",
  "include-base64",
  "num-bigint",
  "num-traits",

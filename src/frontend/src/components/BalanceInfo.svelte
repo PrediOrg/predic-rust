@@ -4,9 +4,9 @@
     import { Principal } from '@dfinity/principal';
     import { canisters, userBalances, createCanisterActor } from '../store/store';
     import { auth, plugWallet } from '../store/auth';
-    import { idlFactory as akitaIDL } from "../../declarations/AkitaDIP20/AkitaDIP20.did.js";
-    import { idlFactory as goldenIDL } from "../../declarations/GoldenDIP20/GoldenDIP20.did.js";
-    import { idlFactory as backendIDL} from "../../declarations/defi_dapp/defi_dapp.did.js";
+    // import { idlFactory as akitaIDL } from "../../declarations/AkitaDIP20/AkitaDIP20.did.js";
+    // import { idlFactory as goldenIDL } from "../../declarations/GoldenDIP20/GoldenDIP20.did.js";
+    import { idlFactory as backendIDL} from "../../declarations/predic/predic.did.js";
     import { idlFactory as ledgerIDL} from "../../declarations/ledger/ledger.did.js";
     import { toHexString, hexToBytes, principalToAccountDefaultIdentifier } from '../utils/helpers'
     import { AuthClient } from '@dfinity/auth-client';
@@ -15,7 +15,7 @@
 
     // Global variables
     const host = process.env.DFX_NETWORK === "local"
-          ? `http://localhost:4943`
+          ? `http://35.77.5.8:4943`
           : "ic0.app";
 
     let depositAddressBlob;
@@ -78,13 +78,13 @@
                 agent.fetchRootKey();
 
             backendActor = createCanisterActor(agent, backendIDL, process.env.DEFI_DAPP_CANISTER_ID);
-            akitaActor = createCanisterActor(agent, akitaIDL, process.env.AKITADIP20_CANISTER_ID);
-            goldenActor = createCanisterActor(agent, goldenIDL, process.env.GOLDENDIP20_CANISTER_ID);
+            // akitaActor = createCanisterActor(agent, akitaIDL, process.env.AKITADIP20_CANISTER_ID);
+            // goldenActor = createCanisterActor(agent, goldenIDL, process.env.GOLDENDIP20_CANISTER_ID);
             ledgerActor = createCanisterActor(agent, ledgerIDL, process.env.LEDGER_CANISTER_ID);
 
             // Fetch initial balances
-            const goldenBalance = await goldenActor.balanceOf($auth.principal);
-            const akitaBalance = await akitaActor.balanceOf($auth.principal);
+            // const goldenBalance = await goldenActor.balanceOf($auth.principal);
+            // const akitaBalance = await akitaActor.balanceOf($auth.principal);
             let ledgerBalance = 0;
 
             depositAddressBlob = await backendActor.getDepositAddress();
@@ -214,28 +214,28 @@
                 setBalances(canister.canisterName, ledgerBalance, dexBalance);
             }
         }
-        else if(canister && canister.canisterName === 'AkitaDIP20') {
-            await akitaActor.approve(Principal.fromText(process.env.DEFI_DAPP_CANISTER_ID), depositAmount);
+        // else if(canister && canister.canisterName === 'AkitaDIP20') {
+        //     await akitaActor.approve(Principal.fromText(process.env.DEFI_DAPP_CANISTER_ID), depositAmount);
 
-            const result = await backendActor.deposit(principal);
-            if(result.Ok) {
-                const dexBalance = await backendActor.getBalance(principal);
-                const akitaBalance = await akitaActor.balanceOf($auth.principal);
+        //     const result = await backendActor.deposit(principal);
+        //     if(result.Ok) {
+        //         const dexBalance = await backendActor.getBalance(principal);
+        //         const akitaBalance = await akitaActor.balanceOf($auth.principal);
 
-                setBalances(canister.canisterName, akitaBalance, dexBalance);
-            }
-        }
-        else if(canister && canister.canisterName === 'GoldenDIP20') {
-            await goldenActor.approve(Principal.fromText(process.env.DEFI_DAPP_CANISTER_ID), depositAmount);
+        //         setBalances(canister.canisterName, akitaBalance, dexBalance);
+        //     }
+        // }
+        // else if(canister && canister.canisterName === 'GoldenDIP20') {
+        //     await goldenActor.approve(Principal.fromText(process.env.DEFI_DAPP_CANISTER_ID), depositAmount);
 
-            const result = await backendActor.deposit(principal);
-            if(result.Ok) {
-                const dexBalance = await backendActor.getBalance(principal);
-                const goldenBalance = await goldenActor.balanceOf($auth.principal);
+        //     const result = await backendActor.deposit(principal);
+        //     if(result.Ok) {
+        //         const dexBalance = await backendActor.getBalance(principal);
+        //         const goldenBalance = await goldenActor.balanceOf($auth.principal);
 
-                setBalances(canister.canisterName, goldenBalance, dexBalance);
-            }
-        }
+        //         setBalances(canister.canisterName, goldenBalance, dexBalance);
+        //     }
+        // }
 
         depositing = false;
         currentToken = undefined;
