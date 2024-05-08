@@ -10,7 +10,6 @@ services:
     tty: true
     volumes:
       - .:/canister/predit
-      - /Users/tao/sources/icp/examples:/canister/examples
     ports:
       - "4943:4943"
       - "39939:39939"
