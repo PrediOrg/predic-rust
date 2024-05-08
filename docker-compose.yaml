@@ -4,7 +4,7 @@ services:
     # build:
     #   context: .
     #   dockerfile: canister.Dockerfile  
-    image: predict
+    image: biconomy/mycanister:latest
     container_name: mycanister
     restart: unless-stopped
     tty: true
