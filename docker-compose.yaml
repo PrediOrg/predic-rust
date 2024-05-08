@@ -1,14 +1,16 @@
 name: mycanister
 services:
   myconister:
-    build:
-      context: .
-      dockerfile: canister.Dockerfile  
+    # build:
+    #   context: .
+    #   dockerfile: canister.Dockerfile  
+    image: predict
     container_name: mycanister
     restart: unless-stopped
     tty: true
     volumes:
-      - .:/canister
+      - .:/canister/predit
+      - /Users/tao/sources/icp/examples:/canister/examples
     ports:
       - "4943:4943"
       - "39939:39939"
