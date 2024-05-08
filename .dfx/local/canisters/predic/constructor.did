@@ -1,0 +1,63 @@
+type Error = variant {
+  ZeroAddress;
+  TransferFailure;
+  InvalidTokenId;
+  Unauthorized;
+  BalanceLow;
+  Other;
+  InvalidLevel;
+};
+type InitArgs = record {
+  buy_prices : vec nat64;
+  logo : opt LogoResult;
+  name : text;
+  custodians : opt vec principal;
+  ledger : principal;
+  symbol : text;
+};
+type InterfaceId = variant {
+  Burn;
+  Mint;
+  Approval;
+  TransactionHistory;
+  TransferNotification;
+};
+type LogoResult = record { data : text; logo_type : text };
+type MintResult = record { id : nat; token_id : nat64; level : nat8 };
+type Result = variant { Ok : nat; Err : Error };
+type Result_1 = variant { Ok : MintResult; Err : Error };
+type Result_2 = variant { Ok : principal; Err : Error };
+type Result_3 = variant { Ok : vec nat64; Err : Error };
+type Result_4 = variant { Ok; Err : Error };
+service : (InitArgs) -> {
+  approveDip721 : (principal, nat64) -> (Result);
+  balanceOfDip721 : (principal) -> (nat64) query;
+  burnDip721 : (nat64) -> (Result);
+  buy : (nat8) -> (Result_1);
+  getApprovedDip721 : (nat64) -> (Result_2) query;
+  getDepositAddress : () -> (vec nat8) query;
+  getDepositeBalance : (principal) -> (nat64) query;
+  getPrices : () -> (vec nat64) query;
+  isApprovedForAllDip721 : (principal) -> (bool) query;
+  isCustodian : (principal) -> (bool) query;
+  nameDip721 : () -> (text) query;
+  ownerNfs : (principal) -> (Result_3) query;
+  ownerOfDip721 : (nat64) -> (Result_2) query;
+  safeTransferFromDip721 : (principal, principal, nat64) -> (Result);
+  safeTransferFromNotifyDip721 : (principal, principal, nat64, vec nat8) -> (
+      Result,
+    );
+  setApprovalForAllDip721 : (principal, bool) -> (Result);
+  setBuyPrice : (vec nat64) -> (Result_4);
+  setCustodian : (principal, bool) -> (Result_4);
+  setLogo : (opt LogoResult) -> (Result_4);
+  setName : (text) -> (Result_4);
+  setSymbol : (text) -> (Result_4);
+  supportedInterfacesDip721 : () -> (vec InterfaceId) query;
+  symbolDip721 : () -> (text) query;
+  totalSupplyDip721 : () -> (nat64) query;
+  transferFromDip721 : (principal, principal, nat64) -> (Result);
+  transferFromNotifyDip721 : (principal, principal, nat64, vec nat8) -> (
+      Result,
+    );
+}

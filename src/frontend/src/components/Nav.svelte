@@ -57,9 +57,9 @@
                 interfaceFactory: ledgerIDL
             });
             plugWallet.set({...$plugWallet, principal, plugActor, plugAkitaActor, plugGoldenActor, plugLedgerActor, isConnected: true});     
-            console.log("akita name:" , await plugAkitaActor.name());
-            console.log("golden name:" , await plugGoldenActor.name());       
-            console.log("defi balances:" , await plugActor.getBalances());       
+            // console.log("akita name:" , await plugAkitaActor.name());
+            // console.log("golden name:" , await plugGoldenActor.name());       
+            // console.log("defi balances:" , await plugActor.getBalances());       
         } catch (e) {
             console.log(e);
         }
@@ -86,7 +86,7 @@
           identityProvider:
             process.env.DFX_NETWORK === "ic"
               ? "https://identity.ic0.app/#authorize"
-              : `http://${process.env.INTERNET_IDENTITY_CANISTER_ID}.35.77.5.8:4943/#authorize`,
+              : `http://${process.env.INTERNET_IDENTITY_CANISTER_ID}.localhost:4943/#authorize`,
           onSuccess: handleAuth,
         });
     }

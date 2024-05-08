@@ -29,3 +29,6 @@ dfx deploy icp_ledger_canister --argument "
 "
 dfx canister call icp_ledger_canister account_balance '(record { account = '$(python3 -c 'print("vec{" + ";".join([str(b) for b in bytes.fromhex("'$DEFAULT_ACCOUNT_ID'")]) + "}")')'})'
 echo "===========SETUP DONE========="
+
+
+II_FETCH_ROOT_KEY=1 dfx deploy internet_identity --no-wallet --argument '(null)'

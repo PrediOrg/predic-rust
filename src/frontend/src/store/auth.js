@@ -10,7 +10,7 @@ import { Actor, HttpAgent } from '@dfinity/agent';
  */
 export function createActor(options) {
   const hostOptions = {
-    host: process.env.DFX_NETWORK === 'ic' ? `https://${process.env.DEFI_DAPP_CANISTER_ID}.ic0.app` : 'http://localhost:4943',
+    host: process.env.DFX_NETWORK === 'ic' ? `https://${process.env.PREDIC_CANISTER_ID}.ic0.app` : 'http://localhost:4943',
   };
   if (!options) {
     options = {
@@ -36,7 +36,7 @@ export function createActor(options) {
   // Creates an actor with using the candid interface and the HttpAgent
   return Actor.createActor(idlFactory, {
     agent,
-    canisterId: process.env.DEFI_DAPP_CANISTER_ID,
+    canisterId: process.env.PREDIC_CANISTER_ID,
     ...options?.actorOptions,
   });
 }

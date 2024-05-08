@@ -53,9 +53,9 @@
             backendActor = $anonymous.actor;
         }
 
-        const orderList = await backendActor.getOrders();
-        orders.set([]);
-        orders.set(orderList.reverse());
+        // const orderList = await backendActor.getOrders();
+        // orders.set([]);
+        // orders.set(orderList.reverse());
 	});
 
     async function placeOrder() {
@@ -71,9 +71,9 @@
 
         console.log(result)
         if(result.Ok) {
-            const orderList = await backendActor.getOrders();
-            orders.set([]);
-            orders.set(orderList.reverse());
+            // const orderList = await backendActor.getOrders();
+            // orders.set([]);
+            // orders.set(orderList.reverse());
         }
         closeOrderForm();
     };
@@ -95,9 +95,9 @@
             newOrder.toAmount
         )
         if(result && result.Ok) {
-            const orderList = await backendActor.getOrders();
-            orders.set([]);
-            orders.set(orderList.reverse());
+            // const orderList = await backendActor.getOrders();
+            // orders.set([]);
+            // orders.set(orderList.reverse());
         }
         currentOrder.set({});
         buyingOrder = false;
@@ -118,9 +118,9 @@
         currentOrder.set(order);
         const result = await backendActor.cancelOrder(id);
         if(result && result.Ok) {
-            const orderList = await backendActor.getOrders();
-            orders.set([]);
-            orders.set(orderList.reverse()); 
+            // const orderList = await backendActor.getOrders();
+            // orders.set([]);
+            // orders.set(orderList.reverse()); 
         }
         currentOrder.set({});
         cancelingOrder = false;
