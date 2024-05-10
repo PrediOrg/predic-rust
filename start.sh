@@ -1,6 +1,6 @@
 set -e
-dfx start --host 0.0.0.0:4943 --background --clean > dfx.log 2>&1 &
-sleep 10
+# dfx start --host 0.0.0.0:4943 --background --clean > dfx.log 2>&1 &
+# sleep 10
 
 echo "===========SETUP========="
 dfx identity new alice_icp_transfer --storage-mode plaintext --force
