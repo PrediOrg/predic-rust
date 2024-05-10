@@ -7,6 +7,7 @@
     // import { idlFactory as goldenIDL } from "../../declarations/GoldenDIP20/GoldenDIP20.did.js";
     import { idlFactory as backendIDL} from "../../declarations/predic/predic.did.js";
     import { idlFactory as ledgerIDL} from "../../declarations/ledger/ledger.did.js";
+    // import logo from "../assets/logo.png"
     /** @type {AuthClient} */
     let client;
     // Plug wallet connection request
@@ -108,7 +109,7 @@
       rel="noopener noreferrer"
       class="logo"
     >
-      <img src="images/dfinity.svg" alt="DFINITY logo" />
+      <img src="images/logo.png" alt="DFINITY logo" />
     </a>
     <ul>
       <li>
@@ -162,6 +163,9 @@
     }
     .logo {
       display: inline-block;
+    }
+    .logo img{
+        height: 50px;
     }
 
     .plug-logo {

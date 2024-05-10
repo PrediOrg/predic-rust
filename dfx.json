@@ -28,7 +28,8 @@
       "package": "predic",
       "declarations": {
         "output": "src/frontend/declarations/predic"
-      }
+      },
+      "specified_id": "bd3sg-teaaa-aaaaa-qaaba-cai"
     },
     "frontend": {
       "dependencies": [
@@ -38,7 +39,8 @@
       "source": [
         "src/frontend_assets"
       ],
-      "type": "assets"
+      "type": "assets",
+      "specified_id": "be2us-64aaa-aaaaa-qaabq-cai"
     }
   },
   "defaults": {

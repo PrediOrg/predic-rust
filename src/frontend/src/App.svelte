@@ -5,7 +5,7 @@
   import { faMinus, faPlus, faCheck, faTimes, faCopy, faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
   import { auth, plugWallet } from './store/auth';
   import BalanceInfo from './components/BalanceInfo.svelte';
-
+  import Mint from './components/Mint.svelte';
  // Add fontawesome icons
  const icons = [faMinus, faPlus, faCheck, faTimes, faCopy, faArrowRight, faArrowLeft];
  library.add(icons);
@@ -19,6 +19,7 @@
      <BalanceInfo />
     {/if}
     <Orders />
+    <Mint/>
   </div>
   <div class="footer">
     <a class="ic-badge-link" href="https://www.smartcontracts.org">
