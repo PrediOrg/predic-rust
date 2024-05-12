@@ -24,6 +24,7 @@ pub struct Balance {
 pub enum Error {
     Unauthorized,
     InvalidTokenId,
+    Insufficientremaining,
     InvalidLevel,
     ZeroAddress,
     Other,

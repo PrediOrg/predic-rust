@@ -6,7 +6,7 @@ npm install
 npm run build
 popd
 dfx build frontend
-dfx canister install frontend
+dfx canister install frontend --mode=reinstall
 
 echo "===== VISIT DEFI FRONTEND ====="
 echo "http://localhost:4943?canisterId=$(dfx canister id frontend)"

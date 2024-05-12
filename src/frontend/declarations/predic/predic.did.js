@@ -6,12 +6,14 @@ export const idlFactory = ({ IDL }) => {
     'name' : IDL.Text,
     'custodians' : IDL.Opt(IDL.Vec(IDL.Principal)),
     'ledger' : IDL.Principal,
+    'remaing' : IDL.Vec(IDL.Nat64),
     'symbol' : IDL.Text,
   });
   const Error = IDL.Variant({
     'ZeroAddress' : IDL.Null,
     'TransferFailure' : IDL.Null,
     'InvalidTokenId' : IDL.Null,
+    'Insufficientremaining' : IDL.Null,
     'Unauthorized' : IDL.Null,
     'BalanceLow' : IDL.Null,
     'Other' : IDL.Null,
@@ -41,8 +43,8 @@ export const idlFactory = ({ IDL }) => {
     'buy' : IDL.Func([IDL.Nat8], [Result_1], []),
     'getApprovedDip721' : IDL.Func([IDL.Nat64], [Result_2], ['query']),
     'getDepositAddress' : IDL.Func([], [IDL.Vec(IDL.Nat8)], ['query']),
-    'getDepositeBalance' : IDL.Func([IDL.Principal], [IDL.Nat64], ['query']),
     'getPrices' : IDL.Func([], [IDL.Vec(IDL.Nat64)], ['query']),
+    'getRemaing' : IDL.Func([], [IDL.Vec(IDL.Nat64)], ['query']),
     'isApprovedForAllDip721' : IDL.Func([IDL.Principal], [IDL.Bool], ['query']),
     'isCustodian' : IDL.Func([IDL.Principal], [IDL.Bool], ['query']),
     'nameDip721' : IDL.Func([], [IDL.Text], ['query']),
@@ -67,6 +69,7 @@ export const idlFactory = ({ IDL }) => {
     'setCustodian' : IDL.Func([IDL.Principal, IDL.Bool], [Result_4], []),
     'setLogo' : IDL.Func([IDL.Opt(LogoResult)], [Result_4], []),
     'setName' : IDL.Func([IDL.Text], [Result_4], []),
+    'setRemaing' : IDL.Func([IDL.Vec(IDL.Nat64)], [Result_4], []),
     'setSymbol' : IDL.Func([IDL.Text], [Result_4], []),
     'supportedInterfacesDip721' : IDL.Func(
         [],
@@ -95,6 +98,7 @@ export const init = ({ IDL }) => {
     'name' : IDL.Text,
     'custodians' : IDL.Opt(IDL.Vec(IDL.Principal)),
     'ledger' : IDL.Principal,
+    'remaing' : IDL.Vec(IDL.Nat64),
     'symbol' : IDL.Text,
   });
   return [InitArgs];

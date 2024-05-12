@@ -55,6 +55,7 @@ struct State {
     txid: u128,
     ledger: Option<Principal>,
     buy_prices: [u64; 3],
+    remaing: [u64; 3],
 }
 
 #[derive(CandidType, Deserialize)]
@@ -133,6 +134,7 @@ struct InitArgs {
     symbol: String,
     ledger: Principal,
     buy_prices: [u64; 3],
+    remaing: [u64; 3],
 }
 
 #[init]
@@ -147,6 +149,7 @@ fn init(args: InitArgs) {
         state.logo = args.logo;
         state.ledger = Some(args.ledger);
         state.buy_prices = args.buy_prices;
+        state.remaing = args.remaing;
     });
 }
 
@@ -162,6 +165,11 @@ fn get_prices() -> [u64; 3] {
     STATE.with(|state| state.borrow().buy_prices)
 }
 
+#[query(name = "getRemaing")]
+fn get_remaing() -> [u64; 3] {
+    STATE.with(|state| state.borrow().remaing)
+}
+
 #[update]
 async fn buy(level: u8) -> Result<MintResult, Error> {
     let caller: Principal = api::caller();
@@ -175,8 +183,10 @@ async fn buy(level: u8) -> Result<MintResult, Error> {
 fn mint(to: Principal, metadata: MetadataDesc, level: u8) -> Result<MintResult, Error> {
     let (txid, tkid) = STATE.with(|state| {
         let mut state = state.borrow_mut();
-        if !state.custodians.contains(&api::caller()) {
-            return Err(Error::Unauthorized);
+        if state.remaing[level as usize].ge(&1) {
+            state.remaing[level as usize] -= 1;
+        } else {
+            return Err(Error::Insufficientremaining);
         }
         let new_id = state.nfts.len() as u64;
         let nft = Nft {
@@ -196,7 +206,6 @@ fn mint(to: Principal, metadata: MetadataDesc, level: u8) -> Result<MintResult, 
         level,
     })
 }
-
 
 async fn deposit_icp(caller: Principal, amount: u64) -> Result<Nat, Error> {
     let canister_id = ic_cdk::api::id();
@@ -579,6 +588,19 @@ fn set_buy_price(buy_prices: [u64; 3]) -> Result<()> {
         let mut state = state.borrow_mut();
         if state.custodians.contains(&api::caller()) {
             state.buy_prices = buy_prices;
+            Ok(())
+        } else {
+            Err(Error::Unauthorized)
+        }
+    })
+}
+
+#[update(name = "setRemaing")]
+fn set_remaing(remaing: [u64; 3]) -> Result<()> {
+    STATE.with(|state| {
+        let mut state = state.borrow_mut();
+        if state.custodians.contains(&api::caller()) {
+            state.remaing = remaing;
             Ok(())
         } else {
             Err(Error::Unauthorized)

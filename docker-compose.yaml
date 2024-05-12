@@ -13,4 +13,4 @@ services:
     ports:
       - "4943:4943"
       - "39939:39939"
-    command: ["dfx","start","--host","0.0.0.0:4943","--force"]
+    command: ["dfx","start","--clean","--host","0.0.0.0:4943","--force"]

@@ -5,6 +5,7 @@ import type { IDL } from '@dfinity/candid';
 export type Error = { 'ZeroAddress' : null } |
   { 'TransferFailure' : null } |
   { 'InvalidTokenId' : null } |
+  { 'Insufficientremaining' : null } |
   { 'Unauthorized' : null } |
   { 'BalanceLow' : null } |
   { 'Other' : null } |
@@ -15,6 +16,7 @@ export interface InitArgs {
   'name' : string,
   'custodians' : [] | [Array<Principal>],
   'ledger' : Principal,
+  'remaing' : BigUint64Array | bigint[],
   'symbol' : string,
 }
 export type InterfaceId = { 'Burn' : null } |
@@ -45,8 +47,8 @@ export interface _SERVICE {
   'buy' : ActorMethod<[number], Result_1>,
   'getApprovedDip721' : ActorMethod<[bigint], Result_2>,
   'getDepositAddress' : ActorMethod<[], Uint8Array | number[]>,
-  'getDepositeBalance' : ActorMethod<[Principal], bigint>,
   'getPrices' : ActorMethod<[], BigUint64Array | bigint[]>,
+  'getRemaing' : ActorMethod<[], BigUint64Array | bigint[]>,
   'isApprovedForAllDip721' : ActorMethod<[Principal], boolean>,
   'isCustodian' : ActorMethod<[Principal], boolean>,
   'nameDip721' : ActorMethod<[], string>,
@@ -65,6 +67,7 @@ export interface _SERVICE {
   'setCustodian' : ActorMethod<[Principal, boolean], Result_4>,
   'setLogo' : ActorMethod<[[] | [LogoResult]], Result_4>,
   'setName' : ActorMethod<[string], Result_4>,
+  'setRemaing' : ActorMethod<[BigUint64Array | bigint[]], Result_4>,
   'setSymbol' : ActorMethod<[string], Result_4>,
   'supportedInterfacesDip721' : ActorMethod<[], Array<InterfaceId>>,
   'symbolDip721' : ActorMethod<[], string>,
