@@ -1,9 +1,6 @@
 name: mycanister
 services:
   myconister:
-    # build:
-    #   context: .
-    #   dockerfile: canister.Dockerfile  
     image: biconomy/mycanister:latest
     container_name: mycanister
     # restart: unless-stopped
@@ -13,4 +10,5 @@ services:
     ports:
       - "4943:4943"
       - "39939:39939"
+    # command: ["tail","-f","predit/dfx.log"]
     command: ["dfx","start","--clean","--host","0.0.0.0:4943","--force"]

@@ -11,7 +11,7 @@ dfx canister install predic --argument "record{
     name=\"Prediction NFT2\";
     symbol=\"PREDIC2\";
     buy_prices=vec { 100000000;200000000;300000000};
-    remaing=vec { 100000000;200000000;300000000};
+    remaing=vec { 30;20;10};
     custodians=null;
     logo=null;
     ledger=principal\"$icp_ledger_canister_id\"
