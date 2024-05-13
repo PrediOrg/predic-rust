@@ -1,7 +1,4 @@
 .DS_Store
-.dfx/local/lsp
-.dfx/local/canisters
-.dfx/local/network-id
 target
 node_modules
 dfx.log
