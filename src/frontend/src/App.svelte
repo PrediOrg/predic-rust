@@ -10,6 +10,7 @@
  // Add fontawesome icons
    const icons = [faMinus, faPlus, faCheck, faTimes, faCopy, faArrowRight, faArrowLeft];
    library.add(icons);
+
 </script>
 
 <main>
@@ -27,6 +28,7 @@
     <div class="right">
       Crato liquidity protocol.co
     </div>
+
   </div>
 </main>
 
@@ -50,6 +52,7 @@
   }
 
   .footer {
+<<<<<<< HEAD
     width: 1000px;
     padding: 20px;
     display: flex;
@@ -66,6 +69,13 @@
     font-weight: 500;
     font-size: 24px;
     color: #999999;
+=======
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    padding: 20px;
+    text-align: center;
+>>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
   }
 
   .ic-badge-link {

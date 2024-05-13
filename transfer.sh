@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -e
-II_ACCOUNT_ID="643BB18533957D60F407A3E0389D1ED47CB81C5C95E151BBE8E79EA5848DCDE9"
+
+II_ACCOUNT_ID="7C60C6E30CFC8865BFF874F07911D2446389C1116047B8314734814190B4EAB4"
 # II_ACCOUNT_ID_HEX=$(python3 ./scripts/principal_to_default_account_id.py $1)
 II_ACCOUNT_ID_VEC=$(python3 -c 'print("vec{" + ";".join([str(b) for b in bytes.fromhex("'$II_ACCOUNT_ID'")]) + "}")')
 # ACCOUNT_ID="$(dfx --ident ledger account-id)"

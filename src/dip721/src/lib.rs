@@ -55,6 +55,10 @@ struct State {
     txid: u128,
     ledger: Option<Principal>,
     buy_prices: [u64; 3],
+<<<<<<< HEAD
+=======
+    remaing: [u64; 3],
+>>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
 }
 
 #[derive(CandidType, Deserialize)]
@@ -133,6 +137,10 @@ struct InitArgs {
     symbol: String,
     ledger: Principal,
     buy_prices: [u64; 3],
+<<<<<<< HEAD
+=======
+    remaing: [u64; 3],
+>>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
 }
 
 #[init]
@@ -147,6 +155,10 @@ fn init(args: InitArgs) {
         state.logo = args.logo;
         state.ledger = Some(args.ledger);
         state.buy_prices = args.buy_prices;
+<<<<<<< HEAD
+=======
+        state.remaing = args.remaing;
+>>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
     });
 }
 
@@ -162,6 +174,14 @@ fn get_prices() -> [u64; 3] {
     STATE.with(|state| state.borrow().buy_prices)
 }
 
+<<<<<<< HEAD
+=======
+#[query(name = "getRemaing")]
+fn get_remaing() -> [u64; 3] {
+    STATE.with(|state| state.borrow().remaing)
+}
+
+>>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
 #[update]
 async fn buy(level: u8) -> Result<MintResult, Error> {
     let caller: Principal = api::caller();
@@ -175,8 +195,15 @@ async fn buy(level: u8) -> Result<MintResult, Error> {
 fn mint(to: Principal, metadata: MetadataDesc, level: u8) -> Result<MintResult, Error> {
     let (txid, tkid) = STATE.with(|state| {
         let mut state = state.borrow_mut();
+<<<<<<< HEAD
         if !state.custodians.contains(&api::caller()) {
             return Err(Error::Unauthorized);
+=======
+        if state.remaing[level as usize].ge(&1) {
+            state.remaing[level as usize] -= 1;
+        } else {
+            return Err(Error::Insufficientremaining);
+>>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
         }
         let new_id = state.nfts.len() as u64;
         let nft = Nft {
@@ -197,7 +224,10 @@ fn mint(to: Principal, metadata: MetadataDesc, level: u8) -> Result<MintResult, 
     })
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
 async fn deposit_icp(caller: Principal, amount: u64) -> Result<Nat, Error> {
     let canister_id = ic_cdk::api::id();
     let ledger_canister_id = STATE
@@ -586,6 +616,22 @@ fn set_buy_price(buy_prices: [u64; 3]) -> Result<()> {
     })
 }
 
+<<<<<<< HEAD
+=======
+#[update(name = "setRemaing")]
+fn set_remaing(remaing: [u64; 3]) -> Result<()> {
+    STATE.with(|state| {
+        let mut state = state.borrow_mut();
+        if state.custodians.contains(&api::caller()) {
+            state.remaing = remaing;
+            Ok(())
+        } else {
+            Err(Error::Unauthorized)
+        }
+    })
+}
+
+>>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
 #[update(name = "setSymbol")]
 fn set_symbol(sym: String) -> Result<()> {
     STATE.with(|state| {

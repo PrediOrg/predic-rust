@@ -2,6 +2,10 @@ type Error = variant {
   ZeroAddress;
   TransferFailure;
   InvalidTokenId;
+<<<<<<< HEAD
+=======
+  Insufficientremaining;
+>>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
   Unauthorized;
   BalanceLow;
   Other;
@@ -13,6 +17,10 @@ type InitArgs = record {
   name : text;
   custodians : opt vec principal;
   ledger : principal;
+<<<<<<< HEAD
+=======
+  remaing : vec nat64;
+>>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
   symbol : text;
 };
 type InterfaceId = variant {
@@ -36,8 +44,13 @@ service : (InitArgs) -> {
   buy : (nat8) -> (Result_1);
   getApprovedDip721 : (nat64) -> (Result_2) query;
   getDepositAddress : () -> (blob) query;
+<<<<<<< HEAD
   getDepositeBalance : (principal) -> (nat64) query;
   getPrices : () -> (vec nat64) query;
+=======
+  getPrices : () -> (vec nat64) query;
+  getRemaing : () -> (vec nat64) query;
+>>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
   isApprovedForAllDip721 : (principal) -> (bool) query;
   isCustodian : (principal) -> (bool) query;
   nameDip721 : () -> (text) query;
@@ -52,6 +65,10 @@ service : (InitArgs) -> {
   setCustodian : (principal, bool) -> (Result_4);
   setLogo : (opt LogoResult) -> (Result_4);
   setName : (text) -> (Result_4);
+<<<<<<< HEAD
+=======
+  setRemaing : (vec nat64) -> (Result_4);
+>>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
   setSymbol : (text) -> (Result_4);
   supportedInterfacesDip721 : () -> (vec InterfaceId) query;
   symbolDip721 : () -> (text) query;
