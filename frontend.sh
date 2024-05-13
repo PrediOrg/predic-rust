@@ -6,7 +6,6 @@ npm install
 npm run build
 popd
 dfx build frontend
-
 dfx canister install frontend
 
 echo "===== VISIT DEFI FRONTEND ====="

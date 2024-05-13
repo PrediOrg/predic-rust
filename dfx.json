@@ -2,7 +2,6 @@
   "canisters": {
     "ledger": {
       "type": "custom",
-
       "candid": "library/ledger.did",
       "wasm": "library/ledger-canister.wasm.gz",
       "remote": {
@@ -14,7 +13,6 @@
     },
     "internet_identity": {
       "type": "custom",
-
       "candid": "library/internet_identity.did",
       "wasm": "library/internet_identity_dev.wasm.gz",
       "remote": {

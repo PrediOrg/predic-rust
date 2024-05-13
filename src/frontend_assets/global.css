@@ -10,11 +10,7 @@ body {
 }
 
 body {
-<<<<<<< HEAD
   background-color: #1A0559;
-=======
-  background-color: var(--color-black);
->>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
   color: white;
   margin: 0;
   padding: 8px;
@@ -37,11 +33,9 @@ a:hover {
 button {
   padding: 8px 32px;
   color: var(--color-black);
-<<<<<<< HEAD
+
   background: #4726bd;
-=======
-  background-color: rgb(100, 100, 100);
->>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
+
   letter-spacing: 0.35px;
   appearance: none;
   font-size: 15px;
@@ -51,7 +45,7 @@ button {
   border: 1px solid transparent;
   cursor: pointer;
   border-radius: 5px;
-<<<<<<< HEAD
+
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -65,17 +59,6 @@ button span{
 
 button:hover {
   background: #3512B2;
-=======
-  max-width: 200px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: black;
-}
-
-button:hover {
-  background-color: rgb(154, 154, 154);
->>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
 }
 
 button.outline {
