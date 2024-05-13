@@ -1,330 +1,492 @@
 <script>
     import { onMount } from 'svelte';
-    import { Principal } from '@dfinity/principal';
-    import { orders, currentOrder } from '../store/order';
-    import { auth, plugWallet, anonymous } from '../store/auth';
-    import { canisters } from '../store/store';
     import { FontAwesomeIcon } from 'fontawesome-svelte';
+    import { Principal } from '@dfinity/principal';
+    import { canisters, userBalances, createCanisterActor } from '../store/store';
+    import { auth, plugWallet } from '../store/auth';
+    // import { idlFactory as akitaIDL } from "../../declarations/AkitaDIP20/AkitaDIP20.did.js";
+    // import { idlFactory as goldenIDL } from "../../declarations/GoldenDIP20/GoldenDIP20.did.js";
+    import { idlFactory as backendIDL} from "../../declarations/predic/predic.did.js";
+    import { idlFactory as ledgerIDL} from "../../declarations/ledger/ledger.did.js";
+    import { toHexString, hexToBytes, principalToAccountDefaultIdentifier } from '../utils/helpers'
     import { AuthClient } from '@dfinity/auth-client';
+    import { HttpAgent } from '@dfinity/agent/lib/cjs/agent';
+    import { Null } from '@dfinity/candid/lib/cjs/idl';
+    import { messageBox,BeOption,BeSelect,showNotice, } from '@brewer/beerui'
+    // Global variables
+    const host = process.env.DFX_NETWORK === "local"
+        ? `http://localhost:4943`
+        : "ic0.app";
 
+    let depositAddressBlob;
+    let iiPrincipal = '';
+    let authType = "anonymous";
 
+    // Actors for corresponding canisters
+    // TDOD: Move to a store
     let backendActor;
-    let authClient;
+    let akitaActor;
+    let goldenActor;
+    let ledgerActor;
+    let accountBalance = 0;
+    let btnDisable = false;
+    // UI Flags
+    let withdrawing = false;
+    let depositing = false;
+    let didCopyDepositAddress = false;
+    let didCopyPrincipal = false;
+    let withdrawingAmount = false;
+    let fetchingAddress = true;
 
-    let showOrderForm = false;
-    let addingOrder = false;
-    let cancelingOrder = false;
-    let buyingOrder = false;
+    let choosePrice
+    let priceArr = [];
+    // UI Variables
+    let currentToken;
+    let withdrawAmount = 0;
+    // TODO: Use an input box for this value, too
+    let depositAmount = 100000;
+    let withdrawAddress = '';
 
-    const newOrder = {
-        fromCanister: "",
-        fromAmount: 0,
-        toCanister: "",
-        toAmount: 0
-    };
-
-    plugWallet.subscribe((value) => {
+    // Subscribe to plug wallet value should a user authenticate with Plug Wallet
+    plugWallet.subscribe(async (value) => {
         if(value.plugActor) {
-            console.log('Plug connected, using plug actor')
-            backendActor = value.plugActor;
+            const pr = Principal.fromText($canisters[0].canisterId);
+            const deposit = await value.plugActor.deposit(pr);
         }
-    })
-
-    auth.subscribe(async (value) => {
-        if(value.loggedIn) {
-            backendActor = value.actor
-            authClient = await AuthClient.create();
-        }
-    })
+    });
 
     onMount(async () => {
         // Use II as actor
         if($auth.loggedIn) {
-            console.log("In orders, using II");
-            backendActor = $auth.actor;
+            console.log("Using II for DEX actor");
+            authType = "II";
+
+            // II must display principle, since it is unique.
+            iiPrincipal = $auth.principal;
+
+            // TODO: When using II, display a note on how to deposit.
+            // e.g.
+            //
+            // To transfer tokens, use the DIP canister to transfer tokens to <iiPrincipal>, and the balance will be reflected here.
+            // To transfer ICP, use the ledger to transfer ICP to <depositAddress>, and the balance will be reflected here.
+            //
+            // This can replace the COPY we have at the bottom, as this is not needed when using Plug
+
+            // Create canister actors
+            const authClient = await AuthClient.create();
+            const identity = authClient.getIdentity();
+            const agent = new HttpAgent({identity, host});
+
+            if(process.env.DFX_NETWORK === 'local')
+                agent.fetchRootKey();
+
+            backendActor = createCanisterActor(agent, backendIDL, process.env.PREDIC_CANISTER_ID);
+            // akitaActor = createCanisterActor(agent, akitaIDL, process.env.AKITADIP20_CANISTER_ID);
+            // goldenActor = createCanisterActor(agent, goldenIDL, process.env.GOLDENDIP20_CANISTER_ID);
+            ledgerActor = createCanisterActor(agent, ledgerIDL, process.env.LEDGER_CANISTER_ID);
+
+            // Fetch initial balances
+            // const goldenBalance = await goldenActor.balanceOf($auth.principal);
+            // const akitaBalance = await akitaActor.balanceOf($auth.principal);
+            let ledgerBalance = 0;
+
+            depositAddressBlob = await backendActor.getDepositAddress();
+            priceArr = await backendActor.getPrices();
+            console.log(backendActor,ledgerActor)
+            const approved = await ledgerActor.account_balance({account: hexToBytes(principalToAccountDefaultIdentifier(iiPrincipal))});
+            if(approved.e8s) {
+                accountBalance = approved.e8s
+            }
         }
         else if ($plugWallet.isConnected) {
-            console.log("Using Plug for DEX actor");
-            backendActor = $plugWallet.plugActor;
-            console.log(backendActor)
-        }
-        else {
-            console.log('Using anonymous actor');
-            backendActor = $anonymous.actor;
+            // TODO: Support Plug wallet
+            // console.log("Using Plug for DEX actor");
+            // authType = "Plug";
+            // const principalId = await window.ic.plug.agent.getPrincipal();
+
+
+            // // Fetch initial balances
+            // const goldenBalance = await $plugWallet.plugGoldenActor.balanceOf(principalId);
+            // const akitaBalance = await $plugWallet.plugAkitaActor.balanceOf(principalId);
+            // let ledgerBalance = 0;
+
+
+            // // When using Plug, the balance displayed should be of the Plug principal
+            // const balance = await $plugWallet.plugLedgerActor.account_balance({account: XXX});
+            // if(balance.e8s) {
+            //     ledgerBalance = balance.e8s;
+            // }
+
+            // // Create a balances array and set the userBalance store object
+            // const balances = []
+            // for(let i = 0; i < $canisters.length; i++) {
+            //     const principal = Principal.fromText($canisters[i].canisterId);
+            //     const dexBalance = await $plugWallet.plugLedgerActor.getBalance(principal);
+
+            //     balances.push({
+            //         name: $canisters[i].canisterName,
+            //         symbol: $canisters[i].symbol,
+            //         canisterBalance: i === 0 ? akitaBalance : i === 1 ? goldenBalance : ledgerBalance,
+            //         dexBalance: dexBalance,
+            //         principal: principal
+            //     })
+            // };
+
+            // // Update the store values
+            // userBalances.set([...balances]);
+
+            // // Don't forget to set `depositAddressBlob`, which we will use later
+            // depositAddressBlob = await $plugWallet.plugLedgerActor.getDepositAddress();
         }
 
-        // const orderList = await backendActor.getOrders();
-        // orders.set([]);
-        // orders.set(orderList.reverse());
+        fetchingAddress = false;
     });
-
     async function placeOrder() {
-        addingOrder = true;
-        const principal = Principal.fromText($canisters[2].canisterId);
-        const balance = await backendActor.getBalance(principal);
-        console.log(balance)
-        const result = await backendActor.placeOrder(
-            Principal.fromText(newOrder.fromCanister),
-            newOrder.fromAmount,
-            Principal.fromText(newOrder.toCanister),
-            newOrder.toAmount);
+        try {
 
-        console.log(result)
-        if(result.Ok) {
-            // const orderList = await backendActor.getOrders();
-            // orders.set([]);
-            // orders.set(orderList.reverse());
+            if(!choosePrice){
+                showNotice({
+                    toast: true,
+                    message: 'Please choose price',
+                    duration: 3000,
+                    type:"error"
+                });
+            }
+            console.log($canisters,backendActor)
+            let depositAddressBlob = await backendActor.getDepositAddress();
+            btnDisable=true
+
+            const transferResult  = await ledgerActor.transfer({
+                memo: BigInt(0x1),
+                amount: { e8s:  (parseInt(choosePrice) + 10000)},
+                fee: { e8s: 10000},
+                to: depositAddressBlob,
+                from_subaccount: [],
+                created_at_time: [],
+            })
+            console.log(transferResult)
+            console.log(transferResult.Err)
+
+            btnDisable =false
+            if (transferResult.Ok) {
+                btnDisable= true
+                const result  = await backendActor.buy(0);
+                btnDisable= false
+                console.log(result)
+            }else{
+                messageBox({
+                    type :"warning",
+                    title: 'Buy Failed',
+                    message: Object.keys(transferResult.Err)[0]
+                })
+            }
+        }catch (e) {
+            btnDisable = false
         }
-        closeOrderForm();
+
+
+    };
+    async function depositT(principal) {
+        // explicitly set these here to prevent
+        // withdraw form from showing
+        withdrawing = false;
+        withdrawAmount = 0;
+        currentToken = undefined;
+        // END withdraw
+
+        depositing = true;
+        currentToken = principal;
+
+        const canister = $canisters.find((canister) => {
+            return canister.canisterId === principal.toString();
+        })
+        if(canister && canister.canisterName === 'ICP') {
+            if (authType === "Plug") {
+                // TODO: Support Plug wallet
+                // await ledgerActor.transfer(...)
+            }
+            // transfer ICP correct subaccount on DEX
+            await ledgerActor.transfer({
+                memo: BigInt(0x1),
+                amount: { e8s: depositAmount },
+                fee: { e8s: 10000},
+                to: depositAddressBlob,
+                from_subaccount: [],
+                created_at_time: [],
+            });
+
+            const result = await backendActor.deposit(principal);
+            if(result.Ok) {
+                const dexBalance = await backendActor.getBalance(principal);
+
+                let ledgerBalance = 0;
+                let response;
+                if(authType === "II") {
+                    // Update user ICP balance
+                    response = await ledgerActor.account_balance({account: hexToBytes(principalToAccountDefaultIdentifier($auth.principal))});
+                } else if (authType === "Plug") {
+                    // TODO: Support Plug wallett
+                    // response = await ledgerActor.account_balance({account: XXX});
+                }
+                if(response.e8s) {
+                    ledgerBalance = response.e8s
+                }
+                setBalances(canister.canisterName, ledgerBalance, dexBalance);
+            }
+        }
+        // else if(canister && canister.canisterName === 'AkitaDIP20') {
+        //     await akitaActor.approve(Principal.fromText(process.env.PREDIC_CANISTER_ID), depositAmount);
+
+        //     const result = await backendActor.deposit(principal);
+        //     if(result.Ok) {
+        //         const dexBalance = await backendActor.getBalance(principal);
+        //         const akitaBalance = await akitaActor.balanceOf($auth.principal);
+
+        //         setBalances(canister.canisterName, akitaBalance, dexBalance);
+        //     }
+        // }
+        // else if(canister && canister.canisterName === 'GoldenDIP20') {
+        //     await goldenActor.approve(Principal.fromText(process.env.PREDIC_CANISTER_ID), depositAmount);
+
+        //     const result = await backendActor.deposit(principal);
+        //     if(result.Ok) {
+        //         const dexBalance = await backendActor.getBalance(principal);
+        //         const goldenBalance = await goldenActor.balanceOf($auth.principal);
+
+        //         setBalances(canister.canisterName, goldenBalance, dexBalance);
+        //     }
+        // }
+
+        depositing = false;
+        currentToken = undefined;
+    }
+
+    async function withdrawT(principal) {
+        withdrawingAmount = true;
+        currentToken = principal;
+        const withdrawPrincipal = Principal.fromText(withdrawAddress);
+
+        const canister = $canisters.find((canister) => {
+            return canister.canisterId === principal.toString();
+        })
+        if(canister && canister.canisterName === 'ICP') {
+            const result = await backendActor.withdraw(currentToken, withdrawAmount, withdrawPrincipal)
+            if(result.Ok) {
+                const dexBalance = await backendActor.getBalance(principal);
+                let ledgerBalance = 0;
+                let response;
+                if(authType === "II") {
+                    // When using II, display the balance in the target account
+                    response = await ledgerActor.account_balance({account: hexToBytes(principalToAccountDefaultIdentifier($auth.principal))});
+                } else if (authType === "Plug") {
+                    // TODO: Support Plug wallet
+                    // response = await ledgerActor.account_balance({account: XXX});
+                }
+                if(response.e8s) {
+                    ledgerBalance = response.e8s
+                }
+                setBalances(canister.canisterName, ledgerBalance, dexBalance);
+            }
+        }
+        else if(canister && canister.canisterName === 'AkitaDIP20') {
+            const result = await backendActor.withdraw(currentToken, withdrawAmount, withdrawPrincipal)
+            if(result.Ok) {
+                const dexBalance = await backendActor.getBalance(principal);
+                const akitaBalance = await akitaActor.balanceOf($auth.principal);
+
+                setBalances(canister.canisterName, akitaBalance, dexBalance);
+            }
+        }
+        else if(canister && canister.canisterName === 'GoldenDIP20') {
+            const result = await backendActor.withdraw(currentToken, withdrawAmount, withdrawPrincipal)
+            if(result.Ok) {
+                const dexBalance = await backendActor.getBalance(principal);
+                const goldenBalance = await goldenActor.balanceOf($auth.principal);
+
+                setBalances(canister.canisterName, goldenBalance, dexBalance);
+            }
+        }
+
+        withdrawAmount = 0;
+        withdrawAddress = '';
+        currentToken = undefined;
+        withdrawingAmount = false;
     };
 
-    async function buyOrder(order) {
-        buyingOrder = true;
-        // Create an order opposite of the one being bought
-        currentOrder.set(order);
-        const newOrder = {
-            fromCanister: order.to,
-            fromAmount: order.toAmount,
-            toCanister: order.from,
-            toAmount: order.fromAmount
-        };
-        const result = await backendActor.placeOrder(
-            newOrder.fromCanister,
-            newOrder.fromAmount,
-            newOrder.toCanister,
-            newOrder.toAmount
-        )
-        if(result && result.Ok) {
-            // const orderList = await backendActor.getOrders();
-            // orders.set([]);
-            // orders.set(orderList.reverse());
+    function setBalances(canisterName, canisterBalance, dexBalance) {
+        const balanceObj = $userBalances.find((b) => {
+            return b.name === canisterName
+        })
+        if(balanceObj) {
+            balanceObj.canisterBalance = canisterBalance;
+            balanceObj.dexBalance = dexBalance;
         }
-        currentOrder.set({});
-        buyingOrder = false;
+        userBalances.set([...$userBalances]);
+    }
 
-        // TODO: Better way to handle balance updates on UI
-        // get the balance of the to, get the balance of the from
-        window.location.reload();
+    function beginWithdrawProcess(token) {
+        currentToken = token;
+        withdrawing = true;
+    }
+
+    function cancelWithdrawProcess(e) {
+        e.stopPropagation();
+        withdrawing = false;
+        withdrawAmount = 0;
+        withdrawAddress = '';
+        currentToken = undefined;
+    }
+
+    function copyDepositAddress(text) {
+        if(window.isSecureContext) {
+            didCopyDepositAddress = true;
+            navigator.clipboard.writeText(text);
+        }
+        setTimeout(() => {
+            didCopyDepositAddress = false
+        }, 1000)
     };
 
-    function closeOrderForm() {
-        showOrderForm = false;
-        addingOrder = false;
-    };
-
-    async function cancelOrder(id) {
-        cancelingOrder = true;
-        const order = $orders.find((o) => o.id === id);
-        currentOrder.set(order);
-        const result = await backendActor.cancelOrder(id);
-        if(result && result.Ok) {
-            // const orderList = await backendActor.getOrders();
-            // orders.set([]);
-            // orders.set(orderList.reverse());
+    function copyPrincipal(text) {
+        if(window.isSecureContext) {
+            didCopyPrincipal = true;
+            navigator.clipboard.writeText(text);
         }
-        currentOrder.set({});
-        cancelingOrder = false;
-    };
-
-    async function getTokenSymbol(principal) {
-        const item =  $canisters.find((canister) => canister.canisterId === principal.toString())
-        if(item) {
-            return item.symbol;
-        }
+        setTimeout(() => {
+            didCopyPrincipal = false
+        }, 1000)
     };
 </script>
 
-<div class="order-container">
-    <div>
-        <div class="header-container">
-            <div class="title">
-                <h2>Orders</h2>
-            </div>
-            {#if $auth.loggedIn || $plugWallet.isConnected}
-                <div class="adding-order-btn">
-                    <button on:click={() => showOrderForm = true } title="Add new order" class="add-btn">
-                        <FontAwesomeIcon icon="plus" />
-                    </button>
+<div class="mint-container">
+    <div class="title">
+        NFT License
+    </div>
+    <div class="mint-content" >
+        <div class="nft-info-box">
+            <img class="nft-img"/>
+            <div class="nft-content">
+                <div class="nft-name">
+                    Name #1
                 </div>
+                <div class="nft-price">
+                    Choose Price
+<!--                    <select class="input-style" bind:value={choosePrice}>-->
+<!--                        {#each priceArr as price}-->
+<!--                            <option value={price}>-->
+<!--                                {price.toString()/1000000}-->
+<!--                            </option>-->
+<!--                        {/each}-->
+<!--                    </select>-->
+                    <BeSelect placeholder="Choose Price" bind:value={choosePrice} maxHeight='180px'>
+                        {#each priceArr as price}
+                            <BeOption value={price} label={price.toString()/1000000} />
+                        {/each}
+                    </BeSelect>
+                </div>
+                <div class="account-balance">
+                    <div class="name">Balance </div>
+                    {accountBalance.toString()/1000000}
+                </div>
+            </div>
+        </div>
+        <button class="mint-btn" disabled={btnDisable} on:click={placeOrder} >
+            {#if btnDisable}
+                 <span>
+                    Loading
+                 </span>
+            {:else}
+                 <span>
+                    Mint
+                </span>
             {/if}
-        </div>
-        <div>
-            <table>
-                {#if $orders.length || showOrderForm}
-                    <thead>
-                    <th>From Account</th>
-                    <th>Amount</th>
-                    <th>To Account</th>
-                    <th>Amount</th>
-                    <th></th>
-                    </thead>
-                {/if}
-                <tbody>
-                {#if showOrderForm}
-                    <tr>
-                        <td>
-                            <select class="input-style" bind:value={newOrder.fromCanister}>
-                                {#each $canisters as canister}
-                                    <option value={canister.canisterId}>
-                                        {canister.symbol}
-                                    </option>
-                                {/each}
-                            </select>
-                        </td>
-                        <td><input class="input-style" bind:value={newOrder.fromAmount} type="number" /></td>
-                        <td>
-                            <select class="input-style" bind:value={newOrder.toCanister}>
-                                {#each $canisters as canister}
-                                    <option value={canister.canisterId}>
-                                        {canister.symbol}
-                                    </option>
-                                {/each}
-                            </select>
-                        </td>
-                        <td><input class="input-style" bind:value={newOrder.toAmount} type="number" /></td>
-                        <td>
-                            <div>
-                                <button class="btn-accept" on:click={placeOrder} title="Place Order" >
-                                    <div class="add-btn-text">
-                                        {#if addingOrder}
-                                            <div class="loader"></div>
-                                        {:else}
-                                            <FontAwesomeIcon icon="check" />
-                                        {/if}
-                                    </div>
-                                </button>
-                                <button class="btn-cancel" on:click={closeOrderForm} title="Cancel" >
-                                    <FontAwesomeIcon icon="times" />
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                {/if}
-                {#each $orders as order}
-                    <tr>
-                        <td>
-                            {#await getTokenSymbol(order.from)}
-                                <span>Loading Symbol...</span>
-                            {:then symbol}
-                                {symbol}
-                            {/await}
-                        </td>
-                        <td>{order.fromAmount}</td>
-                        <td>
-                            {#await getTokenSymbol(order.to)}
-                                <span>Loading Symbol...</span>
-                            {:then symbol}
-                                {symbol}
-                            {/await}
-                        </td>
-                        <td>{order.toAmount}</td>
-                        <td>
-                            {#if $auth.loggedIn}
-                                <button class="btn-accept" title="Buy order">
-                                    {#if buyingOrder && $currentOrder.id === order.id}
-                                        <div class="loader buy-btn-loader"></div>
-                                    {:else}
-                                        <div class="buy-btn-text" on:click={() => buyOrder(order)}>
-                                            <FontAwesomeIcon icon="check" />
-                                        </div>
-                                    {/if}
-                                </button>
-                                {#if authClient && order.owner.toText() === authClient.getIdentity().getPrincipal().toText()}
-                                    <button class="btn-cancel" on:click={() => cancelOrder(order.id)} title="Cancel order">
-                                        {#if cancelingOrder && $currentOrder.id === order.id}
-                                            <div class="loader cancel-btn-loader"></div>
-                                        {:else}
-                                            <div class="cancel-btn-text">
-                                                <FontAwesomeIcon icon="times" />
-                                            </div>
-                                        {/if}
-                                    </button>
-                                {/if}
-                            {/if}
-                        </td>
-                    </tr>
-                {/each}
-                </tbody>
-            </table>
-        </div>
+
+
+        </button>
     </div>
 </div>
 
 <style>
-    table {
-        width: 100%;
+    .mint-container {
+        width: 556px;
+        margin: 0 auto;
     }
 
-    th {
+    .mint-container .mint-content {
+        width: 556px;
+        background: #191032;
+        box-shadow: 0px 2px 3px 0px rgba(41, 72, 152, 0.01), 0px 9px 7px 0px rgba(41, 72, 152, 0.02), 0px 22px 14px 0px rgba(41, 72, 152, 0.03), 0px 42px 28px 0px rgba(41, 72, 152, 0.03), 0px 71px 51px 0px rgba(41, 72, 152, 0.04), 0px 109px 87px 0px rgba(41, 72, 152, 0.05);
+        border-radius: 11px 11px 11px 11px;
+        padding: 20px;
+        margin-top: 28px;
+    }
+
+    .mint-container .title {
+        font-family: Roboto, Roboto;
         font-weight: bold;
-        font-size: 20px;
+        font-size: 30px;
+        margin-top: 10vh;
+        color: #FFFFFF;
+        line-height: 35px;
+        text-align: left;
     }
-    .order-container {
-        text-align: left !important;
-        margin-bottom: 36px;
-        background-color: #333336;
-        padding: 10px;
-        border-radius: 10px;
-    }
-
-    .header-container {
+    .mint-container .mint-content .nft-info-box{
         display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
     }
-
-    .title {
-        display: inline;
+    .mint-container .mint-content .nft-info-box .nft-img{
+        width: 300px;
+        height: 300px;
     }
-
-    .adding-order-btn {
-        margin-left: 10px;
+    .mint-container .mint-content .nft-info-box .nft-content{
+        padding-left: 20px;
     }
-
-    .add-btn {
-        margin-top:22px;
-        border-radius: 5px;
-        padding-top: 3px;
-        padding-bottom: 3px;
-        padding-left: 8px;
-        padding-right: 8px;
+    .nft-name{
+        font-size: 30px;
+        color: #FFFFFF;
+        text-align: left;
+        font-style: normal;
     }
-    .add-btn:hover {
-        background-color: rgb(209, 209, 209);
+    .nft-price{
+        margin-top: 20px;
     }
-
-    .btn-cancel {
-        background-color: white;
+    .account-balance{
+        display: flex;
+        margin-top: 20px;
     }
-    .btn-cancel:hover {
-        background-color: rgb(169, 169, 169);
+    .account-balance .name{
+        margin-right: 10px;
     }
-    .btn-accept {
-        background-color: green;
+    .mint-btn{
+        width: 96%;
+        margin-left: 2%;
+        height: 50px;
+        border-radius: 10px 10px 10px 10px;
+        text-align: center;
+        font-weight: 500;
+        font-size: 18px;
+        color: #F6F7FC;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        margin-top: 30px;
+        margin-bottom: 20px;
     }
-    .btn-accept:hover {
-        background-color: rgb(0, 163, 0);
+    .mint-btn:active{
+        transform: translate(3px, 3px);
     }
-
-    .add-btn-text {
-        display: inline-flex;
-        margin-right: 5px;
+    .mint-btn:after{
+        content:"";
+        width: 490px;
+        height: 29px;
+        background: #AD3589;
+        border-radius: 0px 0px 0px 0px;
+        filter: blur(20px);
+        position: absolute;
+        top: -10px;
+        left: 0;
     }
-
-    .cancel-btn-text {
-        display: inline-flex;
-        margin-right: 5px;
-    }
-
-    .cancel-btn-loader {
-        vertical-align: middle;
-    }
-
-    .buy-btn-text {
-        display: inline-flex;
-    }
-
-    .buy-btn-loader {
-        vertical-align: middle;
+    .mint-btn span{
+        position: relative;
+        z-index: 1;
     }
 </style>

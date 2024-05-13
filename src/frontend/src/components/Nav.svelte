@@ -7,7 +7,7 @@
     // import { idlFactory as goldenIDL } from "../../declarations/GoldenDIP20/GoldenDIP20.did.js";
     import { idlFactory as backendIDL} from "../../declarations/predic/predic.did.js";
     import { idlFactory as ledgerIDL} from "../../declarations/ledger/ledger.did.js";
-    // import logo from "../assets/logo.png"
+
     /** @type {AuthClient} */
     let client;
     // Plug wallet connection request
@@ -104,19 +104,26 @@
 
 <div id="nav-container">
     <a
-      href="https://dfinity.org"
-      target="_blank"
+      href="#"
       rel="noopener noreferrer"
       class="logo"
     >
+
       <img src="images/logo.png" alt="DFINITY logo" />
+
     </a>
     <ul>
       <li>
             {#if $auth.loggedIn}
-                <button on:click={logout}>Log out</button>
+                <button on:click={logout}>
+                    <span>Log out</span>
+                </button>
             {:else}
-                <button on:click={login}>Login</button>
+                <button on:click={login}>
+                    <span>
+                        Login
+                    </span>
+                </button>
             {/if}
       </li>
       <!--Due to lack of support for local testing Plug wallet, Plug wallet auth button
@@ -145,8 +152,10 @@
 
 <style>
     #nav-container {
-        display: inline-flex;
-        width: 100%;
+        width: 90%;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
     }
 
     li {
@@ -168,6 +177,7 @@
         height: 50px;
     }
 
+
     .plug-logo {
         height: 16px;
     }
@@ -177,5 +187,16 @@
             #FFE701,#FC9770,#FB72A5,#C172DA);
         background-size: 100% 3px;
         background-repeat:repeat;
+    }
+    button:after{
+        content:"";
+        width: 100%;
+        height:  30px;
+        background: #AD3589;
+        border-radius: 0px 0px 0px 0px;
+        filter: blur(10px);
+        position: absolute;
+        top: -15px;
+        left: 0;
     }
 </style>
