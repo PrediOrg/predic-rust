@@ -395,16 +395,22 @@
 
                 <div class="account-balance">
                     <div class="name">Balance </div>
-                    {accountBalance.toString()/1000000}
+                     <div class="value">
+                         {accountBalance.toString()/1000000}
+                     </div>
                 </div>
                 <div class="account-balance">
                     <div class="name">Remaing </div>
-                    {remaing}
+                    <div class="value">
+                        {remaing}
+                    </div>
                 </div>
             </div>
         </div>
         <div class="nft-price">
-            Choose Price
+            <div class="name" style="margin-bottom: 10px">
+                Choose Price
+            </div>
             <!--                    <select class="input-style" bind:value={choosePrice}>-->
             <!--                        {#each priceArr as price}-->
             <!--                            <option value={price}>-->
@@ -520,15 +526,18 @@
     }
     .nft-name{
         font-size: 30px;
-        color: #FFFFFF;
         text-align: left;
         font-style: normal;
+        color: #fff;
     }
     .nft-price{
         width: 96%;
         margin-left: 2%;
         margin-top: 20px;
 
+    }
+    .nft-price .name{
+        color: #999;
     }
 
     .choose-price{
@@ -537,11 +546,15 @@
         border: 1px solid rgba(255,255,255,0.1);
     }
     .account-balance{
-        display: flex;
         margin-top: 20px;
+        font-size: 20px;
     }
     .account-balance .name{
         margin-right: 10px;
+        color: #999;
+    }
+    .account-balance .value{
+        margin-top: 10px;
     }
     .mint-btn{
         width: 96%;
