@@ -183,7 +183,6 @@ async fn buy(level: u8) -> Result<MintResult, Error> {
 fn mint(to: Principal, metadata: MetadataDesc, level: u8) -> Result<MintResult, Error> {
     let (txid, tkid) = STATE.with(|state| {
         let mut state = state.borrow_mut();
-
         if state.remaing[level as usize].ge(&1) {
             state.remaing[level as usize] -= 1;
         } else {
@@ -207,7 +206,6 @@ fn mint(to: Principal, metadata: MetadataDesc, level: u8) -> Result<MintResult, 
         level,
     })
 }
-
 
 async fn deposit_icp(caller: Principal, amount: u64) -> Result<Nat, Error> {
     let canister_id = ic_cdk::api::id();
@@ -596,7 +594,6 @@ fn set_buy_price(buy_prices: [u64; 3]) -> Result<()> {
         }
     })
 }
-
 
 #[update(name = "setRemaing")]
 fn set_remaing(remaing: [u64; 3]) -> Result<()> {
