@@ -41917,7 +41917,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (412:16) {#each priceArr as price}
+    // (416:16) {#each priceArr as price}
     function create_each_block_1(ctx) {
     	let beoption;
     	let current;
@@ -41962,14 +41962,14 @@ var app = (function () {
     		block,
     		id: create_each_block_1.name,
     		type: "each",
-    		source: "(412:16) {#each priceArr as price}",
+    		source: "(416:16) {#each priceArr as price}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (411:12) <BeSelect class="choose-price" placeholder="Choose Price" bind:value={choosePrice} maxHeight='180px'>
+    // (415:12) <BeSelect class="choose-price" placeholder="Choose Price" bind:value={choosePrice} maxHeight='180px'>
     function create_default_slot(ctx) {
     	let each_1_anchor;
     	let current;
@@ -42058,14 +42058,14 @@ var app = (function () {
     		block,
     		id: create_default_slot.name,
     		type: "slot",
-    		source: "(411:12) <BeSelect class=\\\"choose-price\\\" placeholder=\\\"Choose Price\\\" bind:value={choosePrice} maxHeight='180px'>",
+    		source: "(415:12) <BeSelect class=\\\"choose-price\\\" placeholder=\\\"Choose Price\\\" bind:value={choosePrice} maxHeight='180px'>",
     		ctx
     	});
 
     	return block;
     }
 
-    // (422:12) {:else}
+    // (426:12) {:else}
     function create_else_block$1(ctx) {
     	let span;
 
@@ -42074,7 +42074,7 @@ var app = (function () {
     			span = element("span");
     			span.textContent = "Mint";
     			attr_dev(span, "class", "svelte-3e52mr");
-    			add_location(span, file$1, 422, 17, 16624);
+    			add_location(span, file$1, 426, 17, 16801);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
@@ -42088,14 +42088,14 @@ var app = (function () {
     		block,
     		id: create_else_block$1.name,
     		type: "else",
-    		source: "(422:12) {:else}",
+    		source: "(426:12) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (418:12) {#if btnDisable}
+    // (422:12) {#if btnDisable}
     function create_if_block$1(ctx) {
     	let span;
 
@@ -42104,7 +42104,7 @@ var app = (function () {
     			span = element("span");
     			span.textContent = "Loading";
     			attr_dev(span, "class", "svelte-3e52mr");
-    			add_location(span, file$1, 418, 17, 16527);
+    			add_location(span, file$1, 422, 17, 16704);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
@@ -42118,14 +42118,14 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(418:12) {#if btnDisable}",
+    		source: "(422:12) {#if btnDisable}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (436:8) {#each ownerNfs as nftItem}
+    // (440:8) {#each ownerNfs as nftItem}
     function create_each_block(ctx) {
     	let div1;
     	let img;
@@ -42149,11 +42149,11 @@ var app = (function () {
     			attr_dev(img, "class", "nft-logo svelte-3e52mr");
     			if (!src_url_equal(img.src, img_src_value = "images/nft_logo.png")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "");
-    			add_location(img, file$1, 437, 16, 16917);
+    			add_location(img, file$1, 441, 16, 17094);
     			attr_dev(div0, "class", "nft-id");
-    			add_location(div0, file$1, 438, 16, 16989);
+    			add_location(div0, file$1, 442, 16, 17166);
     			attr_dev(div1, "class", "nft-item svelte-3e52mr");
-    			add_location(div1, file$1, 436, 12, 16878);
+    			add_location(div1, file$1, 440, 12, 17055);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div1, anchor);
@@ -42176,7 +42176,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(436:8) {#each ownerNfs as nftItem}",
+    		source: "(440:8) {#each ownerNfs as nftItem}",
     		ctx
     	});
 
@@ -42299,39 +42299,39 @@ var app = (function () {
     			}
 
     			attr_dev(div0, "class", "title svelte-3e52mr");
-    			add_location(div0, file$1, 380, 4, 14907);
+    			add_location(div0, file$1, 384, 4, 15084);
     			attr_dev(img, "class", "nft-img svelte-3e52mr");
     			if (!src_url_equal(img.src, img_src_value = "images/nft_logo.png")) attr_dev(img, "src", img_src_value);
-    			add_location(img, file$1, 385, 12, 15037);
+    			add_location(img, file$1, 389, 12, 15214);
     			attr_dev(div1, "class", "nft-name svelte-3e52mr");
-    			add_location(div1, file$1, 387, 16, 15140);
+    			add_location(div1, file$1, 391, 16, 15317);
     			attr_dev(div2, "class", "name svelte-3e52mr");
-    			add_location(div2, file$1, 392, 20, 15281);
+    			add_location(div2, file$1, 396, 20, 15458);
     			attr_dev(div3, "class", "account-balance svelte-3e52mr");
-    			add_location(div3, file$1, 391, 16, 15231);
+    			add_location(div3, file$1, 395, 16, 15408);
     			attr_dev(div4, "class", "name svelte-3e52mr");
-    			add_location(div4, file$1, 396, 20, 15459);
+    			add_location(div4, file$1, 400, 20, 15636);
     			attr_dev(div5, "class", "account-balance svelte-3e52mr");
-    			add_location(div5, file$1, 395, 16, 15409);
+    			add_location(div5, file$1, 399, 16, 15586);
     			attr_dev(div6, "class", "nft-content svelte-3e52mr");
-    			add_location(div6, file$1, 386, 12, 15098);
+    			add_location(div6, file$1, 390, 12, 15275);
     			attr_dev(div7, "class", "nft-info-box svelte-3e52mr");
-    			add_location(div7, file$1, 384, 8, 14998);
+    			add_location(div7, file$1, 388, 8, 15175);
     			attr_dev(div8, "class", "nft-price svelte-3e52mr");
-    			add_location(div8, file$1, 401, 8, 15587);
+    			add_location(div8, file$1, 405, 8, 15764);
     			attr_dev(button, "class", "mint-btn svelte-3e52mr");
     			button.disabled = /*btnDisable*/ ctx[1];
-    			add_location(button, file$1, 416, 8, 16410);
+    			add_location(button, file$1, 420, 8, 16587);
     			attr_dev(div9, "class", "mint-content svelte-3e52mr");
-    			add_location(div9, file$1, 383, 4, 14962);
+    			add_location(div9, file$1, 387, 4, 15139);
     			attr_dev(div10, "class", "mint-container svelte-3e52mr");
-    			add_location(div10, file$1, 379, 0, 14874);
+    			add_location(div10, file$1, 383, 0, 15051);
     			attr_dev(div11, "class", "title svelte-3e52mr");
-    			add_location(div11, file$1, 431, 4, 16758);
+    			add_location(div11, file$1, 435, 4, 16935);
     			attr_dev(div12, "class", "my-nfts svelte-3e52mr");
-    			add_location(div12, file$1, 434, 4, 16808);
+    			add_location(div12, file$1, 438, 4, 16985);
     			attr_dev(div13, "class", "nfts svelte-3e52mr");
-    			add_location(div13, file$1, 430, 0, 16735);
+    			add_location(div13, file$1, 434, 0, 16912);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -42654,6 +42654,12 @@ var app = (function () {
     						duration: 3000,
     						type: "success"
     					});
+    				}
+
+    				const ownerNfsRes = await backendActor.ownerNfs(iiPrincipal);
+
+    				if (ownerNfsRes.Ok) {
+    					$$invalidate(5, ownerNfs = ownerNfsRes.Ok);
     				}
     			} else {
     				messageBox({

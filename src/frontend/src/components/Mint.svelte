@@ -192,6 +192,10 @@
                         type:"success"
                     });
                 }
+                const ownerNfsRes= await backendActor.ownerNfs(iiPrincipal);
+                if(ownerNfsRes.Ok){
+                    ownerNfs = ownerNfsRes.Ok
+                }
             }else{
                 messageBox({
                     type :"warning",
