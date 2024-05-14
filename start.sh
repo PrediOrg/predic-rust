@@ -1,8 +1,6 @@
 set -e
 # dfx start --host 0.0.0.0:4943 --background --clean > dfx.log 2>&1 &
 # sleep 10
-
-rm -rf .dfx
 rm -f .env
 
 echo "===========SETUP========="

@@ -31,6 +31,49 @@ type Result_1 = variant { Ok : MintResult; Err : Error };
 type Result_2 = variant { Ok : principal; Err : Error };
 type Result_3 = variant { Ok : vec nat64; Err : Error };
 type Result_4 = variant { Ok; Err : Error };
+type HttpRequest = record {
+    method : text;
+    url : text;
+    headers : vec record { text; text; };
+    body : blob;
+};
+
+type HttpResponse = record {
+    status_code : nat16;
+    headers : vec record { text; text; };
+    body : blob;
+};
+type ExtendedMetadataResult = record {
+    metadata_desc : MetadataDesc;
+    token_id : nat64;
+};
+type MetadataResult = variant {
+    Ok : MetadataDesc;
+    Err : Error;
+};
+type MetadataDesc = vec MetadataPart;
+type MetadataPart = record {
+    purpose : MetadataPurpose;
+    key_val_data : vec MetadataKeyVal;
+    data : blob;
+};
+type MetadataPurpose = variant {
+    Preview;
+    Rendered;
+};
+type MetadataKeyVal = record {
+    text;
+    MetadataVal;
+};
+type MetadataVal = variant {
+    TextContent : text;
+    BlobContent : blob;
+    NatContent : nat;
+    Nat8Content : nat8;
+    Nat16Content : nat16;
+    Nat32Content : nat32;
+    Nat64Content : nat64;
+};
 service : (InitArgs) -> {
   approveDip721 : (principal, nat64) -> (Result);
   balanceOfDip721 : (principal) -> (nat64) query;
@@ -61,4 +104,7 @@ service : (InitArgs) -> {
   totalSupplyDip721 : () -> (nat64) query;
   transferFromDip721 : (principal, principal, nat64) -> (Result);
   transferFromNotifyDip721 : (principal, principal, nat64, blob) -> (Result);
+  http_request : (HttpRequest) -> (HttpResponse) query;
+  getMetadataDip721 : (token_id : nat64) -> (MetadataResult) query;
+  getMetdataForUserDip721 : (user : principal) -> (vec ExtendedMetadataResult); 
 }
