@@ -14,7 +14,7 @@ dfx canister call predic getPrices
 echo "depositeAddress:"
 echo $ICP_DEPOSIT_ADDR_USER1
 echo "transfer to depositeAddress:"
-dfx canister call ledger transfer "(record { amount = record { e8s = 100_001_000 }; to = $ICP_DEPOSIT_ADDR_USER1; fee = record { e8s = 10000}; memo = 1;})"
+dfx canister call ledger transfer "(record { amount = record { e8s = 100_010_000 }; to = $ICP_DEPOSIT_ADDR_USER1; fee = record { e8s = 10000}; memo = 1;})"
 echo "account balance:"
 dfx canister call ledger account_balance '(record { account = '$ICP_DEPOSIT_ADDR_USER1'})'
 
