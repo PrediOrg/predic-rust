@@ -38,8 +38,9 @@
     let withdrawingAmount = false;
     let fetchingAddress = true;
 
-    let choosePrice
+    let choosePrice;
     let priceArr = [];
+    let remaing ;
     // UI Variables
     let currentToken;
     let withdrawAmount = 0;
@@ -73,10 +74,11 @@
             // This can replace the COPY we have at the bottom, as this is not needed when using Plug
 
             // Create canister actors
+            console.log(111111111111)
+
             const authClient = await AuthClient.create();
             const identity = authClient.getIdentity();
             const agent = new HttpAgent({identity, host});
-
             if(process.env.DFX_NETWORK === 'local')
                 agent.fetchRootKey();
 
@@ -84,6 +86,7 @@
             // akitaActor = createCanisterActor(agent, akitaIDL, process.env.AKITADIP20_CANISTER_ID);
             // goldenActor = createCanisterActor(agent, goldenIDL, process.env.GOLDENDIP20_CANISTER_ID);
             ledgerActor = createCanisterActor(agent, ledgerIDL, process.env.LEDGER_CANISTER_ID);
+            console.log(backendActor,ledgerActor)
 
             // Fetch initial balances
             // const goldenBalance = await goldenActor.balanceOf($auth.principal);
@@ -92,7 +95,7 @@
 
             depositAddressBlob = await backendActor.getDepositAddress();
             priceArr = await backendActor.getPrices();
-            console.log(backendActor,ledgerActor)
+            remaing= await backendActor.getRemaing();
             const approved = await ledgerActor.account_balance({account: hexToBytes(principalToAccountDefaultIdentifier(iiPrincipal))});
             if(approved.e8s) {
                 accountBalance = approved.e8s
@@ -387,6 +390,10 @@
                 <div class="account-balance">
                     <div class="name">Balance </div>
                     {accountBalance.toString()/1000000}
+                </div>
+                <div class="account-balance">
+                    <div class="name">Remaing </div>
+                    {remaing}
                 </div>
             </div>
         </div>

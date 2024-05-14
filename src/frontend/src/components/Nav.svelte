@@ -7,12 +7,13 @@
     // import { idlFactory as goldenIDL } from "../../declarations/GoldenDIP20/GoldenDIP20.did.js";
     import { idlFactory as backendIDL} from "../../declarations/predic/predic.did.js";
     import { idlFactory as ledgerIDL} from "../../declarations/ledger/ledger.did.js";
-<<<<<<< HEAD
+    import { FontAwesomeIcon } from 'fontawesome-svelte';
+    import { showNotice, } from '@brewer/beerui'
 
-=======
->>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
     /** @type {AuthClient} */
     let client;
+    let didCopyDepositAddress;
+    let iiPrincipal;
     // Plug wallet connection request
     onMount(async () => {
         // Internet Identity:q
@@ -20,6 +21,10 @@
         const id = client.getIdentity();
         if (await client.isAuthenticated()) {
             handleAuth();
+        }
+        if($auth.loggedIn) {
+            iiPrincipal = $auth.principal.toString();
+
         }
         // TODO: Support Plug wallet
         // if(!await window.ic.plug.isConnected()){
@@ -84,7 +89,22 @@
         }));
         // Create Canister Actors with II
     }
-    
+    function copyDepositAddress(text) {
+        if(window.isSecureContext) {
+            didCopyDepositAddress = true;
+            navigator.clipboard.writeText(text);
+                showNotice({
+                    toast: true,
+                    message: iiPrincipal+' Copy success!',
+                    duration: 3000,
+                    type:"success"
+                });
+
+        }
+        setTimeout(() => {
+            didCopyDepositAddress = false
+        }, 1000)
+    };
     function login() {
         client.login({
           identityProvider:
@@ -107,7 +127,6 @@
 
 <div id="nav-container">
     <a
-<<<<<<< HEAD
       href="#"
       rel="noopener noreferrer"
       class="logo"
@@ -115,20 +134,16 @@
 
       <img src="images/logo.png" alt="DFINITY logo" />
 
-=======
-      href="https://dfinity.org"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="logo"
-    >
-      <img src="images/dfinity.svg" alt="DFINITY logo" />
->>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
+
     </a>
     <ul>
       <li>
             {#if $auth.loggedIn}
-<<<<<<< HEAD
-                <button on:click={logout}>
+                <button on:click={copyDepositAddress(iiPrincipal)} style="margin-right: 20px">
+                <span>{iiPrincipal?(iiPrincipal.substring(0,3)+"..."+iiPrincipal.substring((iiPrincipal.length-5),iiPrincipal.length)):""}<FontAwesomeIcon icon="copy" /></span>
+
+                </button>
+                <button on:click={logout} >
                     <span>Log out</span>
                 </button>
             {:else}
@@ -137,11 +152,7 @@
                         Login
                     </span>
                 </button>
-=======
-                <button on:click={logout}>Log out</button>
-            {:else}
-                <button on:click={login}>Login</button>
->>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
+
             {/if}
       </li>
       <!--Due to lack of support for local testing Plug wallet, Plug wallet auth button
@@ -170,15 +181,11 @@
 
 <style>
     #nav-container {
-<<<<<<< HEAD
         width: 90%;
         display: flex;
         justify-content: space-between;
         margin: 0 auto;
-=======
-        display: inline-flex;
-        width: 100%;
->>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
+
     }
 
     li {
@@ -196,13 +203,11 @@
     .logo {
       display: inline-block;
     }
-<<<<<<< HEAD
     .logo img{
         height: 50px;
     }
 
-=======
->>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
+
 
     .plug-logo {
         height: 16px;
@@ -214,7 +219,6 @@
         background-size: 100% 3px;
         background-repeat:repeat;
     }
-<<<<<<< HEAD
     button:after{
         content:"";
         width: 100%;
@@ -226,6 +230,5 @@
         top: -15px;
         left: 0;
     }
-=======
->>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
+
 </style>

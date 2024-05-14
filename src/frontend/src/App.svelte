@@ -13,15 +13,18 @@
 
 </script>
 
-<main>
+<main >
   <Nav />
 
   <div class="main-container">
     {#if $auth.loggedIn || $plugWallet.isConnected}
-     <BalanceInfo />
+<!--     <BalanceInfo />-->
+      <Mint/>
+    {:else}
+      <Mint/>
     {/if}
 
-      <Mint/>
+
   </div>
   <div class="footer">
     <img src="images/logo.png" alt="DFINITY logo" />
@@ -37,6 +40,7 @@
 
   .main-container {
     align-items: left;
+      min-height: 70vh;
   }
 
   main {
@@ -52,7 +56,6 @@
   }
 
   .footer {
-<<<<<<< HEAD
     width: 1000px;
     padding: 20px;
     display: flex;
@@ -69,13 +72,7 @@
     font-weight: 500;
     font-size: 24px;
     color: #999999;
-=======
-    position: fixed;
-    bottom: 0;
-    width: 100vw;
-    padding: 20px;
-    text-align: center;
->>>>>>> 59f4afe84ac90981aa99e16d80cb0a6c0e6921a8
+
   }
 
   .ic-badge-link {

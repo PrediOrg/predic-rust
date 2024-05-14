@@ -2,7 +2,7 @@
 set -e
 
 #测试web页面的depositeAddress
-PRINCIPAL="d4r2y-qrw5y-zxje6-ompzv-svfk4-ynbbv-bc3lp-z5t3l-igqgm-fbsjl-pae"
+PRINCIPAL="gj7jv-zmc5m-ktnag-5qdrw-4v5v6-7zvi7-syzx5-owkgf-ohzgk-wqorl-7qe"
 ROOT_PRINCIPAL="principal \"$PRINCIPAL\""
 # script to retrieve default subaccount of II in hex format
 II_ACCOUNT_ID_HEX=$(python3 ./scripts/principal_to_default_account_id.py $PRINCIPAL)
