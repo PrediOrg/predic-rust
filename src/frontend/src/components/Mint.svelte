@@ -13,6 +13,7 @@
     import { HttpAgent } from '@dfinity/agent/lib/cjs/agent';
     import { Null } from '@dfinity/candid/lib/cjs/idl';
     import { messageBox,BeOption,BeSelect,showNotice, } from '@brewer/beerui'
+    import {orders} from "../store/order";
     // Global variables
     const host = process.env.DFX_NETWORK === "local"
         ? `http://localhost:4943`
@@ -41,6 +42,7 @@
     let choosePrice;
     let priceArr = [];
     let remaing ;
+    let ownerNfs = [];
     // UI Variables
     let currentToken;
     let withdrawAmount = 0;
@@ -96,6 +98,11 @@
             depositAddressBlob = await backendActor.getDepositAddress();
             priceArr = await backendActor.getPrices();
             remaing= await backendActor.getRemaing();
+            const ownerNfsRes= await backendActor.ownerNfs(iiPrincipal);
+            console.log(ownerNfsRes)
+            if(ownerNfsRes.Ok){
+                ownerNfs = ownerNfsRes.Ok
+            }
             const approved = await ledgerActor.account_balance({account: hexToBytes(principalToAccountDefaultIdentifier(iiPrincipal))});
             if(approved.e8s) {
                 accountBalance = approved.e8s
@@ -176,6 +183,15 @@
                 const result  = await backendActor.buy(0);
                 btnDisable= false
                 console.log(result)
+
+                if(result.Ok){
+                    showNotice({
+                        toast: true,
+                        message: 'Mint success!!!',
+                        duration: 3000,
+                        type:"success"
+                    });
+                }
             }else{
                 messageBox({
                     type :"warning",
@@ -367,26 +383,12 @@
     </div>
     <div class="mint-content" >
         <div class="nft-info-box">
-            <img class="nft-img"/>
+            <img class="nft-img" src="images/nft_logo.png"/>
             <div class="nft-content">
                 <div class="nft-name">
                     Name #1
                 </div>
-                <div class="nft-price">
-                    Choose Price
-<!--                    <select class="input-style" bind:value={choosePrice}>-->
-<!--                        {#each priceArr as price}-->
-<!--                            <option value={price}>-->
-<!--                                {price.toString()/1000000}-->
-<!--                            </option>-->
-<!--                        {/each}-->
-<!--                    </select>-->
-                    <BeSelect placeholder="Choose Price" bind:value={choosePrice} maxHeight='180px'>
-                        {#each priceArr as price}
-                            <BeOption value={price} label={price.toString()/1000000} />
-                        {/each}
-                    </BeSelect>
-                </div>
+
                 <div class="account-balance">
                     <div class="name">Balance </div>
                     {accountBalance.toString()/1000000}
@@ -396,6 +398,21 @@
                     {remaing}
                 </div>
             </div>
+        </div>
+        <div class="nft-price">
+            Choose Price
+            <!--                    <select class="input-style" bind:value={choosePrice}>-->
+            <!--                        {#each priceArr as price}-->
+            <!--                            <option value={price}>-->
+            <!--                                {price.toString()/1000000}-->
+            <!--                            </option>-->
+            <!--                        {/each}-->
+            <!--                    </select>-->
+            <BeSelect class="choose-price" placeholder="Choose Price" bind:value={choosePrice} maxHeight='180px'>
+                {#each priceArr as price}
+                    <BeOption value={price} label={price.toString()/1000000} />
+                {/each}
+            </BeSelect>
         </div>
         <button class="mint-btn" disabled={btnDisable} on:click={placeOrder} >
             {#if btnDisable}
@@ -407,16 +424,63 @@
                     Mint
                 </span>
             {/if}
-
-
         </button>
+    </div>
+
+</div>
+<div class="nfts">
+    <div class="title">
+        My NFT
+    </div>
+    <div class="my-nfts">
+        {#each ownerNfs as nftItem}
+            <div class="nft-item">
+                <img class="nft-logo" src="images/nft_logo.png" alt="">
+                <div class="nft-id">
+                    # {nftItem}
+                </div>
+            </div>
+        {/each}
     </div>
 </div>
 
 <style>
+    .nfts{
+        width: 1200px;
+        margin: 50px auto;
+    }
+    .nfts .title{
+        font-family: Roboto, Roboto;
+        font-weight: bold;
+        font-size: 30px;
+        margin-top: 10vh;
+        color: #FFFFFF;
+        line-height: 35px;
+        text-align: left;
+    }
     .mint-container {
         width: 556px;
         margin: 0 auto;
+    }
+    .my-nfts{
+        margin-top: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .my-nfts .nft-item{
+        width: calc(20% - 20px);
+        margin-bottom: 10px;
+        padding: 10px;
+        box-sizing: border-box;
+        background: #191032;
+        box-shadow: 0px 2px 3px 0px rgba(41,72,152,0.01), 0px 9px 7px 0px rgba(41,72,152,0.02), 0px 22px 14px 0px rgba(41,72,152,0.03), 0px 42px 28px 0px rgba(41,72,152,0.03), 0px 71px 51px 0px rgba(41,72,152,0.04), 0px 109px 87px 0px rgba(41,72,152,0.05);
+        border-radius: 11px 11px 11px 11px;
+        font-size: 20px;
+    }
+    .my-nfts .nft-logo{
+        margin-bottom: 20px;
+        width: 100%;
     }
 
     .mint-container .mint-content {
@@ -443,6 +507,7 @@
     .mint-container .mint-content .nft-info-box .nft-img{
         width: 300px;
         height: 300px;
+        border-radius: 20px;
     }
     .mint-container .mint-content .nft-info-box .nft-content{
         padding-left: 20px;
@@ -454,7 +519,16 @@
         font-style: normal;
     }
     .nft-price{
+        width: 96%;
+        margin-left: 2%;
         margin-top: 20px;
+
+    }
+
+    .choose-price{
+        margin-top: 10px;
+        background: rgba(255,255,255,0.1) !important;
+        border: 1px solid rgba(255,255,255,0.1);
     }
     .account-balance{
         display: flex;
