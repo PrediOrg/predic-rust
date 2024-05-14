@@ -192,6 +192,10 @@
                         type:"success"
                     });
                 }
+                const ownerNfsRes= await backendActor.ownerNfs(iiPrincipal);
+                if(ownerNfsRes.Ok){
+                    ownerNfs = ownerNfsRes.Ok
+                }
             }else{
                 messageBox({
                     type :"warning",
@@ -461,8 +465,10 @@
     .mint-container {
         width: 556px;
         margin: 0 auto;
+        font-family: OrelegaOne, serif;
     }
     .my-nfts{
+        font-family: OrelegaOne, serif;
         margin-top: 30px;
         display: flex;
         flex-wrap: wrap;
