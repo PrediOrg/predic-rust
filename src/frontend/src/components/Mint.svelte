@@ -1,18 +1,18 @@
 <script>
-    import { onMount } from 'svelte';
-    import { FontAwesomeIcon } from 'fontawesome-svelte';
-    import { Principal } from '@dfinity/principal';
-    import { canisters, userBalances, createCanisterActor } from '../store/store';
-    import { auth, plugWallet } from '../store/auth';
+    import {onMount} from 'svelte';
+    import {FontAwesomeIcon} from 'fontawesome-svelte';
+    import {Principal} from '@dfinity/principal';
+    import {canisters, userBalances, createCanisterActor} from '../store/store';
+    import {auth, plugWallet} from '../store/auth';
     // import { idlFactory as akitaIDL } from "../../declarations/AkitaDIP20/AkitaDIP20.did.js";
     // import { idlFactory as goldenIDL } from "../../declarations/GoldenDIP20/GoldenDIP20.did.js";
-    import { idlFactory as backendIDL} from "../../declarations/predic/predic.did.js";
-    import { idlFactory as ledgerIDL} from "../../declarations/ledger/ledger.did.js";
-    import { toHexString, hexToBytes, principalToAccountDefaultIdentifier } from '../utils/helpers'
-    import { AuthClient } from '@dfinity/auth-client';
-    import { HttpAgent } from '@dfinity/agent/lib/cjs/agent';
-    import { Null } from '@dfinity/candid/lib/cjs/idl';
-    import { messageBox,BeOption,BeSelect,showNotice, } from '@brewer/beerui'
+    import {idlFactory as backendIDL} from "../../declarations/predic/predic.did.js";
+    import {idlFactory as ledgerIDL} from "../../declarations/ledger/ledger.did.js";
+    import {toHexString, hexToBytes, principalToAccountDefaultIdentifier} from '../utils/helpers'
+    import {AuthClient} from '@dfinity/auth-client';
+    import {HttpAgent} from '@dfinity/agent/lib/cjs/agent';
+    import {Null} from '@dfinity/candid/lib/cjs/idl';
+    import {messageBox, BeOption, BeSelect, showNotice,} from '@brewer/beerui'
     import {orders} from "../store/order";
     // Global variables
     const host = process.env.DFX_NETWORK === "local"
@@ -41,7 +41,8 @@
 
     let choosePrice;
     let priceArr = [];
-    let remaing ;
+    let remaing;
+    let symbolDip721;
     let ownerNfs = [];
     // UI Variables
     let currentToken;
@@ -52,7 +53,7 @@
 
     // Subscribe to plug wallet value should a user authenticate with Plug Wallet
     plugWallet.subscribe(async (value) => {
-        if(value.plugActor) {
+        if (value.plugActor) {
             const pr = Principal.fromText($canisters[0].canisterId);
             const deposit = await value.plugActor.deposit(pr);
         }
@@ -60,7 +61,7 @@
 
     onMount(async () => {
         // Use II as actor
-        if($auth.loggedIn) {
+        if ($auth.loggedIn) {
             console.log("Using II for DEX actor");
             authType = "II";
 
@@ -76,19 +77,18 @@
             // This can replace the COPY we have at the bottom, as this is not needed when using Plug
 
             // Create canister actors
-            console.log(111111111111)
 
             const authClient = await AuthClient.create();
             const identity = authClient.getIdentity();
             const agent = new HttpAgent({identity, host});
-            if(process.env.DFX_NETWORK === 'local')
+            if (process.env.DFX_NETWORK === 'local')
                 agent.fetchRootKey();
 
             backendActor = createCanisterActor(agent, backendIDL, process.env.PREDIC_CANISTER_ID);
             // akitaActor = createCanisterActor(agent, akitaIDL, process.env.AKITADIP20_CANISTER_ID);
             // goldenActor = createCanisterActor(agent, goldenIDL, process.env.GOLDENDIP20_CANISTER_ID);
             ledgerActor = createCanisterActor(agent, ledgerIDL, process.env.LEDGER_CANISTER_ID);
-            console.log(backendActor,ledgerActor)
+            console.log(backendActor, ledgerActor)
 
             // Fetch initial balances
             // const goldenBalance = await goldenActor.balanceOf($auth.principal);
@@ -97,118 +97,107 @@
 
             depositAddressBlob = await backendActor.getDepositAddress();
             priceArr = await backendActor.getPrices();
-            remaing= await backendActor.getRemaing();
-            const ownerNfsRes= await backendActor.ownerNfs(iiPrincipal);
+            remaing = await backendActor.getRemaing();
+            const ownerNfsRes = await backendActor.ownerNfs(iiPrincipal);
             console.log(ownerNfsRes)
-            if(ownerNfsRes.Ok){
+            if (ownerNfsRes.Ok) {
                 ownerNfs = ownerNfsRes.Ok
             }
             const approved = await ledgerActor.account_balance({account: hexToBytes(principalToAccountDefaultIdentifier(iiPrincipal))});
-            if(approved.e8s) {
+            if (approved.e8s) {
                 accountBalance = approved.e8s
             }
-        }
-        else if ($plugWallet.isConnected) {
+        } else if ($plugWallet.isConnected) {
             // TODO: Support Plug wallet
-            // console.log("Using Plug for DEX actor");
-            // authType = "Plug";
-            // const principalId = await window.ic.plug.agent.getPrincipal();
 
-
-            // // Fetch initial balances
-            // const goldenBalance = await $plugWallet.plugGoldenActor.balanceOf(principalId);
-            // const akitaBalance = await $plugWallet.plugAkitaActor.balanceOf(principalId);
-            // let ledgerBalance = 0;
-
-
-            // // When using Plug, the balance displayed should be of the Plug principal
-            // const balance = await $plugWallet.plugLedgerActor.account_balance({account: XXX});
-            // if(balance.e8s) {
-            //     ledgerBalance = balance.e8s;
-            // }
-
-            // // Create a balances array and set the userBalance store object
-            // const balances = []
-            // for(let i = 0; i < $canisters.length; i++) {
-            //     const principal = Principal.fromText($canisters[i].canisterId);
-            //     const dexBalance = await $plugWallet.plugLedgerActor.getBalance(principal);
-
-            //     balances.push({
-            //         name: $canisters[i].canisterName,
-            //         symbol: $canisters[i].symbol,
-            //         canisterBalance: i === 0 ? akitaBalance : i === 1 ? goldenBalance : ledgerBalance,
-            //         dexBalance: dexBalance,
-            //         principal: principal
-            //     })
-            // };
-
-            // // Update the store values
-            // userBalances.set([...balances]);
-
-            // // Don't forget to set `depositAddressBlob`, which we will use later
-            // depositAddressBlob = await $plugWallet.plugLedgerActor.getDepositAddress();
         }
+        const authClient = await AuthClient.create();
+        const identity = authClient.getIdentity();
+        const agent = new HttpAgent({identity, host});
+        backendActor = createCanisterActor(agent, backendIDL, process.env.PREDIC_CANISTER_ID);
+        priceArr = await backendActor.getPrices();
+        remaing = await backendActor.getRemaing();
+
+        symbolDip721 = await backendActor.symbolDip721();
+
 
         fetchingAddress = false;
     });
+
     async function placeOrder() {
         try {
 
-            if(!choosePrice){
+            if (!choosePrice) {
                 showNotice({
                     toast: true,
                     message: 'Please choose price',
                     duration: 3000,
-                    type:"error"
+                    type: "error"
                 });
             }
-            console.log($canisters,backendActor)
+            console.log($canisters, backendActor)
             let depositAddressBlob = await backendActor.getDepositAddress();
-            btnDisable=true
+            btnDisable = true
 
-            const transferResult  = await ledgerActor.transfer({
+            const transferResult = await ledgerActor.transfer({
                 memo: BigInt(0x1),
-                amount: { e8s:  (parseInt(choosePrice) + 10000)},
-                fee: { e8s: 10000},
+                amount: {e8s: (parseInt(choosePrice) + 10000)},
+                fee: {e8s: 10000},
                 to: depositAddressBlob,
                 from_subaccount: [],
                 created_at_time: [],
             })
             console.log(transferResult)
-            console.log(transferResult.Err)
 
-            btnDisable =false
+
+            btnDisable = false
             if (transferResult.Ok) {
-                btnDisable= true
-                const result  = await backendActor.buy(0);
-                btnDisable= false
-                console.log(result)
+                btnDisable = true
+                let chooseIndex = 0
+                if (choosePrice == priceArr[1]) {
+                    chooseIndex = 1
+                }
+                if (choosePrice == priceArr[2]) {
+                    chooseIndex = 2
+                }
 
-                if(result.Ok){
+                console.log(chooseIndex)
+                const result = await backendActor.buy(chooseIndex);
+                console.log(result)
+                btnDisable = false
+
+                if (result.Ok) {
                     showNotice({
                         toast: true,
                         message: 'Mint success!!!',
                         duration: 3000,
-                        type:"success"
+                        type: "success"
                     });
+                } else {
+                    messageBox({
+                        type: "warning",
+                        title: 'Buy Failed',
+                        message: Object.keys(result.Err)[0]
+                    })
                 }
-                const ownerNfsRes= await backendActor.ownerNfs(iiPrincipal);
-                if(ownerNfsRes.Ok){
+                const ownerNfsRes = await backendActor.ownerNfs(iiPrincipal);
+                if (ownerNfsRes.Ok) {
                     ownerNfs = ownerNfsRes.Ok
                 }
-            }else{
+            } else {
                 messageBox({
-                    type :"warning",
+                    type: "warning",
                     title: 'Buy Failed',
                     message: Object.keys(transferResult.Err)[0]
                 })
             }
-        }catch (e) {
+        } catch (e) {
             btnDisable = false
         }
 
 
     };
+
     async function depositT(principal) {
         // explicitly set these here to prevent
         // withdraw form from showing
@@ -223,7 +212,7 @@
         const canister = $canisters.find((canister) => {
             return canister.canisterId === principal.toString();
         })
-        if(canister && canister.canisterName === 'ICP') {
+        if (canister && canister.canisterName === 'ICP') {
             if (authType === "Plug") {
                 // TODO: Support Plug wallet
                 // await ledgerActor.transfer(...)
@@ -231,27 +220,27 @@
             // transfer ICP correct subaccount on DEX
             await ledgerActor.transfer({
                 memo: BigInt(0x1),
-                amount: { e8s: depositAmount },
-                fee: { e8s: 10000},
+                amount: {e8s: depositAmount},
+                fee: {e8s: 10000},
                 to: depositAddressBlob,
                 from_subaccount: [],
                 created_at_time: [],
             });
 
             const result = await backendActor.deposit(principal);
-            if(result.Ok) {
+            if (result.Ok) {
                 const dexBalance = await backendActor.getBalance(principal);
 
                 let ledgerBalance = 0;
                 let response;
-                if(authType === "II") {
+                if (authType === "II") {
                     // Update user ICP balance
                     response = await ledgerActor.account_balance({account: hexToBytes(principalToAccountDefaultIdentifier($auth.principal))});
                 } else if (authType === "Plug") {
                     // TODO: Support Plug wallett
                     // response = await ledgerActor.account_balance({account: XXX});
                 }
-                if(response.e8s) {
+                if (response.e8s) {
                     ledgerBalance = response.e8s
                 }
                 setBalances(canister.canisterName, ledgerBalance, dexBalance);
@@ -292,37 +281,35 @@
         const canister = $canisters.find((canister) => {
             return canister.canisterId === principal.toString();
         })
-        if(canister && canister.canisterName === 'ICP') {
+        if (canister && canister.canisterName === 'ICP') {
             const result = await backendActor.withdraw(currentToken, withdrawAmount, withdrawPrincipal)
-            if(result.Ok) {
+            if (result.Ok) {
                 const dexBalance = await backendActor.getBalance(principal);
                 let ledgerBalance = 0;
                 let response;
-                if(authType === "II") {
+                if (authType === "II") {
                     // When using II, display the balance in the target account
                     response = await ledgerActor.account_balance({account: hexToBytes(principalToAccountDefaultIdentifier($auth.principal))});
                 } else if (authType === "Plug") {
                     // TODO: Support Plug wallet
                     // response = await ledgerActor.account_balance({account: XXX});
                 }
-                if(response.e8s) {
+                if (response.e8s) {
                     ledgerBalance = response.e8s
                 }
                 setBalances(canister.canisterName, ledgerBalance, dexBalance);
             }
-        }
-        else if(canister && canister.canisterName === 'AkitaDIP20') {
+        } else if (canister && canister.canisterName === 'AkitaDIP20') {
             const result = await backendActor.withdraw(currentToken, withdrawAmount, withdrawPrincipal)
-            if(result.Ok) {
+            if (result.Ok) {
                 const dexBalance = await backendActor.getBalance(principal);
                 const akitaBalance = await akitaActor.balanceOf($auth.principal);
 
                 setBalances(canister.canisterName, akitaBalance, dexBalance);
             }
-        }
-        else if(canister && canister.canisterName === 'GoldenDIP20') {
+        } else if (canister && canister.canisterName === 'GoldenDIP20') {
             const result = await backendActor.withdraw(currentToken, withdrawAmount, withdrawPrincipal)
-            if(result.Ok) {
+            if (result.Ok) {
                 const dexBalance = await backendActor.getBalance(principal);
                 const goldenBalance = await goldenActor.balanceOf($auth.principal);
 
@@ -340,7 +327,7 @@
         const balanceObj = $userBalances.find((b) => {
             return b.name === canisterName
         })
-        if(balanceObj) {
+        if (balanceObj) {
             balanceObj.canisterBalance = canisterBalance;
             balanceObj.dexBalance = dexBalance;
         }
@@ -361,7 +348,7 @@
     }
 
     function copyDepositAddress(text) {
-        if(window.isSecureContext) {
+        if (window.isSecureContext) {
             didCopyDepositAddress = true;
             navigator.clipboard.writeText(text);
         }
@@ -371,7 +358,7 @@
     };
 
     function copyPrincipal(text) {
-        if(window.isSecureContext) {
+        if (window.isSecureContext) {
             didCopyPrincipal = true;
             navigator.clipboard.writeText(text);
         }
@@ -385,7 +372,7 @@
     <div class="title">
         NFT License
     </div>
-    <div class="mint-content" >
+    <div class="mint-content">
         <div class="nft-info-box">
             <img class="nft-img" src="images/nft_logo.png"/>
             <div class="nft-content">
@@ -393,23 +380,25 @@
                     Name #1
                 </div>
 
+
                 <div class="account-balance">
-                    <div class="name">Balance </div>
-                     <div class="value">
-                         {accountBalance.toString()/1000000}
-                     </div>
-                </div>
-                <div class="account-balance">
-                    <div class="name">Remaing </div>
+                    <div class="name">NFT remaining</div>
                     <div class="value">
                         {remaing}
+                    </div>
+                </div>
+
+                <div class="account-balance">
+                    <div class="name">Your {symbolDip721} balance</div>
+                    <div class="value">
+                        {accountBalance.toString() / 1000000}
                     </div>
                 </div>
             </div>
         </div>
         <div class="nft-price">
             <div class="name" style="margin-bottom: 10px">
-                Choose Price
+                Choose Price {symbolDip721 ? "(" + symbolDip721 + ")" : symbolDip721}
             </div>
             <!--                    <select class="input-style" bind:value={choosePrice}>-->
             <!--                        {#each priceArr as price}-->
@@ -420,11 +409,11 @@
             <!--                    </select>-->
             <BeSelect class="choose-price" placeholder="Choose Price" bind:value={choosePrice} maxHeight='180px'>
                 {#each priceArr as price}
-                    <BeOption value={price} label={price.toString()/1000000} />
+                    <BeOption value={price} label={price.toString()/1000000}/>
                 {/each}
             </BeSelect>
         </div>
-        <button class="mint-btn" disabled={btnDisable} on:click={placeOrder} >
+        <button class="mint-btn" disabled={btnDisable} on:click={placeOrder}>
             {#if btnDisable}
                  <span>
                     Loading
@@ -455,11 +444,12 @@
 </div>
 
 <style>
-    .nfts{
+    .nfts {
         width: 1200px;
         margin: 50px auto;
     }
-    .nfts .title{
+
+    .nfts .title {
         font-family: Roboto, Roboto;
         font-weight: bold;
         font-size: 30px;
@@ -468,29 +458,38 @@
         line-height: 35px;
         text-align: left;
     }
+
     .mint-container {
         width: 556px;
         margin: 0 auto;
         font-family: OrelegaOne, serif;
     }
-    .my-nfts{
+
+    .my-nfts {
         font-family: OrelegaOne, serif;
         margin-top: 30px;
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: flex-start;
     }
-    .my-nfts .nft-item{
+
+    .my-nfts .nft-item {
         width: calc(20% - 20px);
+        margin-left: 20px;
         margin-bottom: 10px;
         padding: 10px;
         box-sizing: border-box;
         background: #191032;
-        box-shadow: 0px 2px 3px 0px rgba(41,72,152,0.01), 0px 9px 7px 0px rgba(41,72,152,0.02), 0px 22px 14px 0px rgba(41,72,152,0.03), 0px 42px 28px 0px rgba(41,72,152,0.03), 0px 71px 51px 0px rgba(41,72,152,0.04), 0px 109px 87px 0px rgba(41,72,152,0.05);
+        box-shadow: 0px 2px 3px 0px rgba(41, 72, 152, 0.01), 0px 9px 7px 0px rgba(41, 72, 152, 0.02), 0px 22px 14px 0px rgba(41, 72, 152, 0.03), 0px 42px 28px 0px rgba(41, 72, 152, 0.03), 0px 71px 51px 0px rgba(41, 72, 152, 0.04), 0px 109px 87px 0px rgba(41, 72, 152, 0.05);
         border-radius: 11px 11px 11px 11px;
         font-size: 20px;
     }
-    .my-nfts .nft-logo{
+
+    .my-nfts .nft-item:nth-child(5n+1) {
+        margin-left: 0;
+    }
+
+    .my-nfts .nft-logo {
         margin-bottom: 20px;
         width: 100%;
     }
@@ -513,50 +512,61 @@
         line-height: 35px;
         text-align: left;
     }
-    .mint-container .mint-content .nft-info-box{
+
+    .mint-container .mint-content .nft-info-box {
         display: flex;
     }
-    .mint-container .mint-content .nft-info-box .nft-img{
+
+    .mint-container .mint-content .nft-info-box .nft-img {
         width: 300px;
         height: 300px;
         border-radius: 20px;
     }
-    .mint-container .mint-content .nft-info-box .nft-content{
+
+    .mint-container .mint-content .nft-info-box .nft-content {
         padding-left: 20px;
     }
-    .nft-name{
+
+    .nft-name {
         font-size: 30px;
         text-align: left;
         font-style: normal;
         color: #fff;
     }
-    .nft-price{
+
+    .nft-price {
         width: 96%;
         margin-left: 2%;
-        margin-top: 20px;
+        margin-top: 30px;
+        font-size: 18px;
 
     }
-    .nft-price .name{
+
+    .nft-price .name {
         color: #999;
     }
 
-    .choose-price{
+    .choose-price {
         margin-top: 10px;
-        background: rgba(255,255,255,0.1) !important;
-        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(255, 255, 255, 0.1) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
-    .account-balance{
+
+    .account-balance {
         margin-top: 20px;
-        font-size: 20px;
+        font-size: 18px;
     }
-    .account-balance .name{
+
+    .account-balance .name {
         margin-right: 10px;
         color: #999;
     }
-    .account-balance .value{
+
+    .account-balance .value {
         margin-top: 10px;
     }
-    .mint-btn{
+
+    .mint-btn {
         width: 96%;
         margin-left: 2%;
         height: 50px;
@@ -571,11 +581,13 @@
         margin-top: 30px;
         margin-bottom: 20px;
     }
-    .mint-btn:active{
+
+    .mint-btn:active {
         transform: translate(3px, 3px);
     }
-    .mint-btn:after{
-        content:"";
+
+    .mint-btn:after {
+        content: "";
         width: 490px;
         height: 29px;
         background: #AD3589;
@@ -585,7 +597,8 @@
         top: -10px;
         left: 0;
     }
-    .mint-btn span{
+
+    .mint-btn span {
         position: relative;
         z-index: 1;
     }

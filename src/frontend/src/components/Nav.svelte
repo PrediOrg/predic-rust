@@ -87,6 +87,7 @@
             },
           }),
         }));
+        iiPrincipal = $auth.principal.toString();
         // Create Canister Actors with II
     }
     function copyDepositAddress(text) {
@@ -113,6 +114,8 @@
               : `http://${process.env.INTERNET_IDENTITY_CANISTER_ID}.localhost:4943/#authorize`,
           onSuccess: handleAuth,
         });
+
+
     }
 
     async function logout() {
@@ -184,8 +187,7 @@
         width: 90%;
         display: flex;
         justify-content: space-between;
-        margin: 0 auto;
-
+        margin:  20px auto;
     }
 
     li {
