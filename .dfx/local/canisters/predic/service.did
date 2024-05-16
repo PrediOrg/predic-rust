@@ -8,10 +8,6 @@ type Error = variant {
   Other;
   InvalidLevel;
 };
-type ExtendedMetadataResult = record {
-  token_id : nat64;
-  metadata_desc : MetadataDesc;
-};
 type HttpRequest = record {
   url : text;
   method : text;
@@ -40,24 +36,6 @@ type InterfaceId = variant {
   TransferNotification;
 };
 type LogoResult = record { data : text; logo_type : text };
-type MetadataDesc = vec MetadataPart;
-type MetadataKeyVal = record { text; MetadataVal };
-type MetadataPart = record {
-  data : vec nat8;
-  key_val_data : vec MetadataKeyVal;
-  purpose : MetadataPurpose;
-};
-type MetadataPurpose = variant { Preview; Rendered };
-type MetadataResult = variant { Ok : MetadataDesc; Err : Error };
-type MetadataVal = variant {
-  Nat64Content : nat64;
-  Nat32Content : nat32;
-  Nat8Content : nat8;
-  NatContent : nat;
-  Nat16Content : nat16;
-  BlobContent : vec nat8;
-  TextContent : text;
-};
 type MintResult = record { id : nat; token_id : nat64; level : nat8 };
 type Result = variant { Ok : nat; Err : Error };
 type Result_1 = variant { Ok : MintResult; Err : Error };
@@ -71,8 +49,6 @@ service : {
   buy : (nat8) -> (Result_1);
   getApprovedDip721 : (nat64) -> (Result_2) query;
   getDepositAddress : () -> (vec nat8) query;
-  getMetadataDip721 : (nat64) -> (MetadataResult) query;
-  getMetdataForUserDip721 : (principal) -> (vec ExtendedMetadataResult);
   getPrices : () -> (vec nat64) query;
   getRemaing : () -> (vec nat64) query;
   http_request : (HttpRequest) -> (HttpResponse) query;

@@ -27,31 +27,6 @@ export const idlFactory = ({ IDL }) => {
   });
   const Result_1 = IDL.Variant({ 'Ok' : MintResult, 'Err' : Error });
   const Result_2 = IDL.Variant({ 'Ok' : IDL.Principal, 'Err' : Error });
-  const MetadataVal = IDL.Variant({
-    'Nat64Content' : IDL.Nat64,
-    'Nat32Content' : IDL.Nat32,
-    'Nat8Content' : IDL.Nat8,
-    'NatContent' : IDL.Nat,
-    'Nat16Content' : IDL.Nat16,
-    'BlobContent' : IDL.Vec(IDL.Nat8),
-    'TextContent' : IDL.Text,
-  });
-  const MetadataKeyVal = IDL.Tuple(IDL.Text, MetadataVal);
-  const MetadataPurpose = IDL.Variant({
-    'Preview' : IDL.Null,
-    'Rendered' : IDL.Null,
-  });
-  const MetadataPart = IDL.Record({
-    'data' : IDL.Vec(IDL.Nat8),
-    'key_val_data' : IDL.Vec(MetadataKeyVal),
-    'purpose' : MetadataPurpose,
-  });
-  const MetadataDesc = IDL.Vec(MetadataPart);
-  const MetadataResult = IDL.Variant({ 'Ok' : MetadataDesc, 'Err' : Error });
-  const ExtendedMetadataResult = IDL.Record({
-    'token_id' : IDL.Nat64,
-    'metadata_desc' : MetadataDesc,
-  });
   const HttpRequest = IDL.Record({
     'url' : IDL.Text,
     'method' : IDL.Text,
@@ -79,12 +54,6 @@ export const idlFactory = ({ IDL }) => {
     'buy' : IDL.Func([IDL.Nat8], [Result_1], []),
     'getApprovedDip721' : IDL.Func([IDL.Nat64], [Result_2], ['query']),
     'getDepositAddress' : IDL.Func([], [IDL.Vec(IDL.Nat8)], ['query']),
-    'getMetadataDip721' : IDL.Func([IDL.Nat64], [MetadataResult], ['query']),
-    'getMetdataForUserDip721' : IDL.Func(
-        [IDL.Principal],
-        [IDL.Vec(ExtendedMetadataResult)],
-        [],
-      ),
     'getPrices' : IDL.Func([], [IDL.Vec(IDL.Nat64)], ['query']),
     'getRemaing' : IDL.Func([], [IDL.Vec(IDL.Nat64)], ['query']),
     'http_request' : IDL.Func([HttpRequest], [HttpResponse], ['query']),
