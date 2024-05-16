@@ -128,24 +128,16 @@
     async function getNftArr(){
         const ownerNfsRes = await backendActor.ownerNfs(iiPrincipal);
         console.log(ownerNfsRes)
-
+        const tempArr = [];
         if (ownerNfsRes.Ok) {
             ownerNfs = ownerNfsRes.Ok
-            return
             for(let i=0;i<ownerNfs.length;i++){
                 const id = ownerNfs[i]
                 try {
-                    const response = await axios({
-                        method:"get",
-                        url:'http://bd3sg-teaaa-aaaaa-qaaba-cai.localhost:4943/' + parseInt(id),
-                        headers:{
-                            'User-Agent':"Mozilla/5.0"
-                        }
-                    })
-                    console.log(response)
-                    ownerNFTArr.push({
+                    const level =  await backendActor.level(id);
+                    tempArr.push({
                         id,
-                        level:response
+                        level
                     })
                 } catch (error) {
                     console.error('Error fetching data:', error);
@@ -153,7 +145,8 @@
             }
 
         }
-
+        ownerNFTArr = tempArr
+        console.log(ownerNFTArr)
     }
     async function placeOrder() {
         try {
@@ -468,11 +461,16 @@
         My NFT
     </div>
     <div class="my-nfts">
-        {#each ownerNfs as nftItem}
+        {#each ownerNFTArr as nftItem}
             <div class="nft-item">
                 <img class="nft-logo" src="images/nft_logo.png" alt="">
-                <div class="nft-id">
-                    NFT #{nftItem}
+                <div style="display: flex;justify-content: space-between">
+                    <div class="nft-id">
+                        NFT #{nftItem.id}
+                    </div>
+                    <div class="nft-id">
+                        Level {nftItem.level}
+                    </div>
                 </div>
             </div>
         {/each}
