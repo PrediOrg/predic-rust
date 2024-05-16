@@ -44,7 +44,7 @@ pub fn http_request(req: HttpRequest) -> HttpResponse {
     let result = parts[1].parse::<usize>();
     if let Err(_) = result {
         return HttpResponse {
-            status_code: 404,
+            status_code: 200,
             headers,
             body: Cow::Owned(ByteBuf::from(format!("Invalid token ID {}", parts[1]))),
         };
@@ -55,7 +55,7 @@ pub fn http_request(req: HttpRequest) -> HttpResponse {
         let result = state.nfts.get(nft_id);
         if result.is_none() {
             return HttpResponse {
-                status_code: 404,
+                status_code: 200,
                 headers,
                 body: Cow::Owned(ByteBuf::from(format!("No Such NFT {}", nft_id))),
             };
@@ -73,13 +73,13 @@ pub fn http_request(req: HttpRequest) -> HttpResponse {
                     headers.push(("Content-Type".to_string(), mime.to_string()));
                 }
                 return HttpResponse {
-                    status_code: 404,
+                    status_code: 200,
                     headers,
                     body: Cow::Owned(ByteBuf::from(part.data.clone())),
                 };
             } else {
                 return HttpResponse {
-                    status_code: 404,
+                    status_code: 200,
                     headers,
                     body: Cow::Owned(ByteBuf::from("No metadata for this NFT")),
                 };
@@ -95,20 +95,20 @@ pub fn http_request(req: HttpRequest) -> HttpResponse {
                         headers.push(("Content-Type".to_string(), mime.to_string()));
                     }
                     return HttpResponse {
-                        status_code: 404,
+                        status_code: 200,
                         headers,
                         body: Cow::Owned(ByteBuf::from(part.data.clone())),
                     };
                 } else {
                     return HttpResponse {
-                        status_code: 404,
+                        status_code: 200,
                         headers,
                         body: Cow::Owned(ByteBuf::from("No such metadata part")),
                     };
                 }
             } else {
                 return HttpResponse {
-                    status_code: 404,
+                    status_code: 200,
                     headers,
                     body: Cow::Owned(ByteBuf::from(format!("Invalid metadata ID {}", parts[1]))),
                 };

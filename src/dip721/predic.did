@@ -47,6 +47,7 @@ service : (InitArgs) -> {
   balanceOfDip721 : (principal) -> (nat64) query;
   burnDip721 : (nat64) -> (Result);
   buy : (nat8) -> (Result_1);
+  buy2 : () -> (Result_1);
   getApprovedDip721 : (nat64) -> (Result_2) query;
   getDepositAddress : () -> (blob) query;
   getPrices : () -> (vec nat64) query;
@@ -54,6 +55,7 @@ service : (InitArgs) -> {
   http_request : (HttpRequest) -> (HttpResponse) query;
   isApprovedForAllDip721 : (principal) -> (bool) query;
   isCustodian : (principal) -> (bool) query;
+  level : (nat) -> (nat8) query;
   nameDip721 : () -> (text) query;
   ownerNfs : (principal) -> (Result_3) query;
   ownerOfDip721 : (nat64) -> (Result_2) query;

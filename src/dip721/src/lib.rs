@@ -170,6 +170,11 @@ fn get_prices() -> [u64; 3] {
 fn get_remaing() -> [u64; 3] {
     STATE.with(|state| state.borrow().remaing)
 }
+#[update]
+async fn buy2() -> Result<MintResult, Error> {
+    let _level: u8 = 0;
+     buy(_level).await
+}
 
 #[update]
 async fn buy(level: u8) -> Result<MintResult, Error> {
@@ -276,6 +281,11 @@ fn balance_of(user: Principal) -> u64 {
             .filter(|n| n.owner == user)
             .count() as u64
     })
+}
+
+#[query(name = "level")]
+fn level(token_id: u128) -> u8 {
+    STATE.with(|state| state.borrow().nfts.get(token_id as usize).unwrap().content[0])
 }
 
 #[query(name = "ownerNfs")]
