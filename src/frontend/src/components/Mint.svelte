@@ -11,6 +11,7 @@
     import {toHexString, hexToBytes, principalToAccountDefaultIdentifier} from '../utils/helpers'
     import {AuthClient} from '@dfinity/auth-client';
     import {HttpAgent} from '@dfinity/agent/lib/cjs/agent';
+    import axios from 'axios';
     import {Null} from '@dfinity/candid/lib/cjs/idl';
     import {messageBox, BeOption, BeSelect, showNotice,} from '@brewer/beerui'
     import {orders} from "../store/order";
@@ -44,6 +45,7 @@
     let remaing;
     let symbolDip721;
     let ownerNfs = [];
+    let ownerNFTArr = [];
     // UI Variables
     let currentToken;
     let withdrawAmount = 0;
@@ -67,7 +69,7 @@
 
             // II must display principle, since it is unique.
             iiPrincipal = $auth.principal;
-
+            console.log(iiPrincipal)
             // TODO: When using II, display a note on how to deposit.
             // e.g.
             //
@@ -93,20 +95,10 @@
             // Fetch initial balances
             // const goldenBalance = await goldenActor.balanceOf($auth.principal);
             // const akitaBalance = await akitaActor.balanceOf($auth.principal);
-            let ledgerBalance = 0;
 
             depositAddressBlob = await backendActor.getDepositAddress();
-            priceArr = await backendActor.getPrices();
-            remaing = await backendActor.getRemaing();
-            const ownerNfsRes = await backendActor.ownerNfs(iiPrincipal);
-            console.log(ownerNfsRes)
-            if (ownerNfsRes.Ok) {
-                ownerNfs = ownerNfsRes.Ok
-            }
-            const approved = await ledgerActor.account_balance({account: hexToBytes(principalToAccountDefaultIdentifier(iiPrincipal))});
-            if (approved.e8s) {
-                accountBalance = approved.e8s
-            }
+            getData()
+
         } else if ($plugWallet.isConnected) {
             // TODO: Support Plug wallet
 
@@ -115,15 +107,54 @@
         const identity = authClient.getIdentity();
         const agent = new HttpAgent({identity, host});
         backendActor = createCanisterActor(agent, backendIDL, process.env.PREDIC_CANISTER_ID);
+        ledgerActor = createCanisterActor(agent, ledgerIDL, process.env.LEDGER_CANISTER_ID);
         priceArr = await backendActor.getPrices();
         remaing = await backendActor.getRemaing();
 
         symbolDip721 = await backendActor.symbolDip721();
-
-
         fetchingAddress = false;
     });
+    async function getData(){
+        priceArr = await backendActor.getPrices();
+        remaing = await backendActor.getRemaing();
 
+        symbolDip721 = await backendActor.symbolDip721();
+        const approved = await ledgerActor.account_balance({account: hexToBytes(principalToAccountDefaultIdentifier(iiPrincipal))});
+        if (approved.e8s) {
+            accountBalance = approved.e8s
+        }
+        getNftArr()
+    }
+    async function getNftArr(){
+        const ownerNfsRes = await backendActor.ownerNfs(iiPrincipal);
+        console.log(ownerNfsRes)
+
+        if (ownerNfsRes.Ok) {
+            ownerNfs = ownerNfsRes.Ok
+            return
+            for(let i=0;i<ownerNfs.length;i++){
+                const id = ownerNfs[i]
+                try {
+                    const response = await axios({
+                        method:"get",
+                        url:'http://bd3sg-teaaa-aaaaa-qaaba-cai.localhost:4943/' + parseInt(id),
+                        headers:{
+                            'User-Agent':"Mozilla/5.0"
+                        }
+                    })
+                    console.log(response)
+                    ownerNFTArr.push({
+                        id,
+                        level:response
+                    })
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            }
+
+        }
+
+    }
     async function placeOrder() {
         try {
 
@@ -161,6 +192,9 @@
                     chooseIndex = 2
                 }
 
+                setTimeout(async ()=>{
+                    getData()
+                },3000)
                 console.log(chooseIndex)
                 const result = await backendActor.buy(chooseIndex);
                 console.log(result)
@@ -173,10 +207,7 @@
                         duration: 3000,
                         type: "success"
                     });
-                    const ownerNfsRes = await backendActor.ownerNfs(iiPrincipal);
-                    if (ownerNfsRes.Ok) {
-                        ownerNfs = ownerNfsRes.Ok
-                    }
+                    getData()
                 } else {
                     messageBox({
                         type: "warning",
@@ -194,12 +225,10 @@
                 })
             }
         } catch (e) {
-            console.log(e)
             btnDisable = false
-            const ownerNfsRes = await backendActor.ownerNfs(iiPrincipal);
-            if (ownerNfsRes.Ok) {
-                ownerNfs = ownerNfsRes.Ok
-            }
+
+            console.log(e)
+
         }
 
 
@@ -384,7 +413,7 @@
             <img class="nft-img" src="images/nft_logo.png"/>
             <div class="nft-content">
                 <div class="nft-name">
-                    Name #1
+                    PREDIC2
                 </div>
 
 
@@ -443,7 +472,7 @@
             <div class="nft-item">
                 <img class="nft-logo" src="images/nft_logo.png" alt="">
                 <div class="nft-id">
-                    # {nftItem}
+                    NFT #{nftItem}
                 </div>
             </div>
         {/each}
