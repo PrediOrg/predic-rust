@@ -10,10 +10,6 @@ export type Error = { 'ZeroAddress' : null } |
   { 'BalanceLow' : null } |
   { 'Other' : null } |
   { 'InvalidLevel' : null };
-export interface ExtendedMetadataResult {
-  'token_id' : bigint,
-  'metadata_desc' : MetadataDesc,
-}
 export interface HttpRequest {
   'url' : string,
   'method' : string,
@@ -40,24 +36,6 @@ export type InterfaceId = { 'Burn' : null } |
   { 'TransactionHistory' : null } |
   { 'TransferNotification' : null };
 export interface LogoResult { 'data' : string, 'logo_type' : string }
-export type MetadataDesc = Array<MetadataPart>;
-export type MetadataKeyVal = [string, MetadataVal];
-export interface MetadataPart {
-  'data' : Uint8Array | number[],
-  'key_val_data' : Array<MetadataKeyVal>,
-  'purpose' : MetadataPurpose,
-}
-export type MetadataPurpose = { 'Preview' : null } |
-  { 'Rendered' : null };
-export type MetadataResult = { 'Ok' : MetadataDesc } |
-  { 'Err' : Error };
-export type MetadataVal = { 'Nat64Content' : bigint } |
-  { 'Nat32Content' : number } |
-  { 'Nat8Content' : number } |
-  { 'NatContent' : bigint } |
-  { 'Nat16Content' : number } |
-  { 'BlobContent' : Uint8Array | number[] } |
-  { 'TextContent' : string };
 export interface MintResult {
   'id' : bigint,
   'token_id' : bigint,
@@ -80,16 +58,12 @@ export interface _SERVICE {
   'buy' : ActorMethod<[number], Result_1>,
   'getApprovedDip721' : ActorMethod<[bigint], Result_2>,
   'getDepositAddress' : ActorMethod<[], Uint8Array | number[]>,
-  'getMetadataDip721' : ActorMethod<[bigint], MetadataResult>,
-  'getMetdataForUserDip721' : ActorMethod<
-    [Principal],
-    Array<ExtendedMetadataResult>
-  >,
   'getPrices' : ActorMethod<[], BigUint64Array | bigint[]>,
   'getRemaing' : ActorMethod<[], BigUint64Array | bigint[]>,
   'http_request' : ActorMethod<[HttpRequest], HttpResponse>,
   'isApprovedForAllDip721' : ActorMethod<[Principal], boolean>,
   'isCustodian' : ActorMethod<[Principal], boolean>,
+  'level' : ActorMethod<[bigint], number>,
   'nameDip721' : ActorMethod<[], string>,
   'ownerNfs' : ActorMethod<[Principal], Result_3>,
   'ownerOfDip721' : ActorMethod<[bigint], Result_2>,

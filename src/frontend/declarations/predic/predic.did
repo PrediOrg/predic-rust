@@ -8,6 +8,17 @@ type Error = variant {
   Other;
   InvalidLevel;
 };
+type HttpRequest = record {
+  url : text;
+  method : text;
+  body : blob;
+  headers : vec record { text; text };
+};
+type HttpResponse = record {
+  body : blob;
+  headers : vec record { text; text };
+  status_code : nat16;
+};
 type InitArgs = record {
   buy_prices : vec nat64;
   logo : opt LogoResult;
@@ -31,49 +42,6 @@ type Result_1 = variant { Ok : MintResult; Err : Error };
 type Result_2 = variant { Ok : principal; Err : Error };
 type Result_3 = variant { Ok : vec nat64; Err : Error };
 type Result_4 = variant { Ok; Err : Error };
-type HttpRequest = record {
-    method : text;
-    url : text;
-    headers : vec record { text; text; };
-    body : blob;
-};
-
-type HttpResponse = record {
-    status_code : nat16;
-    headers : vec record { text; text; };
-    body : blob;
-};
-type ExtendedMetadataResult = record {
-    metadata_desc : MetadataDesc;
-    token_id : nat64;
-};
-type MetadataResult = variant {
-    Ok : MetadataDesc;
-    Err : Error;
-};
-type MetadataDesc = vec MetadataPart;
-type MetadataPart = record {
-    purpose : MetadataPurpose;
-    key_val_data : vec MetadataKeyVal;
-    data : blob;
-};
-type MetadataPurpose = variant {
-    Preview;
-    Rendered;
-};
-type MetadataKeyVal = record {
-    text;
-    MetadataVal;
-};
-type MetadataVal = variant {
-    TextContent : text;
-    BlobContent : blob;
-    NatContent : nat;
-    Nat8Content : nat8;
-    Nat16Content : nat16;
-    Nat32Content : nat32;
-    Nat64Content : nat64;
-};
 service : (InitArgs) -> {
   approveDip721 : (principal, nat64) -> (Result);
   balanceOfDip721 : (principal) -> (nat64) query;
@@ -83,8 +51,10 @@ service : (InitArgs) -> {
   getDepositAddress : () -> (blob) query;
   getPrices : () -> (vec nat64) query;
   getRemaing : () -> (vec nat64) query;
+  http_request : (HttpRequest) -> (HttpResponse) query;
   isApprovedForAllDip721 : (principal) -> (bool) query;
   isCustodian : (principal) -> (bool) query;
+  level : (nat) -> (nat8) query;
   nameDip721 : () -> (text) query;
   ownerNfs : (principal) -> (Result_3) query;
   ownerOfDip721 : (nat64) -> (Result_2) query;
@@ -104,7 +74,4 @@ service : (InitArgs) -> {
   totalSupplyDip721 : () -> (nat64) query;
   transferFromDip721 : (principal, principal, nat64) -> (Result);
   transferFromNotifyDip721 : (principal, principal, nat64, blob) -> (Result);
-  http_request : (HttpRequest) -> (HttpResponse) query;
-  getMetadataDip721 : (token_id : nat64) -> (MetadataResult) query;
-  getMetdataForUserDip721 : (user : principal) -> (vec ExtendedMetadataResult); 
 }

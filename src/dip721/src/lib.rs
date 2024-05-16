@@ -278,6 +278,11 @@ fn balance_of(user: Principal) -> u64 {
     })
 }
 
+#[query(name = "level")]
+fn level(token_id: u128) -> u8 {
+    STATE.with(|state| state.borrow().nfts.get(token_id as usize).unwrap().content[0])
+}
+
 #[query(name = "ownerNfs")]
 fn owner_nfts(user: Principal) -> Result<Vec<u64>> {
     STATE.with(|state| {
