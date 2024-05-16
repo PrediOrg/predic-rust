@@ -69,7 +69,7 @@
 
             // II must display principle, since it is unique.
             iiPrincipal = $auth.principal;
-
+            console.log(iiPrincipal)
             // TODO: When using II, display a note on how to deposit.
             // e.g.
             //
@@ -97,7 +97,7 @@
             // const akitaBalance = await akitaActor.balanceOf($auth.principal);
 
             depositAddressBlob = await backendActor.getDepositAddress();
-
+            getData()
 
         } else if ($plugWallet.isConnected) {
             // TODO: Support Plug wallet
@@ -108,8 +108,10 @@
         const agent = new HttpAgent({identity, host});
         backendActor = createCanisterActor(agent, backendIDL, process.env.PREDIC_CANISTER_ID);
         ledgerActor = createCanisterActor(agent, ledgerIDL, process.env.LEDGER_CANISTER_ID);
+        priceArr = await backendActor.getPrices();
+        remaing = await backendActor.getRemaing();
 
-        getData()
+        symbolDip721 = await backendActor.symbolDip721();
         fetchingAddress = false;
     });
     async function getData(){
@@ -129,6 +131,7 @@
 
         if (ownerNfsRes.Ok) {
             ownerNfs = ownerNfsRes.Ok
+            return
             for(let i=0;i<ownerNfs.length;i++){
                 const id = ownerNfs[i]
                 try {
@@ -192,6 +195,7 @@
                 setTimeout(async ()=>{
                     getData()
                 },3000)
+                console.log(chooseIndex)
                 const result = await backendActor.buy(chooseIndex);
                 console.log(result)
                 btnDisable = false

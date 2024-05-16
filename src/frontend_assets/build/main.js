@@ -45319,7 +45319,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (443:16) {#each priceArr as price}
+    // (447:16) {#each priceArr as price}
     function create_each_block_1(ctx) {
     	let beoption;
     	let current;
@@ -45364,14 +45364,14 @@ var app = (function () {
     		block,
     		id: create_each_block_1.name,
     		type: "each",
-    		source: "(443:16) {#each priceArr as price}",
+    		source: "(447:16) {#each priceArr as price}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (442:12) <BeSelect class="choose-price" placeholder="Choose Price" bind:value={choosePrice} maxHeight='180px'>
+    // (446:12) <BeSelect class="choose-price" placeholder="Choose Price" bind:value={choosePrice} maxHeight='180px'>
     function create_default_slot(ctx) {
     	let each_1_anchor;
     	let current;
@@ -45462,14 +45462,14 @@ var app = (function () {
     		block,
     		id: create_default_slot.name,
     		type: "slot",
-    		source: "(442:12) <BeSelect class=\\\"choose-price\\\" placeholder=\\\"Choose Price\\\" bind:value={choosePrice} maxHeight='180px'>",
+    		source: "(446:12) <BeSelect class=\\\"choose-price\\\" placeholder=\\\"Choose Price\\\" bind:value={choosePrice} maxHeight='180px'>",
     		ctx
     	});
 
     	return block;
     }
 
-    // (453:12) {:else}
+    // (457:12) {:else}
     function create_else_block$1(ctx) {
     	let span;
 
@@ -45478,7 +45478,7 @@ var app = (function () {
     			span = element("span");
     			span.textContent = "Mint";
     			attr_dev(span, "class", "svelte-kmx4nm");
-    			add_location(span, file$1, 453, 17, 17007);
+    			add_location(span, file$1, 457, 17, 17266);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
@@ -45492,14 +45492,14 @@ var app = (function () {
     		block,
     		id: create_else_block$1.name,
     		type: "else",
-    		source: "(453:12) {:else}",
+    		source: "(457:12) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (449:12) {#if btnDisable}
+    // (453:12) {#if btnDisable}
     function create_if_block$1(ctx) {
     	let span;
 
@@ -45508,7 +45508,7 @@ var app = (function () {
     			span = element("span");
     			span.textContent = "Loading";
     			attr_dev(span, "class", "svelte-kmx4nm");
-    			add_location(span, file$1, 449, 17, 16910);
+    			add_location(span, file$1, 453, 17, 17169);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
@@ -45522,14 +45522,14 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(449:12) {#if btnDisable}",
+    		source: "(453:12) {#if btnDisable}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (467:8) {#each ownerNfs as nftItem}
+    // (471:8) {#each ownerNfs as nftItem}
     function create_each_block(ctx) {
     	let div1;
     	let img;
@@ -45553,11 +45553,11 @@ var app = (function () {
     			attr_dev(img, "class", "nft-logo svelte-kmx4nm");
     			if (!src_url_equal(img.src, img_src_value = "images/nft_logo.png")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "");
-    			add_location(img, file$1, 468, 16, 17300);
+    			add_location(img, file$1, 472, 16, 17559);
     			attr_dev(div0, "class", "nft-id");
-    			add_location(div0, file$1, 469, 16, 17372);
+    			add_location(div0, file$1, 473, 16, 17631);
     			attr_dev(div1, "class", "nft-item svelte-kmx4nm");
-    			add_location(div1, file$1, 467, 12, 17261);
+    			add_location(div1, file$1, 471, 12, 17520);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div1, anchor);
@@ -45580,7 +45580,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(467:8) {#each ownerNfs as nftItem}",
+    		source: "(471:8) {#each ownerNfs as nftItem}",
     		ctx
     	});
 
@@ -45723,46 +45723,46 @@ var app = (function () {
     			}
 
     			attr_dev(div0, "class", "title svelte-kmx4nm");
-    			add_location(div0, file$1, 403, 4, 14984);
+    			add_location(div0, file$1, 407, 4, 15243);
     			attr_dev(img, "class", "nft-img svelte-kmx4nm");
     			if (!src_url_equal(img.src, img_src_value = "images/nft_logo.png")) attr_dev(img, "src", img_src_value);
-    			add_location(img, file$1, 408, 12, 15113);
+    			add_location(img, file$1, 412, 12, 15372);
     			attr_dev(div1, "class", "nft-name svelte-kmx4nm");
-    			add_location(div1, file$1, 410, 16, 15216);
+    			add_location(div1, file$1, 414, 16, 15475);
     			attr_dev(div2, "class", "name svelte-kmx4nm");
-    			add_location(div2, file$1, 416, 20, 15358);
+    			add_location(div2, file$1, 420, 20, 15617);
     			attr_dev(div3, "class", "value svelte-kmx4nm");
-    			add_location(div3, file$1, 417, 20, 15416);
+    			add_location(div3, file$1, 421, 20, 15675);
     			attr_dev(div4, "class", "account-balance svelte-kmx4nm");
-    			add_location(div4, file$1, 415, 16, 15308);
+    			add_location(div4, file$1, 419, 16, 15567);
     			attr_dev(div5, "class", "name svelte-kmx4nm");
-    			add_location(div5, file$1, 423, 20, 15587);
+    			add_location(div5, file$1, 427, 20, 15846);
     			attr_dev(div6, "class", "value svelte-kmx4nm");
-    			add_location(div6, file$1, 424, 20, 15659);
+    			add_location(div6, file$1, 428, 20, 15918);
     			attr_dev(div7, "class", "account-balance svelte-kmx4nm");
-    			add_location(div7, file$1, 422, 16, 15537);
+    			add_location(div7, file$1, 426, 16, 15796);
     			attr_dev(div8, "class", "nft-content svelte-kmx4nm");
-    			add_location(div8, file$1, 409, 12, 15174);
+    			add_location(div8, file$1, 413, 12, 15433);
     			attr_dev(div9, "class", "nft-info-box svelte-kmx4nm");
-    			add_location(div9, file$1, 407, 8, 15074);
+    			add_location(div9, file$1, 411, 8, 15333);
     			attr_dev(div10, "class", "name svelte-kmx4nm");
     			set_style(div10, "margin-bottom", "10px");
-    			add_location(div10, file$1, 431, 12, 15869);
+    			add_location(div10, file$1, 435, 12, 16128);
     			attr_dev(div11, "class", "nft-price svelte-kmx4nm");
-    			add_location(div11, file$1, 430, 8, 15833);
+    			add_location(div11, file$1, 434, 8, 16092);
     			attr_dev(button, "class", "mint-btn svelte-kmx4nm");
     			button.disabled = /*btnDisable*/ ctx[1];
-    			add_location(button, file$1, 447, 8, 16794);
+    			add_location(button, file$1, 451, 8, 17053);
     			attr_dev(div12, "class", "mint-content svelte-kmx4nm");
-    			add_location(div12, file$1, 406, 4, 15039);
+    			add_location(div12, file$1, 410, 4, 15298);
     			attr_dev(div13, "class", "mint-container svelte-kmx4nm");
-    			add_location(div13, file$1, 402, 0, 14951);
+    			add_location(div13, file$1, 406, 0, 15210);
     			attr_dev(div14, "class", "title svelte-kmx4nm");
-    			add_location(div14, file$1, 462, 4, 17141);
+    			add_location(div14, file$1, 466, 4, 17400);
     			attr_dev(div15, "class", "my-nfts svelte-kmx4nm");
-    			add_location(div15, file$1, 465, 4, 17191);
+    			add_location(div15, file$1, 469, 4, 17450);
     			attr_dev(div16, "class", "nfts svelte-kmx4nm");
-    			add_location(div16, file$1, 461, 0, 17118);
+    			add_location(div16, file$1, 465, 0, 17377);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -45989,6 +45989,8 @@ var app = (function () {
     			// II must display principle, since it is unique.
     			iiPrincipal = $auth.principal;
 
+    			console.log(iiPrincipal);
+
     			// TODO: When using II, display a note on how to deposit.
     			// e.g.
     			//
@@ -46014,6 +46016,8 @@ var app = (function () {
     			// const goldenBalance = await goldenActor.balanceOf($auth.principal);
     			// const akitaBalance = await akitaActor.balanceOf($auth.principal);
     			depositAddressBlob = await backendActor.getDepositAddress();
+
+    			getData();
     		} else if ($plugWallet.isConnected) ; // TODO: Support Plug wallet
 
     		const authClient = await AuthClient.create();
@@ -46021,7 +46025,9 @@ var app = (function () {
     		const agent$1 = new agent.HttpAgent({ identity, host });
     		backendActor = createCanisterActor(agent$1, idlFactory$1, "bd3sg-teaaa-aaaaa-qaaba-cai");
     		ledgerActor = createCanisterActor(agent$1, idlFactory, "ryjl3-tyaaa-aaaaa-aaaba-cai");
-    		getData();
+    		$$invalidate(3, priceArr = await backendActor.getPrices());
+    		$$invalidate(4, remaing = await backendActor.getRemaing());
+    		$$invalidate(5, symbolDip721 = await backendActor.symbolDip721());
     		fetchingAddress = false;
     	});
 
@@ -46047,23 +46053,7 @@ var app = (function () {
 
     		if (ownerNfsRes.Ok) {
     			$$invalidate(6, ownerNfs = ownerNfsRes.Ok);
-
-    			for (let i = 0; i < ownerNfs.length; i++) {
-    				const id = ownerNfs[i];
-
-    				try {
-    					const response = await axios$1({
-    						method: "get",
-    						url: 'http://bd3sg-teaaa-aaaaa-qaaba-cai.localhost:4943/' + parseInt(id),
-    						headers: { 'User-Agent': "Mozilla/5.0" }
-    					});
-
-    					console.log(response);
-    					ownerNFTArr.push({ id, level: response });
-    				} catch(error) {
-    					console.error('Error fetching data:', error);
-    				}
-    			}
+    			return;
     		}
     	}
 
@@ -46113,6 +46103,7 @@ var app = (function () {
     					3000
     				);
 
+    				console.log(chooseIndex);
     				const result = await backendActor.buy(chooseIndex);
     				console.log(result);
     				$$invalidate(1, btnDisable = false);
