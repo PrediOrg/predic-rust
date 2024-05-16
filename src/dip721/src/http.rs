@@ -1,144 +1,120 @@
 use std::borrow::Cow;
+use std::cell::RefCell;
 use std::iter::FromIterator;
-use std::{cell::RefCell, collections::HashMap};
-
-use candid::CandidType;
-use ic_cdk::api::{self, call};
-use ic_certified_map::{AsHashTree, Hash, RbTree};
-use percent_encoding::percent_decode_str;
-use serde::{Deserialize, Serialize};
-use serde_cbor::Serializer;
-use sha2::{Digest, Sha256};
 
 use crate::{MetadataPurpose, MetadataVal, STATE};
+use candid::CandidType;
+use ic_cdk::api;
+use ic_certified_map::{AsHashTree, Hash, RbTree};
+use serde::Deserialize;
+use serde_bytes::{ByteBuf, Bytes};
+use sha2::{Digest, Sha256};
+pub type HeaderField = (String, String);
 
-#[derive(CandidType, Deserialize)]
-struct HttpRequest {
-    method: String,
-    url: String,
-    headers: HashMap<String, String>,
-    body: Vec<u8>,
+#[derive(Clone, Debug, CandidType, Deserialize)]
+pub struct HttpRequest {
+    pub method: String,
+    pub url: String,
+    pub headers: Vec<(String, String)>,
+    pub body: ByteBuf,
 }
 
-#[derive(CandidType)]
-struct HttpResponse<'a> {
-    status_code: u16,
-    headers: HashMap<&'a str, Cow<'a, str>>,
-    body: Cow<'a, [u8]>,
+#[derive(Clone, Debug, CandidType, Deserialize)]
+pub struct HttpResponse {
+    pub status_code: u16,
+    pub headers: Vec<HeaderField>,
+    pub body: Cow<'static, Bytes>,
 }
 
-// This could reply with a lot of data. To return this data from the function would require it to be cloned,
-// because the thread_local! closure prevents us from returning data borrowed from inside it.
-// Luckily, it doesn't actually get returned from the exported WASM function, that's just an abstraction.
-// What happens is it gets fed to call::reply, and we can do that explicitly to save the cost of cloning the data.
-// #[query] calls call::reply unconditionally, and calling it twice would trap, so we use #[export_name] directly.
-// This requires duplicating the rest of the abstraction #[query] provides for us, like setting up the panic handler with
-// ic_cdk::setup() and fetching the function parameters via call::arg_data.
-// cdk 0.5 makes this unnecessary, but it has not been released at the time of writing this example.
-#[export_name = "canister_query http_request"]
-fn http_request(/* req: HttpRequest */) /* -> HttpResponse */
-{
-    ic_cdk::setup();
-    let req = call::arg_data::<(HttpRequest,)>(call::ArgDecoderConfig {
-        decoding_quota: None,
-        skipping_quota: None,
-        debug: false,
-    })
-    .0;
+#[query]
+pub fn http_request(req: HttpRequest) -> HttpResponse {
+    let parts: Vec<&str> = req.url.split('?').collect();
+    let path = parts[0];
+    let mut headers = vec![];
+    headers.push(("Access-Control-Allow-Origin".to_string(), "*".to_string()));
+    if path == "/" {
+        let length = STATE.with(|state| state.borrow().nfts.len());
+        return HttpResponse {
+            status_code: 200,
+            headers,
+            body: Cow::Owned(ByteBuf::from(format!("Total NFTs: {}", length))),
+        };
+    }
+    let parts: Vec<&str> = path.split("/").collect();
+    let result = parts[1].parse::<usize>();
+    if let Err(_) = result {
+        return HttpResponse {
+            status_code: 404,
+            headers,
+            body: Cow::Owned(ByteBuf::from(format!("Invalid token ID {}", parts[1]))),
+        };
+    }
+    let nft_id = result.unwrap();
     STATE.with(|state| {
         let state = state.borrow();
-        let url = req.url.split('?').next().unwrap_or("/");
-        let cert = format!(
-            "certificate=:{}:, tree=:{}:",
-            base64::encode(api::data_certificate().unwrap()),
-            witness(&url)
-        )
-        .into();
-        let mut path = url[1..]
-            .split('/')
-            .map(|segment| percent_decode_str(segment).decode_utf8().unwrap());
-        let mut headers = HashMap::from_iter([
-            (
-                "Content-Security-Policy",
-                "default-src 'self' ; script-src 'none' ; frame-src 'none' ; object-src 'none'"
-                    .into(),
-            ),
-            ("IC-Certificate", cert),
-        ]);
-        if cfg!(mainnet) {
-            headers.insert(
-                "Strict-Transport-Security",
-                "max-age=31536000; includeSubDomains".into(),
-            );
+        let result = state.nfts.get(nft_id);
+        if result.is_none() {
+            return HttpResponse {
+                status_code: 404,
+                headers,
+                body: Cow::Owned(ByteBuf::from(format!("No Such NFT {}", nft_id))),
+            };
         }
-        let root = path.next().unwrap_or_else(|| "".into());
-        let body;
-        let mut code = 200;
-        if root == "" {
-            body = format!("Total NFTs: {}", state.nfts.len())
-                .into_bytes()
-                .into();
+        let nft = result.unwrap();
+        if parts.len() == 2 {
+            let part = nft
+                .metadata
+                .iter()
+                .find(|x| x.purpose == MetadataPurpose::Rendered)
+                .or_else(|| nft.metadata.get(0));
+            if let Some(part) = part {
+                // default metadata: first non-preview metadata, or if there is none, first metadata
+                if let Some(MetadataVal::TextContent(mime)) = part.key_val_data.get("contentType") {
+                    headers.push(("Content-Type".to_string(), mime.to_string()));
+                }
+                return HttpResponse {
+                    status_code: 404,
+                    headers,
+                    body: Cow::Owned(ByteBuf::from(part.data.clone())),
+                };
+            } else {
+                return HttpResponse {
+                    status_code: 404,
+                    headers,
+                    body: Cow::Owned(ByteBuf::from("No metadata for this NFT")),
+                };
+            }
         } else {
-            if let Ok(num) = root.parse::<usize>() {
-                // /:something
-                if let Some(nft) = state.nfts.get(num) {
-                    // /:nft
-                    let img = path.next().unwrap_or_else(|| "".into());
-                    if img == "" {
-                        // /:nft/
-                        let part = nft
-                            .metadata
-                            .iter()
-                            .find(|x| x.purpose == MetadataPurpose::Rendered)
-                            .or_else(|| nft.metadata.get(0));
-                        if let Some(part) = part {
-                            // default metadata: first non-preview metadata, or if there is none, first metadata
-                            body = part.data.as_slice().into();
-                            if let Some(MetadataVal::TextContent(mime)) =
-                                part.key_val_data.get("contentType")
-                            {
-                                headers.insert("Content-Type", mime.as_str().into());
-                            }
-                        } else {
-                            // no metadata to be found
-                            body = b"No metadata for this NFT"[..].into();
-                        }
-                    } else {
-                        // /:nft/:something
-                        if let Ok(num) = img.parse::<usize>() {
-                            // /:nft/:number
-                            if let Some(part) = nft.metadata.get(num) {
-                                // /:nft/:id
-                                body = part.data.as_slice().into();
-                                if let Some(MetadataVal::TextContent(mime)) =
-                                    part.key_val_data.get("contentType")
-                                {
-                                    headers.insert("Content-Type", mime.as_str().into());
-                                }
-                            } else {
-                                code = 404;
-                                body = b"No such metadata part"[..].into();
-                            }
-                        } else {
-                            code = 400;
-                            body = format!("Invalid metadata ID {}", img).into_bytes().into();
-                        }
+            if let Ok(num) = parts[2].parse::<usize>() {
+                // /:nft/:number
+                if let Some(part) = nft.metadata.get(num) {
+                    // /:nft/:id
+                    if let Some(MetadataVal::TextContent(mime)) =
+                        part.key_val_data.get("contentType")
+                    {
+                        headers.push(("Content-Type".to_string(), mime.to_string()));
                     }
+                    return HttpResponse {
+                        status_code: 404,
+                        headers,
+                        body: Cow::Owned(ByteBuf::from(part.data.clone())),
+                    };
                 } else {
-                    code = 404;
-                    body = b"No such NFT"[..].into();
+                    return HttpResponse {
+                        status_code: 404,
+                        headers,
+                        body: Cow::Owned(ByteBuf::from("No such metadata part")),
+                    };
                 }
             } else {
-                code = 400;
-                body = format!("Invalid NFT ID {}", root).into_bytes().into();
+                return HttpResponse {
+                    status_code: 404,
+                    headers,
+                    body: Cow::Owned(ByteBuf::from(format!("Invalid metadata ID {}", parts[1]))),
+                };
             }
         }
-        call::reply((HttpResponse {
-            status_code: code,
-            headers,
-            body,
-        },));
-    });
+    })
 }
 
 thread_local! {
@@ -170,17 +146,4 @@ pub fn add_hash(tkid: u64) {
             Some(())
         })
     });
-}
-
-fn witness(name: &str) -> String {
-    HASHES.with(|hashes| {
-        let hashes = hashes.borrow();
-        let witness = hashes.witness(name.as_bytes());
-        let tree = ic_certified_map::labeled(b"http_assets", witness);
-        let mut data = vec![];
-        let mut serializer = Serializer::new(&mut data);
-        serializer.self_describe().unwrap();
-        tree.serialize(&mut serializer).unwrap();
-        base64::encode(data)
-    })
 }

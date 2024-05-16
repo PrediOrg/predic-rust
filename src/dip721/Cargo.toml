@@ -17,6 +17,6 @@ base64 = "0.13.0"
 candid = "0.10"
 num-bigint = "0.4"
 num-traits = "0.2.14"
-
+serde_bytes = "0.11"
 [lib]
 crate-type = ["cdylib"]

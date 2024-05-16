@@ -25,6 +25,7 @@ use std::num::TryFromIntError;
 use std::result::Result as StdResult;
 const ICP_FEE: u64 = 10_000;
 mod http;
+use http::*;
 
 mod types;
 use types::*;
@@ -177,7 +178,17 @@ async fn buy(level: u8) -> Result<MintResult, Error> {
         .with(|s| s.borrow().buy_prices.get(level as usize).copied())
         .ok_or(Error::InvalidLevel)?;
     deposit_icp(caller, amount).await?;
-    mint(caller, vec![], level)
+    let mut map = HashMap::new();
+    map.insert(
+        "contentType".to_string(),
+        MetadataVal::TextContent("application/json".to_string()),
+    );
+    let metadata = vec![MetadataPart {
+        purpose: MetadataPurpose::Preview,
+        key_val_data: map,
+        data: format!("{{\"level\":\"{}\"}}", level).as_bytes().to_vec(),
+    }];
+    mint(caller, metadata, level)
 }
 
 fn mint(to: Principal, metadata: MetadataDesc, level: u8) -> Result<MintResult, Error> {
