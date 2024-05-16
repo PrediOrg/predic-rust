@@ -52,6 +52,7 @@ export const idlFactory = ({ IDL }) => {
     'balanceOfDip721' : IDL.Func([IDL.Principal], [IDL.Nat64], ['query']),
     'burnDip721' : IDL.Func([IDL.Nat64], [Result], []),
     'buy' : IDL.Func([IDL.Nat8], [Result_1], []),
+    'buy2' : IDL.Func([], [Result_1], []),
     'getApprovedDip721' : IDL.Func([IDL.Nat64], [Result_2], ['query']),
     'getDepositAddress' : IDL.Func([], [IDL.Vec(IDL.Nat8)], ['query']),
     'getPrices' : IDL.Func([], [IDL.Vec(IDL.Nat64)], ['query']),

@@ -56,6 +56,7 @@ export interface _SERVICE {
   'balanceOfDip721' : ActorMethod<[Principal], bigint>,
   'burnDip721' : ActorMethod<[bigint], Result>,
   'buy' : ActorMethod<[number], Result_1>,
+  'buy2' : ActorMethod<[], Result_1>,
   'getApprovedDip721' : ActorMethod<[bigint], Result_2>,
   'getDepositAddress' : ActorMethod<[], Uint8Array | number[]>,
   'getPrices' : ActorMethod<[], BigUint64Array | bigint[]>,

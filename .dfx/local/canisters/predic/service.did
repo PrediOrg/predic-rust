@@ -47,6 +47,7 @@ service : {
   balanceOfDip721 : (principal) -> (nat64) query;
   burnDip721 : (nat64) -> (Result);
   buy : (nat8) -> (Result_1);
+  buy2 : () -> (Result_1);
   getApprovedDip721 : (nat64) -> (Result_2) query;
   getDepositAddress : () -> (vec nat8) query;
   getPrices : () -> (vec nat64) query;
