@@ -106,6 +106,8 @@
         const authClient = await AuthClient.create();
         const identity = authClient.getIdentity();
         const agent = new HttpAgent({identity, host});
+        if (process.env.DFX_NETWORK === 'local')
+            agent.fetchRootKey();
         backendActor = createCanisterActor(agent, backendIDL, process.env.PREDIC_CANISTER_ID);
         ledgerActor = createCanisterActor(agent, ledgerIDL, process.env.LEDGER_CANISTER_ID);
         priceArr = await backendActor.getPrices();
@@ -129,7 +131,6 @@
 
     async function getNftArr() {
         const ownerNfsRes = await backendActor.ownerNfs(iiPrincipal);
-        console.log(ownerNfsRes)
         const tempArr = [];
         if (ownerNfsRes.Ok) {
             ownerNfs = ownerNfsRes.Ok
@@ -148,14 +149,13 @@
 
         }
         ownerNFTArr = tempArr
-        console.log(ownerNFTArr)
     }
 
     async function placeOrder() {
-        if(accountBalance<choosePrice){
+        if (accountBalance < choosePrice) {
             showNotice({
                 toast: true,
-                message: 'Please choose price',
+                message: 'Balance not enough',
                 duration: 3000,
                 type: "error"
             });
@@ -172,72 +172,59 @@
                         type: "error"
                     });
                 }
-                console.log($canisters, backendActor)
                 let depositAddressBlob = await backendActor.getDepositAddress();
                 btnDisable = true
 
-                try {
-                    const transferResult = await ledgerActor.transfer({
-                        memo: BigInt(0x1),
-                        amount: {e8s: (parseInt(choosePrice) + 10000)},
-                        fee: {e8s: 10000},
-                        to: depositAddressBlob,
-                        from_subaccount: [],
-                        created_at_time: [],
-                    })
-                } catch (e) {
-                    console.log(e)
-                }
+                const transferResult = await ledgerActor.transfer({
+                    memo: BigInt(0x1),
+                    amount: {e8s: (parseInt(choosePrice) + 10000)},
+                    fee: {e8s: 10000},
+                    to: depositAddressBlob,
+                    from_subaccount: [],
+                    created_at_time: [],
+                })
 
-                console.log(111111111111111)
+
                 btnDisable = false
-                // if (transferResult.Ok) {
-                btnDisable = true
-                let chooseIndex = 0
-                if (choosePrice == priceArr[1]) {
-                    chooseIndex = 1
-                }
-                if (choosePrice == priceArr[2]) {
-                    chooseIndex = 2
-                }
+                if (transferResult.Ok) {
+                    btnDisable = true
+                    let chooseIndex = 0
+                    if (choosePrice == priceArr[1]) {
+                        chooseIndex = 1
+                    }
+                    if (choosePrice == priceArr[2]) {
+                        chooseIndex = 2
+                    }
 
-                setTimeout(async () => {
-                    getData()
-                }, 3000)
-                console.log(chooseIndex)
-                try {
+                    setTimeout(async () => {
+                        getData()
+                    }, 3000)
                     const result = await backendActor.buy(chooseIndex);
 
-                } catch (e) {
-                    console.log(e)
+                    btnDisable = false
+                    if (result.Ok) {
+                        showNotice({
+                            toast: true,
+                            message: 'Mint success!!!',
+                            duration: 3000,
+                            type: "success"
+                        });
+                        getData()
+                    } else {
+                        messageBox({
+                            type: "warning",
+                            title: 'Buy Failed',
+                            message: Object.keys(result.Err)[0]
+                        })
+                    }
+
+                } else {
+                    messageBox({
+                        type: "warning",
+                        title: 'Buy Failed',
+                        message: Object.keys(transferResult.Err)[0]
+                    })
                 }
-
-                btnDisable = false
-
-                // if (result.Ok) {
-                showNotice({
-                    toast: true,
-                    message: 'Mint success!!!',
-                    duration: 3000,
-                    type: "success"
-                });
-                getData()
-                // } else {
-                //     messageBox({
-                //         type: "warning",
-                //         title: 'Buy Failed',
-                //         message: Object.keys(result.Err)[0]
-                //     })
-                // }
-
-
-                // } else {
-                //     messageBox({
-                //         type: "warning",
-                //         title: 'Buy Failed',
-                //         message: Object.keys(transferResult.Err)[0]
-                //     })
-                // }
             } catch (e) {
                 btnDisable = false
 
@@ -245,13 +232,13 @@
 
             }
 
-        }else{
-                messageBox({
-                    toast: true,
-                    type: "warning",
-                    title: 'Please login',
-                    message: 'Please login'
-                })
+        } else {
+            messageBox({
+                toast: true,
+                type: "warning",
+                title: 'Please login',
+                message: 'Please login'
+            })
         }
 
 
@@ -499,7 +486,7 @@
                         NFT #{nftItem.id}
                     </div>
                     <div class="nft-id">
-                        Level {nftItem.level}
+                        Level {nftItem.level+1}
                     </div>
                 </div>
             </div>
