@@ -106,6 +106,8 @@
         const authClient = await AuthClient.create();
         const identity = authClient.getIdentity();
         const agent = new HttpAgent({identity, host});
+        if (process.env.DFX_NETWORK === 'local')
+            agent.fetchRootKey();
         backendActor = createCanisterActor(agent, backendIDL, process.env.PREDIC_CANISTER_ID);
         ledgerActor = createCanisterActor(agent, ledgerIDL, process.env.LEDGER_CANISTER_ID);
         priceArr = await backendActor.getPrices();
@@ -114,7 +116,8 @@
         symbolDip721 = await backendActor.symbolDip721();
         fetchingAddress = false;
     });
-    async function getData(){
+
+    async function getData() {
         priceArr = await backendActor.getPrices();
         remaing = await backendActor.getRemaing();
 
@@ -125,16 +128,16 @@
         }
         getNftArr()
     }
-    async function getNftArr(){
+
+    async function getNftArr() {
         const ownerNfsRes = await backendActor.ownerNfs(iiPrincipal);
-        console.log(ownerNfsRes)
         const tempArr = [];
         if (ownerNfsRes.Ok) {
             ownerNfs = ownerNfsRes.Ok
-            for(let i=0;i<ownerNfs.length;i++){
+            for (let i = 0; i < ownerNfs.length; i++) {
                 const id = ownerNfs[i]
                 try {
-                    const level =  await backendActor.level(id);
+                    const level = await backendActor.level(id);
                     tempArr.push({
                         id,
                         level
@@ -146,82 +149,96 @@
 
         }
         ownerNFTArr = tempArr
-        console.log(ownerNFTArr)
     }
+
     async function placeOrder() {
-        try {
+        if (accountBalance < choosePrice) {
+            showNotice({
+                toast: true,
+                message: 'Balance not enough',
+                duration: 3000,
+                type: "error"
+            });
+            return
+        }
+        if ($auth.loggedIn) {
+            try {
 
-            if (!choosePrice) {
-                showNotice({
-                    toast: true,
-                    message: 'Please choose price',
-                    duration: 3000,
-                    type: "error"
-                });
-            }
-            console.log($canisters, backendActor)
-            let depositAddressBlob = await backendActor.getDepositAddress();
-            btnDisable = true
-
-            const transferResult = await ledgerActor.transfer({
-                memo: BigInt(0x1),
-                amount: {e8s: (parseInt(choosePrice) + 10000)},
-                fee: {e8s: 10000},
-                to: depositAddressBlob,
-                from_subaccount: [],
-                created_at_time: [],
-            })
-            console.log(transferResult)
-
-
-            btnDisable = false
-            if (transferResult.Ok) {
-                btnDisable = true
-                let chooseIndex = 0
-                if (choosePrice == priceArr[1]) {
-                    chooseIndex = 1
-                }
-                if (choosePrice == priceArr[2]) {
-                    chooseIndex = 2
-                }
-
-                setTimeout(async ()=>{
-                    getData()
-                },3000)
-                console.log(chooseIndex)
-                const result = await backendActor.buy(chooseIndex);
-                console.log(result)
-                btnDisable = false
-
-                if (result.Ok) {
+                if (!choosePrice) {
                     showNotice({
                         toast: true,
-                        message: 'Mint success!!!',
+                        message: 'Balance not enough',
                         duration: 3000,
-                        type: "success"
+                        type: "error"
                     });
-                    getData()
+                }
+                let depositAddressBlob = await backendActor.getDepositAddress();
+                btnDisable = true
+
+                const transferResult = await ledgerActor.transfer({
+                    memo: BigInt(0x1),
+                    amount: {e8s: (parseInt(choosePrice) + 10000)},
+                    fee: {e8s: 10000},
+                    to: depositAddressBlob,
+                    from_subaccount: [],
+                    created_at_time: [],
+                })
+
+
+                btnDisable = false
+                if (transferResult.Ok) {
+                    btnDisable = true
+                    let chooseIndex = 0
+                    if (choosePrice == priceArr[1]) {
+                        chooseIndex = 1
+                    }
+                    if (choosePrice == priceArr[2]) {
+                        chooseIndex = 2
+                    }
+
+                    setTimeout(async () => {
+                        getData()
+                    }, 3000)
+                    const result = await backendActor.buy(chooseIndex);
+
+                    btnDisable = false
+                    if (result.Ok) {
+                        showNotice({
+                            toast: true,
+                            message: 'Mint success!!!',
+                            duration: 3000,
+                            type: "success"
+                        });
+                        getData()
+                    } else {
+                        messageBox({
+                            type: "warning",
+                            title: 'Buy Failed',
+                            message: Object.keys(result.Err)[0]
+                        })
+                    }
+
                 } else {
                     messageBox({
                         type: "warning",
                         title: 'Buy Failed',
-                        message: Object.keys(result.Err)[0]
+                        message: Object.keys(transferResult.Err)[0]
                     })
                 }
+            } catch (e) {
+                btnDisable = false
 
+                console.log(e)
 
-            } else {
-                messageBox({
-                    type: "warning",
-                    title: 'Buy Failed',
-                    message: Object.keys(transferResult.Err)[0]
-                })
             }
-        } catch (e) {
-            btnDisable = false
 
-            console.log(e)
-
+        } else {
+            messageBox({
+                toast: true,
+                type: "warning",
+                title: 'Please login',
+                message: 'Please login'
+            })
         }
 
 
@@ -469,7 +486,7 @@
                         NFT #{nftItem.id}
                     </div>
                     <div class="nft-id">
-                        Level {nftItem.level}
+                        Level {nftItem.level+1}
                     </div>
                 </div>
             </div>
