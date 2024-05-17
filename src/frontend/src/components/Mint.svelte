@@ -155,7 +155,7 @@
         if (accountBalance < choosePrice) {
             showNotice({
                 toast: true,
-                message: 'Balance not enough',
+                message: 'Balance not enough!',
                 duration: 3000,
                 type: "error"
             });
@@ -167,7 +167,7 @@
                 if (!choosePrice) {
                     showNotice({
                         toast: true,
-                        message: 'Balance not enough',
+                        message: 'Please choose nft price!',
                         duration: 3000,
                         type: "error"
                     });
