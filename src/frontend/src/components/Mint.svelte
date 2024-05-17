@@ -114,7 +114,8 @@
         symbolDip721 = await backendActor.symbolDip721();
         fetchingAddress = false;
     });
-    async function getData(){
+
+    async function getData() {
         priceArr = await backendActor.getPrices();
         remaing = await backendActor.getRemaing();
 
@@ -125,16 +126,17 @@
         }
         getNftArr()
     }
-    async function getNftArr(){
+
+    async function getNftArr() {
         const ownerNfsRes = await backendActor.ownerNfs(iiPrincipal);
         console.log(ownerNfsRes)
         const tempArr = [];
         if (ownerNfsRes.Ok) {
             ownerNfs = ownerNfsRes.Ok
-            for(let i=0;i<ownerNfs.length;i++){
+            for (let i = 0; i < ownerNfs.length; i++) {
                 const id = ownerNfs[i]
                 try {
-                    const level =  await backendActor.level(id);
+                    const level = await backendActor.level(id);
                     tempArr.push({
                         id,
                         level
@@ -148,6 +150,7 @@
         ownerNFTArr = tempArr
         console.log(ownerNFTArr)
     }
+
     async function placeOrder() {
         try {
 
@@ -163,60 +166,68 @@
             let depositAddressBlob = await backendActor.getDepositAddress();
             btnDisable = true
 
-            const transferResult = await ledgerActor.transfer({
-                memo: BigInt(0x1),
-                amount: {e8s: (parseInt(choosePrice) + 10000)},
-                fee: {e8s: 10000},
-                to: depositAddressBlob,
-                from_subaccount: [],
-                created_at_time: [],
-            })
-            console.log(transferResult)
+            try {
+                const transferResult = await ledgerActor.transfer({
+                    memo: BigInt(0x1),
+                    amount: {e8s: (parseInt(choosePrice) + 10000)},
+                    fee: {e8s: 10000},
+                    to: depositAddressBlob,
+                    from_subaccount: [],
+                    created_at_time: [],
+                })
+            } catch (e) {
+                console.log(e)
+            }
 
+            console.log(111111111111111)
+            btnDisable = false
+            // if (transferResult.Ok) {
+            btnDisable = true
+            let chooseIndex = 0
+            if (choosePrice == priceArr[1]) {
+                chooseIndex = 1
+            }
+            if (choosePrice == priceArr[2]) {
+                chooseIndex = 2
+            }
+
+            setTimeout(async () => {
+                getData()
+            }, 3000)
+            console.log(chooseIndex)
+            try {
+                const result = await backendActor.buy(chooseIndex);
+
+            } catch (e) {
+                console.log(e)
+            }
 
             btnDisable = false
-            if (transferResult.Ok) {
-                btnDisable = true
-                let chooseIndex = 0
-                if (choosePrice == priceArr[1]) {
-                    chooseIndex = 1
-                }
-                if (choosePrice == priceArr[2]) {
-                    chooseIndex = 2
-                }
 
-                setTimeout(async ()=>{
-                    getData()
-                },3000)
-                console.log(chooseIndex)
-                const result = await backendActor.buy(chooseIndex);
-                console.log(result)
-                btnDisable = false
-
-                if (result.Ok) {
-                    showNotice({
-                        toast: true,
-                        message: 'Mint success!!!',
-                        duration: 3000,
-                        type: "success"
-                    });
-                    getData()
-                } else {
-                    messageBox({
-                        type: "warning",
-                        title: 'Buy Failed',
-                        message: Object.keys(result.Err)[0]
-                    })
-                }
+            // if (result.Ok) {
+            showNotice({
+                toast: true,
+                message: 'Mint success!!!',
+                duration: 3000,
+                type: "success"
+            });
+            getData()
+            // } else {
+            //     messageBox({
+            //         type: "warning",
+            //         title: 'Buy Failed',
+            //         message: Object.keys(result.Err)[0]
+            //     })
+            // }
 
 
-            } else {
-                messageBox({
-                    type: "warning",
-                    title: 'Buy Failed',
-                    message: Object.keys(transferResult.Err)[0]
-                })
-            }
+            // } else {
+            //     messageBox({
+            //         type: "warning",
+            //         title: 'Buy Failed',
+            //         message: Object.keys(transferResult.Err)[0]
+            //     })
+            // }
         } catch (e) {
             btnDisable = false
 

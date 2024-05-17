@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e55db1cc-2e8d-43a8-9375-dab32443add0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.dfx/local/network-id" beforeDir="false" afterPath="$PROJECT_DIR$/.dfx/local/network-id" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charge.sh" beforeDir="false" afterPath="$PROJECT_DIR$/charge.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/src/components/Mint.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/src/components/Mint.svelte" afterDir="false" />
@@ -57,7 +59,7 @@
       <option name="presentableId" value="Default" />
       <updated>1715320392685</updated>
       <workItem from="1715320393784" duration="12000" />
-      <workItem from="1715870734740" duration="1276000" />
+      <workItem from="1715870734740" duration="6784000" />
     </task>
     <servers />
   </component>
