@@ -16,7 +16,7 @@ ENV DFX_VERSION=0.19.0
 # Install a basic environment needed for our build tools
 RUN apt -yq update && \
     apt -yq install --no-install-recommends curl ca-certificates \
-    build-essential pkg-config libssl-dev llvm-dev liblmdb-dev clang cmake rsync libunwind8 netcat git psmisc vim
+    build-essential pkg-config libssl-dev llvm-dev liblmdb-dev clang cmake libunwind8 netcat git psmisc vim
 
 # Install Node.js using nvm
 ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin:${PATH}"
@@ -36,7 +36,7 @@ RUN rustup target add wasm32-unknown-unknown
 RUN cargo install ic-wasm
 RUN cargo install candid-extractor
 
-COPY . /canister
+RUN mkdir /cansiter
 WORKDIR /canister
 
 # RUN cargo install cargo-audit
