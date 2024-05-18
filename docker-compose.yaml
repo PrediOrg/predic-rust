@@ -1,15 +1,14 @@
 name: mycanister
 services:
   myconister:
-    image: biconomy/mycanister:latest
+    image: tarolpotato/predict:latest
     container_name: mycanister
     # restart: unless-stopped
-    tty: true
     volumes:
       - .:/canister/predit
+      - /Users/tao/examples/cycles-ledger:/canister/cycles-ledger
       - /Users/tao/sources/icp/examples/rust:/canister/examples
     ports:
       - "4943:4943"
-      - "39939:39939"
+      - "5555:5555"
     command: ["tail","-f","predit/dfx.log"]
-    # command: ["dfx","start","--host","0.0.0.0:4943","--force"]

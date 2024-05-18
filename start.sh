@@ -1,7 +1,8 @@
 set -e
 # dfx start --host 0.0.0.0:4943 --background --clean > dfx.log 2>&1 &
 # sleep 10
-rm -f .env
+dfx identity new taro --storage-mode=plaintext || true
+dfx identity use taro
 
 echo "===========SETUP========="
 dfx identity new alice_icp_transfer --storage-mode plaintext --force
