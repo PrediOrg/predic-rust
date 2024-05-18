@@ -1,7 +1,7 @@
 name: mycanister
 services:
   myconister:
-    image: tarolpotato/predict:latest
+    image: biconomy/mycanister:latest
     container_name: mycanister
     # restart: unless-stopped
     volumes:
