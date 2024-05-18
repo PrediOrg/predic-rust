@@ -4,8 +4,8 @@ root="$(dirname "$0")/src/dip721/"
 did_file="${root}predic.did"
 dfx canister create predic
 dfx build predic
-candid-extractor "target/wasm32-unknown-unknown/release/predic.wasm" > $did_file
 dfx generate predic
+# candid-extractor "target/wasm32-unknown-unknown/release/predic.wasm" > $did_file
 ledger_id="$(dfx canister id ledger)"
 dfx canister install predic --argument "record{
     name=\"Prediction NFT2\";
