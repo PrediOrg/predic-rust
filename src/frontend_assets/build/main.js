@@ -45058,7 +45058,7 @@ var app = (function () {
     			span = element("span");
     			span.textContent = "Mint";
     			attr_dev(span, "class", "svelte-kmx4nm");
-    			add_location(span, file$1, 339, 17, 12309);
+    			add_location(span, file$1, 339, 17, 12321);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
@@ -45088,7 +45088,7 @@ var app = (function () {
     			span = element("span");
     			span.textContent = "Loading";
     			attr_dev(span, "class", "svelte-kmx4nm");
-    			add_location(span, file$1, 335, 17, 12212);
+    			add_location(span, file$1, 335, 17, 12224);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
@@ -45144,16 +45144,16 @@ var app = (function () {
     			attr_dev(img, "class", "nft-logo svelte-kmx4nm");
     			if (!src_url_equal(img.src, img_src_value = "images/nft_logo.png")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "");
-    			add_location(img, file$1, 354, 16, 12605);
+    			add_location(img, file$1, 354, 16, 12617);
     			attr_dev(div0, "class", "nft-id");
-    			add_location(div0, file$1, 356, 20, 12756);
+    			add_location(div0, file$1, 356, 20, 12768);
     			attr_dev(div1, "class", "nft-id");
-    			add_location(div1, file$1, 359, 20, 12866);
+    			add_location(div1, file$1, 359, 20, 12878);
     			set_style(div2, "display", "flex");
     			set_style(div2, "justify-content", "space-between");
-    			add_location(div2, file$1, 355, 16, 12677);
+    			add_location(div2, file$1, 355, 16, 12689);
     			attr_dev(div3, "class", "nft-item svelte-kmx4nm");
-    			add_location(div3, file$1, 353, 12, 12566);
+    			add_location(div3, file$1, 353, 12, 12578);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div3, anchor);
@@ -45286,7 +45286,7 @@ var app = (function () {
     			t2 = space();
     			div8 = element("div");
     			div1 = element("div");
-    			div1.textContent = "PREDIC2";
+    			div1.textContent = "PREDIC";
     			t4 = space();
     			div4 = element("div");
     			div2 = element("div");
@@ -45328,43 +45328,44 @@ var app = (function () {
     			add_location(div0, file$1, 289, 4, 10298);
     			attr_dev(img, "class", "nft-img svelte-kmx4nm");
     			if (!src_url_equal(img.src, img_src_value = "images/nft_logo.png")) attr_dev(img, "src", img_src_value);
+    			attr_dev(img, "alt", "Predic");
     			add_location(img, file$1, 294, 12, 10427);
     			attr_dev(div1, "class", "nft-name svelte-kmx4nm");
-    			add_location(div1, file$1, 296, 16, 10530);
+    			add_location(div1, file$1, 296, 16, 10543);
     			attr_dev(div2, "class", "name svelte-kmx4nm");
-    			add_location(div2, file$1, 302, 20, 10672);
+    			add_location(div2, file$1, 302, 20, 10684);
     			attr_dev(div3, "class", "value svelte-kmx4nm");
-    			add_location(div3, file$1, 303, 20, 10730);
+    			add_location(div3, file$1, 303, 20, 10742);
     			attr_dev(div4, "class", "account-balance svelte-kmx4nm");
-    			add_location(div4, file$1, 301, 16, 10622);
+    			add_location(div4, file$1, 301, 16, 10634);
     			attr_dev(div5, "class", "name svelte-kmx4nm");
-    			add_location(div5, file$1, 309, 20, 10901);
+    			add_location(div5, file$1, 309, 20, 10913);
     			attr_dev(div6, "class", "value svelte-kmx4nm");
-    			add_location(div6, file$1, 310, 20, 10973);
+    			add_location(div6, file$1, 310, 20, 10985);
     			attr_dev(div7, "class", "account-balance svelte-kmx4nm");
-    			add_location(div7, file$1, 308, 16, 10851);
+    			add_location(div7, file$1, 308, 16, 10863);
     			attr_dev(div8, "class", "nft-content svelte-kmx4nm");
-    			add_location(div8, file$1, 295, 12, 10488);
+    			add_location(div8, file$1, 295, 12, 10501);
     			attr_dev(div9, "class", "nft-info-box svelte-kmx4nm");
     			add_location(div9, file$1, 293, 8, 10388);
     			attr_dev(div10, "class", "name svelte-kmx4nm");
     			set_style(div10, "margin-bottom", "10px");
-    			add_location(div10, file$1, 317, 12, 11179);
+    			add_location(div10, file$1, 317, 12, 11191);
     			attr_dev(div11, "class", "nft-price svelte-kmx4nm");
-    			add_location(div11, file$1, 316, 8, 11143);
+    			add_location(div11, file$1, 316, 8, 11155);
     			attr_dev(button, "class", "mint-btn svelte-kmx4nm");
     			button.disabled = /*btnDisable*/ ctx[1];
-    			add_location(button, file$1, 333, 8, 12096);
+    			add_location(button, file$1, 333, 8, 12108);
     			attr_dev(div12, "class", "mint-content svelte-kmx4nm");
     			add_location(div12, file$1, 292, 4, 10353);
     			attr_dev(div13, "class", "mint-container svelte-kmx4nm");
     			add_location(div13, file$1, 288, 0, 10265);
     			attr_dev(div14, "class", "title svelte-kmx4nm");
-    			add_location(div14, file$1, 348, 4, 12443);
+    			add_location(div14, file$1, 348, 4, 12455);
     			attr_dev(div15, "class", "my-nfts svelte-kmx4nm");
-    			add_location(div15, file$1, 351, 4, 12493);
+    			add_location(div15, file$1, 351, 4, 12505);
     			attr_dev(div16, "class", "nfts svelte-kmx4nm");
-    			add_location(div16, file$1, 347, 0, 12420);
+    			add_location(div16, file$1, 347, 0, 12432);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");

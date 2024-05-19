@@ -292,10 +292,10 @@
     </div>
     <div class="mint-content">
         <div class="nft-info-box">
-            <img class="nft-img" src="images/nft_logo.png"/>
+            <img class="nft-img" src="images/nft_logo.png" alt="Predic"/>
             <div class="nft-content">
                 <div class="nft-name">
-                    PREDIC2
+                    PREDIC
                 </div>
 
 

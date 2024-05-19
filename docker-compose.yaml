@@ -11,4 +11,4 @@ services:
     ports:
       - "4943:4943"
       - "5555:5555"
-    command: ["tail","-f","predit/dfx.log"]
+    command: ["tail","-f","predit/logs/dfx.log"]

@@ -263,6 +263,41 @@ async fn deposit_icp(caller: Principal, amount: u64) -> Result<Nat, Error> {
     Ok((amount - ICP_FEE).into())
 }
 
+#[update]
+async fn retreve() -> Result<Nat, Error> {
+    let caller = api::caller();
+    let canister_id = ic_cdk::api::id();
+    let ledger_canister_id = STATE
+        .with(|s| s.borrow().ledger)
+        .unwrap_or(MAINNET_LEDGER_CANISTER_ID);
+    let account = AccountIdentifier::new(&canister_id, &principal_to_subaccount(&caller));
+    let balance_args = ic_ledger_types::AccountBalanceArgs { account };
+    let balance = ic_ledger_types::account_balance(ledger_canister_id, balance_args)
+        .await
+        .map_err(|_| Error::TransferFailure)?;
+    if balance.e8s() < ICP_FEE {
+        return Err(Error::BalanceLow);
+    }
+    let transfer_args = ic_ledger_types::TransferArgs {
+        memo: Memo(0),
+        amount: Tokens::from_e8s(balance.e8s() - ICP_FEE),
+        fee: Tokens::from_e8s(ICP_FEE),
+        from_subaccount: Some(principal_to_subaccount(&caller)),
+        to: AccountIdentifier::new(&caller, &DEFAULT_SUBACCOUNT),
+        created_at_time: None,
+    };
+    ic_ledger_types::transfer(ledger_canister_id, transfer_args)
+        .await
+        .map_err(|_| Error::TransferFailure)?
+        .map_err(|_| Error::TransferFailure)?;
+    ic_cdk::println!(
+        "retreve of {} ICP in account {:?}",
+        Tokens::from_e8s(balance.e8s() - ICP_FEE),
+        &account
+    );
+    Ok((balance.e8s() - ICP_FEE).into())
+}
+
 impl From<TryFromIntError> for Error {
     fn from(_: TryFromIntError) -> Self {
         Self::InvalidTokenId
