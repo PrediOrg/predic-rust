@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 set -e
-root="$(dirname "$0")/src/dip721/"
+root="$(pwd)/src/dip721/"
 did_file="${root}predic.did"
-dfx canister create predic
 dfx build predic
 dfx generate predic
-# candid-extractor "target/wasm32-unknown-unknown/release/predic.wasm" > $did_file
+candid-extractor "target/wasm32-unknown-unknown/release/predic.wasm" > $did_file
 ledger_id="$(dfx canister id ledger)"
-dfx canister install predic --argument "record{
+dfx canister install predic --mode=upgrade --argument "record{
     name=\"Prediction NFT2\";
     symbol=\"PREDIC2\";
     buy_prices=vec { 100000000;200000000;300000000};

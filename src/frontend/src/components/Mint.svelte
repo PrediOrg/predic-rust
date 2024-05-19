@@ -174,17 +174,15 @@
                 }
                 let depositAddressBlob = await backendActor.getDepositAddress();
                 btnDisable = true
-
+                const fee = 0;
                 const transferResult = await ledgerActor.transfer({
                     memo: BigInt(0x1),
-                    amount: {e8s: (parseInt(choosePrice) + 10000)},
+                    amount: {e8s: (parseInt(choosePrice) + fee)},
                     fee: {e8s: 10000},
                     to: depositAddressBlob,
                     from_subaccount: [],
                     created_at_time: [],
                 })
-
-
                 btnDisable = false
                 if (transferResult.Ok) {
                     btnDisable = true
@@ -195,12 +193,10 @@
                     if (choosePrice == priceArr[2]) {
                         chooseIndex = 2
                     }
-
                     setTimeout(async () => {
                         getData()
                     }, 3000)
                     const result = await backendActor.buy(chooseIndex);
-
                     btnDisable = false
                     if (result.Ok) {
                         showNotice({
@@ -211,14 +207,15 @@
                         });
                         getData()
                     } else {
+                        console.log("transfer failed2",result.Err)
                         messageBox({
                             type: "warning",
                             title: 'Buy Failed',
                             message: Object.keys(result.Err)[0]
                         })
                     }
-
                 } else {
+                    console.log("transfer failed1")
                     messageBox({
                         type: "warning",
                         title: 'Buy Failed',
@@ -242,131 +239,6 @@
         }
 
 
-    };
-
-    async function depositT(principal) {
-        // explicitly set these here to prevent
-        // withdraw form from showing
-        withdrawing = false;
-        withdrawAmount = 0;
-        currentToken = undefined;
-        // END withdraw
-
-        depositing = true;
-        currentToken = principal;
-
-        const canister = $canisters.find((canister) => {
-            return canister.canisterId === principal.toString();
-        })
-        if (canister && canister.canisterName === 'ICP') {
-            if (authType === "Plug") {
-                // TODO: Support Plug wallet
-                // await ledgerActor.transfer(...)
-            }
-            // transfer ICP correct subaccount on DEX
-            await ledgerActor.transfer({
-                memo: BigInt(0x1),
-                amount: {e8s: depositAmount},
-                fee: {e8s: 10000},
-                to: depositAddressBlob,
-                from_subaccount: [],
-                created_at_time: [],
-            });
-
-            const result = await backendActor.deposit(principal);
-            if (result.Ok) {
-                const dexBalance = await backendActor.getBalance(principal);
-
-                let ledgerBalance = 0;
-                let response;
-                if (authType === "II") {
-                    // Update user ICP balance
-                    response = await ledgerActor.account_balance({account: hexToBytes(principalToAccountDefaultIdentifier($auth.principal))});
-                } else if (authType === "Plug") {
-                    // TODO: Support Plug wallett
-                    // response = await ledgerActor.account_balance({account: XXX});
-                }
-                if (response.e8s) {
-                    ledgerBalance = response.e8s
-                }
-                setBalances(canister.canisterName, ledgerBalance, dexBalance);
-            }
-        }
-        // else if(canister && canister.canisterName === 'AkitaDIP20') {
-        //     await akitaActor.approve(Principal.fromText(process.env.PREDIC_CANISTER_ID), depositAmount);
-
-        //     const result = await backendActor.deposit(principal);
-        //     if(result.Ok) {
-        //         const dexBalance = await backendActor.getBalance(principal);
-        //         const akitaBalance = await akitaActor.balanceOf($auth.principal);
-
-        //         setBalances(canister.canisterName, akitaBalance, dexBalance);
-        //     }
-        // }
-        // else if(canister && canister.canisterName === 'GoldenDIP20') {
-        //     await goldenActor.approve(Principal.fromText(process.env.PREDIC_CANISTER_ID), depositAmount);
-
-        //     const result = await backendActor.deposit(principal);
-        //     if(result.Ok) {
-        //         const dexBalance = await backendActor.getBalance(principal);
-        //         const goldenBalance = await goldenActor.balanceOf($auth.principal);
-
-        //         setBalances(canister.canisterName, goldenBalance, dexBalance);
-        //     }
-        // }
-
-        depositing = false;
-        currentToken = undefined;
-    }
-
-    async function withdrawT(principal) {
-        withdrawingAmount = true;
-        currentToken = principal;
-        const withdrawPrincipal = Principal.fromText(withdrawAddress);
-
-        const canister = $canisters.find((canister) => {
-            return canister.canisterId === principal.toString();
-        })
-        if (canister && canister.canisterName === 'ICP') {
-            const result = await backendActor.withdraw(currentToken, withdrawAmount, withdrawPrincipal)
-            if (result.Ok) {
-                const dexBalance = await backendActor.getBalance(principal);
-                let ledgerBalance = 0;
-                let response;
-                if (authType === "II") {
-                    // When using II, display the balance in the target account
-                    response = await ledgerActor.account_balance({account: hexToBytes(principalToAccountDefaultIdentifier($auth.principal))});
-                } else if (authType === "Plug") {
-                    // TODO: Support Plug wallet
-                    // response = await ledgerActor.account_balance({account: XXX});
-                }
-                if (response.e8s) {
-                    ledgerBalance = response.e8s
-                }
-                setBalances(canister.canisterName, ledgerBalance, dexBalance);
-            }
-        } else if (canister && canister.canisterName === 'AkitaDIP20') {
-            const result = await backendActor.withdraw(currentToken, withdrawAmount, withdrawPrincipal)
-            if (result.Ok) {
-                const dexBalance = await backendActor.getBalance(principal);
-                const akitaBalance = await akitaActor.balanceOf($auth.principal);
-
-                setBalances(canister.canisterName, akitaBalance, dexBalance);
-            }
-        } else if (canister && canister.canisterName === 'GoldenDIP20') {
-            const result = await backendActor.withdraw(currentToken, withdrawAmount, withdrawPrincipal)
-            if (result.Ok) {
-                const dexBalance = await backendActor.getBalance(principal);
-                const goldenBalance = await goldenActor.balanceOf($auth.principal);
-
-                setBalances(canister.canisterName, goldenBalance, dexBalance);
-            }
-        }
-
-        withdrawAmount = 0;
-        withdrawAddress = '';
-        currentToken = undefined;
-        withdrawingAmount = false;
     };
 
     function setBalances(canisterName, canisterBalance, dexBalance) {
@@ -437,7 +309,7 @@
                 <div class="account-balance">
                     <div class="name">Your {symbolDip721} balance</div>
                     <div class="value">
-                        {accountBalance.toString() / 1000000}
+                        {accountBalance.toString() / 1e8}
                     </div>
                 </div>
             </div>
@@ -449,13 +321,13 @@
             <!--                    <select class="input-style" bind:value={choosePrice}>-->
             <!--                        {#each priceArr as price}-->
             <!--                            <option value={price}>-->
-            <!--                                {price.toString()/1000000}-->
+            <!--                                {price.toString()/1e8}-->
             <!--                            </option>-->
             <!--                        {/each}-->
             <!--                    </select>-->
             <BeSelect class="choose-price" placeholder="Choose Price" bind:value={choosePrice} maxHeight='180px'>
                 {#each priceArr as price}
-                    <BeOption value={price} label={price.toString()/1000000}/>
+                    <BeOption value={price} label={price.toString()/1e8}/>
                 {/each}
             </BeSelect>
         </div>

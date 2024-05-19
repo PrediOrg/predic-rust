@@ -12,8 +12,15 @@ use ic_cdk::{
 };
 use ic_certified_map::Hash;
 use ic_ledger_types::{
-    AccountIdentifier, Memo, Tokens, DEFAULT_SUBACCOUNT, MAINNET_LEDGER_CANISTER_ID,
+    AccountIdentifier, BlockIndex, Memo, Subaccount, Tokens, DEFAULT_SUBACCOUNT,
+    MAINNET_LEDGER_CANISTER_ID,
 };
+#[derive(CandidType, Serialize, Deserialize, Clone, Debug)]
+pub struct TransferArgs {
+    amount: Tokens,
+    to_principal: Principal,
+    to_subaccount: Option<Subaccount>,
+}
 use include_base64::include_base64;
 use std::borrow::Cow;
 use std::cell::RefCell;
@@ -23,7 +30,7 @@ use std::iter::FromIterator;
 use std::mem;
 use std::num::TryFromIntError;
 use std::result::Result as StdResult;
-const ICP_FEE: u64 = 10_000;
+const ICP_FEE: u64 = 10000;
 mod http;
 use http::*;
 
@@ -170,19 +177,17 @@ fn get_prices() -> [u64; 3] {
 fn get_remaing() -> [u64; 3] {
     STATE.with(|state| state.borrow().remaing)
 }
-#[update]
-async fn buy2() -> Result<MintResult, Error> {
-    let _level: u8 = 0;
-     buy(_level).await
-}
 
 #[update]
 async fn buy(level: u8) -> Result<MintResult, Error> {
     let caller: Principal = api::caller();
-    let amount = STATE
-        .with(|s| s.borrow().buy_prices.get(level as usize).copied())
-        .ok_or(Error::InvalidLevel)?;
-    deposit_icp(caller, amount).await?;
+    let is_owner = STATE.with(|state| state.borrow().custodians.contains(&caller));
+    if !is_owner {
+        let amount = STATE
+            .with(|s| s.borrow().buy_prices.get(level as usize).copied())
+            .ok_or(Error::InvalidLevel)?;
+        deposit_icp(caller, amount).await?;
+    }
     let mut map = HashMap::new();
     map.insert(
         "contentType".to_string(),
@@ -235,12 +240,12 @@ async fn deposit_icp(caller: Principal, amount: u64) -> Result<Nat, Error> {
     let balance = ic_ledger_types::account_balance(ledger_canister_id, balance_args)
         .await
         .map_err(|_| Error::TransferFailure)?;
-    if balance.e8s() < ICP_FEE + amount {
+    if balance.e8s() < amount {
         return Err(Error::BalanceLow);
     }
     let transfer_args = ic_ledger_types::TransferArgs {
         memo: Memo(0),
-        amount: Tokens::from_e8s(amount),
+        amount: Tokens::from_e8s(amount - ICP_FEE),
         fee: Tokens::from_e8s(ICP_FEE),
         from_subaccount: Some(principal_to_subaccount(&caller)),
         to: AccountIdentifier::new(&canister_id, &DEFAULT_SUBACCOUNT),
@@ -250,13 +255,12 @@ async fn deposit_icp(caller: Principal, amount: u64) -> Result<Nat, Error> {
         .await
         .map_err(|_| Error::TransferFailure)?
         .map_err(|_| Error::TransferFailure)?;
-
     ic_cdk::println!(
         "Deposit of {} ICP in account {:?}",
-        balance - Tokens::from_e8s(ICP_FEE),
+        Tokens::from_e8s(amount - ICP_FEE),
         &account
     );
-    Ok((balance.e8s() - ICP_FEE).into())
+    Ok((amount - ICP_FEE).into())
 }
 
 impl From<TryFromIntError> for Error {
@@ -653,6 +657,36 @@ fn set_logo(logo: Option<LogoResult>) -> Result<()> {
             Err(Error::Unauthorized)
         }
     })
+}
+
+#[update]
+async fn withdraw(args: TransferArgs) -> Result<BlockIndex, String> {
+    let is_owner = STATE.with(|state| state.borrow().custodians.contains(&api::caller()));
+    if !is_owner {
+        return Err("Unauthorized".to_string());
+    }
+    ic_cdk::println!(
+        "Transferring {} tokens to principal {} subaccount {:?}",
+        &args.amount,
+        &args.to_principal,
+        &args.to_subaccount
+    );
+    let to_subaccount = args.to_subaccount.unwrap_or(DEFAULT_SUBACCOUNT);
+    let transfer_args = ic_ledger_types::TransferArgs {
+        memo: Memo(0),
+        amount: args.amount,
+        fee: Tokens::from_e8s(10_000),
+        // The subaccount of the account identifier that will be used to withdraw tokens and send them
+        // to another account identifier. If set to None then the default subaccount will be used.
+        // See the [Ledger doc](https://internetcomputer.org/docs/current/developer-docs/integrations/ledger/#accounts).
+        from_subaccount: None,
+        to: AccountIdentifier::new(&args.to_principal, &to_subaccount),
+        created_at_time: None,
+    };
+    ic_ledger_types::transfer(MAINNET_LEDGER_CANISTER_ID, transfer_args)
+        .await
+        .map_err(|e| format!("failed to call ledger: {:?}", e))?
+        .map_err(|e| format!("ledger transfer error {:?}", e))
 }
 
 #[update(name = "setCustodian")]

@@ -47,12 +47,18 @@ export const idlFactory = ({ IDL }) => {
     'TransactionHistory' : IDL.Null,
     'TransferNotification' : IDL.Null,
   });
+  const Tokens = IDL.Record({ 'e8s' : IDL.Nat64 });
+  const TransferArgs = IDL.Record({
+    'to_principal' : IDL.Principal,
+    'to_subaccount' : IDL.Opt(IDL.Vec(IDL.Nat8)),
+    'amount' : Tokens,
+  });
+  const Result_5 = IDL.Variant({ 'Ok' : IDL.Nat64, 'Err' : IDL.Text });
   return IDL.Service({
     'approveDip721' : IDL.Func([IDL.Principal, IDL.Nat64], [Result], []),
     'balanceOfDip721' : IDL.Func([IDL.Principal], [IDL.Nat64], ['query']),
     'burnDip721' : IDL.Func([IDL.Nat64], [Result], []),
     'buy' : IDL.Func([IDL.Nat8], [Result_1], []),
-    'buy2' : IDL.Func([], [Result_1], []),
     'getApprovedDip721' : IDL.Func([IDL.Nat64], [Result_2], ['query']),
     'getDepositAddress' : IDL.Func([], [IDL.Vec(IDL.Nat8)], ['query']),
     'getPrices' : IDL.Func([], [IDL.Vec(IDL.Nat64)], ['query']),
@@ -102,6 +108,7 @@ export const idlFactory = ({ IDL }) => {
         [Result],
         [],
       ),
+    'withdraw' : IDL.Func([TransferArgs], [Result_5], []),
   });
 };
 export const init = ({ IDL }) => {

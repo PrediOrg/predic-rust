@@ -3,6 +3,8 @@ set -e
 # sleep 10
 rm -f .env
 
+dfx identity new taro --storage-mode plaintext --force
+
 echo "===========SETUP========="
 dfx identity new alice_icp_transfer --storage-mode plaintext --force
 export MINTER_ACCOUNT_ID=$(dfx --identity anonymous ledger account-id)
