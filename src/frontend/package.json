@@ -5,7 +5,7 @@
   "scripts": {
     "build": "rollup --preserveSymlinks -c",
     "dev": "rollup --preserveSymlinks -c -w",
-    "start": "sirv ../frontend_assets --no-clear --port 5555"
+    "start": "sirv ../frontend_assets --no-clear --port 5555 --host 0.0.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
@@ -22,7 +22,7 @@
     "svelte": "^3.49.0"
   },
   "dependencies": {
-    "@brewer/beerui": "^1.1.17",
+    "@brewer/beerui": "^1.1.8",
     "@dfinity/agent": "^0.10.4",
     "@dfinity/auth-client": "^0.10.4",
     "@dfinity/authentication": "^0.10.4",

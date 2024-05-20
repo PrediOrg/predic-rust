@@ -415,9 +415,6 @@ var app = (function () {
     function add_render_callback(fn) {
         render_callbacks.push(fn);
     }
-    function add_flush_callback(fn) {
-        flush_callbacks.push(fn);
-    }
     // flush() calls callbacks in this order:
     // 1. All beforeUpdate callbacks, in order: parents before children
     // 2. All bind:this callbacks, in reverse order: children before parents.
@@ -663,14 +660,6 @@ var app = (function () {
                 update[key] = undefined;
         }
         return update;
-    }
-
-    function bind$1(component, name, callback) {
-        const index = component.$$.props[name];
-        if (index !== undefined) {
-            component.$$.bound[index] = callback;
-            callback(component.$$.ctx[index]);
-        }
     }
     function create_component(block) {
         block && block.c();
@@ -34886,7 +34875,7 @@ var app = (function () {
     const { console: console_1$3 } = globals;
     const file$4 = "src/components/Nav.svelte";
 
-    // (153:12) {:else}
+    // (186:12) {:else}
     function create_else_block$4(ctx) {
     	let button;
     	let span;
@@ -34898,9 +34887,9 @@ var app = (function () {
     			button = element("button");
     			span = element("span");
     			span.textContent = "Login";
-    			add_location(span, file$4, 154, 20, 5750);
-    			attr_dev(button, "class", "svelte-1imvso");
-    			add_location(button, file$4, 153, 16, 5704);
+    			add_location(span, file$4, 187, 20, 6486);
+    			attr_dev(button, "class", "svelte-f0pu5s");
+    			add_location(button, file$4, 186, 16, 6440);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button, anchor);
@@ -34925,14 +34914,14 @@ var app = (function () {
     		block,
     		id: create_else_block$4.name,
     		type: "else",
-    		source: "(153:12) {:else}",
+    		source: "(186:12) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (145:12) {#if $auth.loggedIn}
+    // (177:12) {#if $auth.loggedIn}
     function create_if_block$4(ctx) {
     	let button0;
     	let span0;
@@ -34942,8 +34931,9 @@ var app = (function () {
     	: "") + "";
 
     	let t0;
-    	let fontawesomeicon;
     	let t1;
+    	let fontawesomeicon;
+    	let t2;
     	let button1;
     	let span1;
     	let current;
@@ -34956,25 +34946,27 @@ var app = (function () {
     			button0 = element("button");
     			span0 = element("span");
     			t0 = text(t0_value);
-    			create_component(fontawesomeicon.$$.fragment);
     			t1 = space();
+    			create_component(fontawesomeicon.$$.fragment);
+    			t2 = space();
     			button1 = element("button");
     			span1 = element("span");
     			span1.textContent = "Log out";
-    			add_location(span0, file$4, 146, 16, 5369);
+    			add_location(span0, file$4, 178, 20, 6055);
     			set_style(button0, "margin-right", "20px");
-    			attr_dev(button0, "class", "svelte-1imvso");
-    			add_location(button0, file$4, 145, 16, 5274);
-    			add_location(span1, file$4, 150, 20, 5621);
-    			attr_dev(button1, "class", "svelte-1imvso");
-    			add_location(button1, file$4, 149, 16, 5573);
+    			attr_dev(button0, "class", "svelte-f0pu5s");
+    			add_location(button0, file$4, 177, 16, 5956);
+    			add_location(span1, file$4, 183, 20, 6357);
+    			attr_dev(button1, "class", "logout svelte-f0pu5s");
+    			add_location(button1, file$4, 182, 16, 6295);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button0, anchor);
     			append_dev(button0, span0);
     			append_dev(span0, t0);
+    			append_dev(span0, t1);
     			mount_component(fontawesomeicon, span0, null);
-    			insert_dev(target, t1, anchor);
+    			insert_dev(target, t2, anchor);
     			insert_dev(target, button1, anchor);
     			append_dev(button1, span1);
     			current = true;
@@ -34992,7 +34984,7 @@ var app = (function () {
     						false,
     						false
     					),
-    					listen_dev(button1, "click", /*logout*/ ctx[4], false, false, false, false)
+    					listen_dev(button1, "click", /*logout*/ ctx[5], false, false, false, false)
     				];
 
     				mounted = true;
@@ -35017,7 +35009,7 @@ var app = (function () {
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(button0);
     			destroy_component(fontawesomeicon);
-    			if (detaching) detach_dev(t1);
+    			if (detaching) detach_dev(t2);
     			if (detaching) detach_dev(button1);
     			mounted = false;
     			run_all(dispose);
@@ -35028,7 +35020,7 @@ var app = (function () {
     		block,
     		id: create_if_block$4.name,
     		type: "if",
-    		source: "(145:12) {#if $auth.loggedIn}",
+    		source: "(177:12) {#if $auth.loggedIn}",
     		ctx
     	});
 
@@ -35036,16 +35028,25 @@ var app = (function () {
     }
 
     function create_fragment$4(ctx) {
-    	let div;
+    	let div6;
     	let a;
     	let img;
     	let img_src_value;
-    	let t;
-    	let ul;
-    	let li;
+    	let t0;
+    	let div3;
+    	let div0;
+    	let t2;
+    	let div1;
+    	let t4;
+    	let div2;
+    	let t6;
+    	let div5;
+    	let div4;
     	let current_block_type_index;
     	let if_block;
     	let current;
+    	let mounted;
+    	let dispose;
     	const if_block_creators = [create_if_block$4, create_else_block$4];
     	const if_blocks = [];
 
@@ -35059,42 +35060,75 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
-    			div = element("div");
+    			div6 = element("div");
     			a = element("a");
     			img = element("img");
-    			t = space();
-    			ul = element("ul");
-    			li = element("li");
+    			t0 = space();
+    			div3 = element("div");
+    			div0 = element("div");
+    			div0.textContent = "Product License";
+    			t2 = space();
+    			div1 = element("div");
+    			div1.textContent = "Markets";
+    			t4 = space();
+    			div2 = element("div");
+    			div2.textContent = "Portfolio";
+    			t6 = space();
+    			div5 = element("div");
+    			div4 = element("div");
     			if_block.c();
     			if (!src_url_equal(img.src, img_src_value = "images/logo.png")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "DFINITY logo");
-    			attr_dev(img, "class", "svelte-1imvso");
-    			add_location(img, file$4, 138, 6, 5145);
+    			attr_dev(img, "class", "svelte-f0pu5s");
+    			add_location(img, file$4, 159, 8, 5495);
     			attr_dev(a, "href", "https://www.predi.org");
     			attr_dev(a, "rel", "noopener noreferrer");
     			attr_dev(a, "target", "_blank");
-    			attr_dev(a, "class", "logo svelte-1imvso");
-    			add_location(a, file$4, 131, 4, 5021);
-    			attr_dev(li, "class", "svelte-1imvso");
-    			add_location(li, file$4, 143, 6, 5220);
-    			attr_dev(ul, "class", "svelte-1imvso");
-    			add_location(ul, file$4, 142, 4, 5209);
-    			attr_dev(div, "id", "nav-container");
-    			attr_dev(div, "class", "svelte-1imvso");
-    			add_location(div, file$4, 130, 0, 4992);
+    			attr_dev(a, "class", "logo svelte-f0pu5s");
+    			add_location(a, file$4, 152, 4, 5345);
+    			attr_dev(div0, "class", "nav-item active svelte-f0pu5s");
+    			add_location(div0, file$4, 164, 8, 5589);
+    			attr_dev(div1, "class", "nav-item svelte-f0pu5s");
+    			add_location(div1, file$4, 167, 8, 5670);
+    			attr_dev(div2, "class", "nav-item svelte-f0pu5s");
+    			add_location(div2, file$4, 170, 8, 5766);
+    			attr_dev(div3, "class", "nav-list svelte-f0pu5s");
+    			add_location(div3, file$4, 163, 4, 5558);
+    			add_location(div4, file$4, 175, 8, 5901);
+    			attr_dev(div5, "class", "btn-box svelte-f0pu5s");
+    			add_location(div5, file$4, 174, 4, 5871);
+    			attr_dev(div6, "id", "nav-container");
+    			attr_dev(div6, "class", "svelte-f0pu5s");
+    			add_location(div6, file$4, 151, 0, 5316);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, div, anchor);
-    			append_dev(div, a);
+    			insert_dev(target, div6, anchor);
+    			append_dev(div6, a);
     			append_dev(a, img);
-    			append_dev(div, t);
-    			append_dev(div, ul);
-    			append_dev(ul, li);
-    			if_blocks[current_block_type_index].m(li, null);
+    			append_dev(div6, t0);
+    			append_dev(div6, div3);
+    			append_dev(div3, div0);
+    			append_dev(div3, t2);
+    			append_dev(div3, div1);
+    			append_dev(div3, t4);
+    			append_dev(div3, div2);
+    			append_dev(div6, t6);
+    			append_dev(div6, div5);
+    			append_dev(div5, div4);
+    			if_blocks[current_block_type_index].m(div4, null);
     			current = true;
+
+    			if (!mounted) {
+    				dispose = [
+    					listen_dev(div1, "click", /*click_handler*/ ctx[6], false, false, false, false),
+    					listen_dev(div2, "click", /*click_handler_1*/ ctx[7], false, false, false, false)
+    				];
+
+    				mounted = true;
+    			}
     		},
     		p: function update(ctx, [dirty]) {
     			let previous_block_index = current_block_type_index;
@@ -35120,7 +35154,7 @@ var app = (function () {
     				}
 
     				transition_in(if_block, 1);
-    				if_block.m(li, null);
+    				if_block.m(div4, null);
     			}
     		},
     		i: function intro(local) {
@@ -35133,8 +35167,10 @@ var app = (function () {
     			current = false;
     		},
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(div);
+    			if (detaching) detach_dev(div6);
     			if_blocks[current_block_type_index].d();
+    			mounted = false;
+    			run_all(dispose);
     		}
     	};
 
@@ -35155,7 +35191,7 @@ var app = (function () {
     	validate_store(auth$1, 'auth');
     	component_subscribe($$self, auth$1, $$value => $$invalidate(1, $auth = $$value));
     	validate_store(plugWallet, 'plugWallet');
-    	component_subscribe($$self, plugWallet, $$value => $$invalidate(7, $plugWallet = $$value));
+    	component_subscribe($$self, plugWallet, $$value => $$invalidate(10, $plugWallet = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Nav', slots, []);
     	let client;
@@ -35276,6 +35312,15 @@ var app = (function () {
     		});
     	}
 
+    	async function onBuilding() {
+    		showNotice({
+    			toast: true,
+    			message: 'Coming soon!',
+    			duration: 300000,
+    			type: "warning"
+    		});
+    	}
+
     	async function logout() {
     		await client.logout();
 
@@ -35291,6 +35336,14 @@ var app = (function () {
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1$3.warn(`<Nav> was created with unknown prop '${key}'`);
     	});
+
+    	const click_handler = () => {
+    		onBuilding();
+    	};
+
+    	const click_handler_1 = () => {
+    		onBuilding();
+    	};
 
     	$$self.$capture_state = () => ({
     		AuthClient,
@@ -35313,6 +35366,7 @@ var app = (function () {
     		handleAuth,
     		copyDepositAddress,
     		login,
+    		onBuilding,
     		logout,
     		$auth,
     		$plugWallet
@@ -35328,7 +35382,16 @@ var app = (function () {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [iiPrincipal, $auth, copyDepositAddress, login, logout];
+    	return [
+    		iiPrincipal,
+    		$auth,
+    		copyDepositAddress,
+    		login,
+    		onBuilding,
+    		logout,
+    		click_handler,
+    		click_handler_1
+    	];
     }
 
     class Nav extends SvelteComponentDev {
@@ -35377,7 +35440,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    function get_each_context_1$1(ctx, list, i) {
+    function get_each_context_1(ctx, list, i) {
     	const child_ctx = ctx.slice();
     	child_ctx[29] = list[i];
     	return child_ctx;
@@ -35559,7 +35622,7 @@ var app = (function () {
     	let each_blocks = [];
 
     	for (let i = 0; i < each_value_1.length; i += 1) {
-    		each_blocks[i] = create_each_block_1$1(get_each_context_1$1(ctx, each_value_1, i));
+    		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
     	}
 
     	const if_block_creators = [create_if_block_5$1, create_else_block_2$1];
@@ -35729,12 +35792,12 @@ var app = (function () {
     				let i;
 
     				for (i = 0; i < each_value_1.length; i += 1) {
-    					const child_ctx = get_each_context_1$1(ctx, each_value_1, i);
+    					const child_ctx = get_each_context_1(ctx, each_value_1, i);
 
     					if (each_blocks[i]) {
     						each_blocks[i].p(child_ctx, dirty);
     					} else {
-    						each_blocks[i] = create_each_block_1$1(child_ctx);
+    						each_blocks[i] = create_each_block_1(child_ctx);
     						each_blocks[i].c();
     						each_blocks[i].m(select1, null);
     					}
@@ -35857,7 +35920,7 @@ var app = (function () {
     }
 
     // (177:32) {#each $canisters as canister}
-    function create_each_block_1$1(ctx) {
+    function create_each_block_1(ctx) {
     	let option;
     	let t0_value = /*canister*/ ctx[29].symbol + "";
     	let t0;
@@ -35893,7 +35956,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_each_block_1$1.name,
+    		id: create_each_block_1.name,
     		type: "each",
     		source: "(177:32) {#each $canisters as canister}",
     		ctx
@@ -45281,167 +45344,11 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[41] = list[i];
+    	child_ctx[38] = list[i];
     	return child_ctx;
     }
 
-    function get_each_context_1(ctx, list, i) {
-    	const child_ctx = ctx.slice();
-    	child_ctx[44] = list[i];
-    	return child_ctx;
-    }
-
-    // (457:16) {#each priceArr as price}
-    function create_each_block_1(ctx) {
-    	let beoption;
-    	let current;
-
-    	beoption = new BeOption({
-    			props: {
-    				value: /*price*/ ctx[44],
-    				label: /*price*/ ctx[44].toString() / 1000000
-    			},
-    			$$inline: true
-    		});
-
-    	const block = {
-    		c: function create() {
-    			create_component(beoption.$$.fragment);
-    		},
-    		m: function mount(target, anchor) {
-    			mount_component(beoption, target, anchor);
-    			current = true;
-    		},
-    		p: function update(ctx, dirty) {
-    			const beoption_changes = {};
-    			if (dirty[0] & /*priceArr*/ 8) beoption_changes.value = /*price*/ ctx[44];
-    			if (dirty[0] & /*priceArr*/ 8) beoption_changes.label = /*price*/ ctx[44].toString() / 1000000;
-    			beoption.$set(beoption_changes);
-    		},
-    		i: function intro(local) {
-    			if (current) return;
-    			transition_in(beoption.$$.fragment, local);
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			transition_out(beoption.$$.fragment, local);
-    			current = false;
-    		},
-    		d: function destroy(detaching) {
-    			destroy_component(beoption, detaching);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_each_block_1.name,
-    		type: "each",
-    		source: "(457:16) {#each priceArr as price}",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (456:12) <BeSelect class="choose-price" placeholder="Choose Price" bind:value={choosePrice} maxHeight='180px'>
-    function create_default_slot(ctx) {
-    	let each_1_anchor;
-    	let current;
-    	let each_value_1 = /*priceArr*/ ctx[3];
-    	validate_each_argument(each_value_1);
-    	let each_blocks = [];
-
-    	for (let i = 0; i < each_value_1.length; i += 1) {
-    		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
-    	}
-
-    	const out = i => transition_out(each_blocks[i], 1, 1, () => {
-    		each_blocks[i] = null;
-    	});
-
-    	const block = {
-    		c: function create() {
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].c();
-    			}
-
-    			each_1_anchor = empty();
-    		},
-    		m: function mount(target, anchor) {
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				if (each_blocks[i]) {
-    					each_blocks[i].m(target, anchor);
-    				}
-    			}
-
-    			insert_dev(target, each_1_anchor, anchor);
-    			current = true;
-    		},
-    		p: function update(ctx, dirty) {
-    			if (dirty[0] & /*priceArr*/ 8) {
-    				each_value_1 = /*priceArr*/ ctx[3];
-    				validate_each_argument(each_value_1);
-    				let i;
-
-    				for (i = 0; i < each_value_1.length; i += 1) {
-    					const child_ctx = get_each_context_1(ctx, each_value_1, i);
-
-    					if (each_blocks[i]) {
-    						each_blocks[i].p(child_ctx, dirty);
-    						transition_in(each_blocks[i], 1);
-    					} else {
-    						each_blocks[i] = create_each_block_1(child_ctx);
-    						each_blocks[i].c();
-    						transition_in(each_blocks[i], 1);
-    						each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
-    					}
-    				}
-
-    				group_outros();
-
-    				for (i = each_value_1.length; i < each_blocks.length; i += 1) {
-    					out(i);
-    				}
-
-    				check_outros();
-    			}
-    		},
-    		i: function intro(local) {
-    			if (current) return;
-
-    			for (let i = 0; i < each_value_1.length; i += 1) {
-    				transition_in(each_blocks[i]);
-    			}
-
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			each_blocks = each_blocks.filter(Boolean);
-
-    			for (let i = 0; i < each_blocks.length; i += 1) {
-    				transition_out(each_blocks[i]);
-    			}
-
-    			current = false;
-    		},
-    		d: function destroy(detaching) {
-    			destroy_each(each_blocks, detaching);
-    			if (detaching) detach_dev(each_1_anchor);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_default_slot.name,
-    		type: "slot",
-    		source: "(456:12) <BeSelect class=\\\"choose-price\\\" placeholder=\\\"Choose Price\\\" bind:value={choosePrice} maxHeight='180px'>",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (467:12) {:else}
+    // (357:12) {:else}
     function create_else_block$1(ctx) {
     	let span;
 
@@ -45449,8 +45356,8 @@ var app = (function () {
     		c: function create() {
     			span = element("span");
     			span.textContent = "Mint";
-    			attr_dev(span, "class", "svelte-kmx4nm");
-    			add_location(span, file$1, 467, 17, 17695);
+    			attr_dev(span, "class", "svelte-1lvz8cd");
+    			add_location(span, file$1, 357, 17, 13106);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
@@ -45464,14 +45371,14 @@ var app = (function () {
     		block,
     		id: create_else_block$1.name,
     		type: "else",
-    		source: "(467:12) {:else}",
+    		source: "(357:12) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (463:12) {#if btnDisable}
+    // (353:12) {#if btnDisable}
     function create_if_block$1(ctx) {
     	let span;
 
@@ -45479,8 +45386,8 @@ var app = (function () {
     		c: function create() {
     			span = element("span");
     			span.textContent = "Loading";
-    			attr_dev(span, "class", "svelte-kmx4nm");
-    			add_location(span, file$1, 463, 17, 17598);
+    			attr_dev(span, "class", "svelte-1lvz8cd");
+    			add_location(span, file$1, 353, 17, 13009);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
@@ -45494,14 +45401,14 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(463:12) {#if btnDisable}",
+    		source: "(353:12) {#if btnDisable}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (481:8) {#each ownerNFTArr as nftItem}
+    // (371:8) {#each ownerNFTArr as nftItem}
     function create_each_block(ctx) {
     	let div3;
     	let img;
@@ -45510,12 +45417,12 @@ var app = (function () {
     	let div2;
     	let div0;
     	let t1;
-    	let t2_value = /*nftItem*/ ctx[41].id + "";
+    	let t2_value = /*nftItem*/ ctx[38].id + "";
     	let t2;
     	let t3;
     	let div1;
     	let t4;
-    	let t5_value = /*nftItem*/ ctx[41].level + 1 + "";
+    	let t5_value = /*nftItem*/ ctx[38].level + 1 + "";
     	let t5;
     	let t6;
 
@@ -45533,19 +45440,19 @@ var app = (function () {
     			t4 = text("Level ");
     			t5 = text(t5_value);
     			t6 = space();
-    			attr_dev(img, "class", "nft-logo svelte-kmx4nm");
+    			attr_dev(img, "class", "nft-logo svelte-1lvz8cd");
     			if (!src_url_equal(img.src, img_src_value = "images/nft_logo.png")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "");
-    			add_location(img, file$1, 482, 16, 17991);
+    			add_location(img, file$1, 372, 16, 13402);
     			attr_dev(div0, "class", "nft-id");
-    			add_location(div0, file$1, 484, 20, 18142);
+    			add_location(div0, file$1, 374, 20, 13553);
     			attr_dev(div1, "class", "nft-id");
-    			add_location(div1, file$1, 487, 20, 18252);
+    			add_location(div1, file$1, 377, 20, 13663);
     			set_style(div2, "display", "flex");
     			set_style(div2, "justify-content", "space-between");
-    			add_location(div2, file$1, 483, 16, 18063);
-    			attr_dev(div3, "class", "nft-item svelte-kmx4nm");
-    			add_location(div3, file$1, 481, 12, 17952);
+    			add_location(div2, file$1, 373, 16, 13474);
+    			attr_dev(div3, "class", "nft-item svelte-1lvz8cd");
+    			add_location(div3, file$1, 371, 12, 13363);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div3, anchor);
@@ -45562,8 +45469,8 @@ var app = (function () {
     			append_dev(div3, t6);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty[0] & /*ownerNFTArr*/ 64 && t2_value !== (t2_value = /*nftItem*/ ctx[41].id + "")) set_data_dev(t2, t2_value);
-    			if (dirty[0] & /*ownerNFTArr*/ 64 && t5_value !== (t5_value = /*nftItem*/ ctx[41].level + 1 + "")) set_data_dev(t5, t5_value);
+    			if (dirty[0] & /*ownerNFTArr*/ 16 && t2_value !== (t2_value = /*nftItem*/ ctx[38].id + "")) set_data_dev(t2, t2_value);
+    			if (dirty[0] & /*ownerNFTArr*/ 16 && t5_value !== (t5_value = /*nftItem*/ ctx[38].level + 1 + "")) set_data_dev(t5, t5_value);
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div3);
@@ -45574,7 +45481,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(481:8) {#each ownerNFTArr as nftItem}",
+    		source: "(371:8) {#each ownerNFTArr as nftItem}",
     		ctx
     	});
 
@@ -45582,10 +45489,10 @@ var app = (function () {
     }
 
     function create_fragment$1(ctx) {
-    	let div13;
+    	let div15;
     	let div0;
     	let t1;
-    	let div12;
+    	let div14;
     	let div9;
     	let img;
     	let img_src_value;
@@ -45606,50 +45513,23 @@ var app = (function () {
     	let t11;
     	let t12;
     	let div6;
-    	let t13_value = /*accountBalance*/ ctx[0].toString() / 1000000 + "";
+    	let t13_value = /*accountBalance*/ ctx[0].toString() / 1e8 + "";
     	let t13;
     	let t14;
-    	let div11;
+    	let div13;
+    	let div12;
     	let div10;
-    	let t15;
-
-    	let t16_value = (/*symbolDip721*/ ctx[5]
-    	? "(" + /*symbolDip721*/ ctx[5] + ")"
-    	: /*symbolDip721*/ ctx[5]) + "";
-
     	let t16;
-    	let t17;
-    	let beselect;
-    	let updating_value;
+    	let div11;
     	let t18;
     	let button;
     	let t19;
+    	let div18;
     	let div16;
-    	let div14;
     	let t21;
-    	let div15;
-    	let current;
+    	let div17;
     	let mounted;
     	let dispose;
-
-    	function beselect_value_binding(value) {
-    		/*beselect_value_binding*/ ctx[8](value);
-    	}
-
-    	let beselect_props = {
-    		class: "choose-price",
-    		placeholder: "Choose Price",
-    		maxHeight: "180px",
-    		$$slots: { default: [create_default_slot] },
-    		$$scope: { ctx }
-    	};
-
-    	if (/*choosePrice*/ ctx[2] !== void 0) {
-    		beselect_props.value = /*choosePrice*/ ctx[2];
-    	}
-
-    	beselect = new BeSelect({ props: beselect_props, $$inline: true });
-    	binding_callbacks.push(() => bind$1(beselect, 'value', beselect_value_binding));
 
     	function select_block_type(ctx, dirty) {
     		if (/*btnDisable*/ ctx[1]) return create_if_block$1;
@@ -45658,7 +45538,7 @@ var app = (function () {
 
     	let current_block_type = select_block_type(ctx);
     	let if_block = current_block_type(ctx);
-    	let each_value = /*ownerNFTArr*/ ctx[6];
+    	let each_value = /*ownerNFTArr*/ ctx[4];
     	validate_each_argument(each_value);
     	let each_blocks = [];
 
@@ -45668,11 +45548,11 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
-    			div13 = element("div");
+    			div15 = element("div");
     			div0 = element("div");
     			div0.textContent = "License NFT";
     			t1 = space();
-    			div12 = element("div");
+    			div14 = element("div");
     			div9 = element("div");
     			img = element("img");
     			t2 = space();
@@ -45685,88 +45565,97 @@ var app = (function () {
     			div2.textContent = "NFT remaining";
     			t6 = space();
     			div3 = element("div");
-    			t7 = text(/*remaing*/ ctx[4]);
+    			t7 = text(/*remaing*/ ctx[2]);
     			t8 = space();
     			div7 = element("div");
     			div5 = element("div");
     			t9 = text("Your ");
-    			t10 = text(/*symbolDip721*/ ctx[5]);
+    			t10 = text(/*symbolDip721*/ ctx[3]);
     			t11 = text(" balance");
     			t12 = space();
     			div6 = element("div");
     			t13 = text(t13_value);
     			t14 = space();
-    			div11 = element("div");
+    			div13 = element("div");
+    			div12 = element("div");
     			div10 = element("div");
-    			t15 = text("Choose Price ");
-    			t16 = text(t16_value);
-    			t17 = space();
-    			create_component(beselect.$$.fragment);
+    			div10.textContent = "NFT Price";
+    			t16 = space();
+    			div11 = element("div");
+    			div11.textContent = "10 ICP";
     			t18 = space();
     			button = element("button");
     			if_block.c();
     			t19 = space();
+    			div18 = element("div");
     			div16 = element("div");
-    			div14 = element("div");
-    			div14.textContent = "My NFT";
+    			div16.textContent = "My NFT";
     			t21 = space();
-    			div15 = element("div");
+    			div17 = element("div");
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
-    			attr_dev(div0, "class", "title svelte-kmx4nm");
-    			add_location(div0, file$1, 417, 4, 15676);
-    			attr_dev(img, "class", "nft-img svelte-kmx4nm");
+    			attr_dev(div0, "class", "title svelte-1lvz8cd");
+    			add_location(div0, file$1, 298, 4, 10702);
+    			attr_dev(img, "class", "nft-img svelte-1lvz8cd");
     			if (!src_url_equal(img.src, img_src_value = "images/nft_logo.png")) attr_dev(img, "src", img_src_value);
-    			add_location(img, file$1, 422, 12, 15805);
-    			attr_dev(div1, "class", "nft-name svelte-kmx4nm");
-    			add_location(div1, file$1, 424, 16, 15908);
-    			attr_dev(div2, "class", "name svelte-kmx4nm");
-    			add_location(div2, file$1, 430, 20, 16046);
-    			attr_dev(div3, "class", "value svelte-kmx4nm");
-    			add_location(div3, file$1, 431, 20, 16104);
-    			attr_dev(div4, "class", "account-balance svelte-kmx4nm");
-    			add_location(div4, file$1, 429, 16, 15996);
-    			attr_dev(div5, "class", "name svelte-kmx4nm");
-    			add_location(div5, file$1, 437, 20, 16275);
-    			attr_dev(div6, "class", "value svelte-kmx4nm");
-    			add_location(div6, file$1, 438, 20, 16347);
-    			attr_dev(div7, "class", "account-balance svelte-kmx4nm");
-    			add_location(div7, file$1, 436, 16, 16225);
-    			attr_dev(div8, "class", "nft-content svelte-kmx4nm");
-    			add_location(div8, file$1, 423, 12, 15866);
-    			attr_dev(div9, "class", "nft-info-box svelte-kmx4nm");
-    			add_location(div9, file$1, 421, 8, 15766);
-    			attr_dev(div10, "class", "name svelte-kmx4nm");
-    			set_style(div10, "margin-bottom", "10px");
-    			add_location(div10, file$1, 445, 12, 16557);
-    			attr_dev(div11, "class", "nft-price svelte-kmx4nm");
-    			add_location(div11, file$1, 444, 8, 16521);
-    			attr_dev(button, "class", "mint-btn svelte-kmx4nm");
+    			attr_dev(img, "alt", "Predic");
+    			add_location(img, file$1, 303, 12, 10831);
+    			attr_dev(div1, "class", "nft-name svelte-1lvz8cd");
+    			add_location(div1, file$1, 305, 16, 10947);
+    			attr_dev(div2, "class", "name svelte-1lvz8cd");
+    			add_location(div2, file$1, 311, 20, 11085);
+    			attr_dev(div3, "class", "value svelte-1lvz8cd");
+    			add_location(div3, file$1, 312, 20, 11143);
+    			attr_dev(div4, "class", "account-balance svelte-1lvz8cd");
+    			add_location(div4, file$1, 310, 16, 11035);
+    			attr_dev(div5, "class", "name svelte-1lvz8cd");
+    			add_location(div5, file$1, 318, 20, 11314);
+    			attr_dev(div6, "class", "value svelte-1lvz8cd");
+    			add_location(div6, file$1, 319, 20, 11386);
+    			attr_dev(div7, "class", "account-balance svelte-1lvz8cd");
+    			add_location(div7, file$1, 317, 16, 11264);
+    			attr_dev(div8, "class", "nft-content svelte-1lvz8cd");
+    			add_location(div8, file$1, 304, 12, 10905);
+    			attr_dev(div9, "class", "nft-info-box svelte-1lvz8cd");
+    			add_location(div9, file$1, 302, 8, 10792);
+    			attr_dev(div10, "class", "name svelte-1lvz8cd");
+    			add_location(div10, file$1, 327, 16, 11704);
+    			attr_dev(div11, "class", "price");
+    			set_style(div11, "font-size", "26px");
+    			add_location(div11, file$1, 330, 16, 11793);
+    			attr_dev(div12, "class", "flex-box");
+    			set_style(div12, "display", "flex");
+    			set_style(div12, "justify-content", "space-between");
+    			set_style(div12, "align-items", "center");
+    			add_location(div12, file$1, 326, 12, 11592);
+    			attr_dev(div13, "class", "nft-price svelte-1lvz8cd");
+    			add_location(div13, file$1, 325, 8, 11556);
+    			attr_dev(button, "class", "mint-btn svelte-1lvz8cd");
     			button.disabled = /*btnDisable*/ ctx[1];
-    			add_location(button, file$1, 461, 8, 17482);
-    			attr_dev(div12, "class", "mint-content svelte-kmx4nm");
-    			add_location(div12, file$1, 420, 4, 15731);
-    			attr_dev(div13, "class", "mint-container svelte-kmx4nm");
-    			add_location(div13, file$1, 416, 0, 15643);
-    			attr_dev(div14, "class", "title svelte-kmx4nm");
-    			add_location(div14, file$1, 476, 4, 17829);
-    			attr_dev(div15, "class", "my-nfts svelte-kmx4nm");
-    			add_location(div15, file$1, 479, 4, 17879);
-    			attr_dev(div16, "class", "nfts svelte-kmx4nm");
-    			add_location(div16, file$1, 475, 0, 17806);
+    			add_location(button, file$1, 351, 8, 12893);
+    			attr_dev(div14, "class", "mint-content svelte-1lvz8cd");
+    			add_location(div14, file$1, 301, 4, 10757);
+    			attr_dev(div15, "class", "mint-container svelte-1lvz8cd");
+    			add_location(div15, file$1, 297, 0, 10669);
+    			attr_dev(div16, "class", "title svelte-1lvz8cd");
+    			add_location(div16, file$1, 366, 4, 13240);
+    			attr_dev(div17, "class", "my-nfts svelte-1lvz8cd");
+    			add_location(div17, file$1, 369, 4, 13290);
+    			attr_dev(div18, "class", "nfts svelte-1lvz8cd");
+    			add_location(div18, file$1, 365, 0, 13217);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, div13, anchor);
-    			append_dev(div13, div0);
-    			append_dev(div13, t1);
-    			append_dev(div13, div12);
-    			append_dev(div12, div9);
+    			insert_dev(target, div15, anchor);
+    			append_dev(div15, div0);
+    			append_dev(div15, t1);
+    			append_dev(div15, div14);
+    			append_dev(div14, div9);
     			append_dev(div9, img);
     			append_dev(div9, t2);
     			append_dev(div9, div8);
@@ -45786,57 +45675,36 @@ var app = (function () {
     			append_dev(div7, t12);
     			append_dev(div7, div6);
     			append_dev(div6, t13);
-    			append_dev(div12, t14);
+    			append_dev(div14, t14);
+    			append_dev(div14, div13);
+    			append_dev(div13, div12);
+    			append_dev(div12, div10);
+    			append_dev(div12, t16);
     			append_dev(div12, div11);
-    			append_dev(div11, div10);
-    			append_dev(div10, t15);
-    			append_dev(div10, t16);
-    			append_dev(div11, t17);
-    			mount_component(beselect, div11, null);
-    			append_dev(div12, t18);
-    			append_dev(div12, button);
+    			append_dev(div14, t18);
+    			append_dev(div14, button);
     			if_block.m(button, null);
     			insert_dev(target, t19, anchor);
-    			insert_dev(target, div16, anchor);
-    			append_dev(div16, div14);
-    			append_dev(div16, t21);
-    			append_dev(div16, div15);
+    			insert_dev(target, div18, anchor);
+    			append_dev(div18, div16);
+    			append_dev(div18, t21);
+    			append_dev(div18, div17);
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				if (each_blocks[i]) {
-    					each_blocks[i].m(div15, null);
+    					each_blocks[i].m(div17, null);
     				}
     			}
 
-    			current = true;
-
     			if (!mounted) {
-    				dispose = listen_dev(button, "click", /*placeOrder*/ ctx[7], false, false, false, false);
+    				dispose = listen_dev(button, "click", /*placeOrder*/ ctx[5], false, false, false, false);
     				mounted = true;
     			}
     		},
     		p: function update(ctx, dirty) {
-    			if (!current || dirty[0] & /*remaing*/ 16) set_data_dev(t7, /*remaing*/ ctx[4]);
-    			if (!current || dirty[0] & /*symbolDip721*/ 32) set_data_dev(t10, /*symbolDip721*/ ctx[5]);
-    			if ((!current || dirty[0] & /*accountBalance*/ 1) && t13_value !== (t13_value = /*accountBalance*/ ctx[0].toString() / 1000000 + "")) set_data_dev(t13, t13_value);
-
-    			if ((!current || dirty[0] & /*symbolDip721*/ 32) && t16_value !== (t16_value = (/*symbolDip721*/ ctx[5]
-    			? "(" + /*symbolDip721*/ ctx[5] + ")"
-    			: /*symbolDip721*/ ctx[5]) + "")) set_data_dev(t16, t16_value);
-
-    			const beselect_changes = {};
-
-    			if (dirty[0] & /*priceArr*/ 8 | dirty[1] & /*$$scope*/ 65536) {
-    				beselect_changes.$$scope = { dirty, ctx };
-    			}
-
-    			if (!updating_value && dirty[0] & /*choosePrice*/ 4) {
-    				updating_value = true;
-    				beselect_changes.value = /*choosePrice*/ ctx[2];
-    				add_flush_callback(() => updating_value = false);
-    			}
-
-    			beselect.$set(beselect_changes);
+    			if (dirty[0] & /*remaing*/ 4) set_data_dev(t7, /*remaing*/ ctx[2]);
+    			if (dirty[0] & /*symbolDip721*/ 8) set_data_dev(t10, /*symbolDip721*/ ctx[3]);
+    			if (dirty[0] & /*accountBalance*/ 1 && t13_value !== (t13_value = /*accountBalance*/ ctx[0].toString() / 1e8 + "")) set_data_dev(t13, t13_value);
 
     			if (current_block_type !== (current_block_type = select_block_type(ctx))) {
     				if_block.d(1);
@@ -45848,12 +45716,12 @@ var app = (function () {
     				}
     			}
 
-    			if (!current || dirty[0] & /*btnDisable*/ 2) {
+    			if (dirty[0] & /*btnDisable*/ 2) {
     				prop_dev(button, "disabled", /*btnDisable*/ ctx[1]);
     			}
 
-    			if (dirty[0] & /*ownerNFTArr*/ 64) {
-    				each_value = /*ownerNFTArr*/ ctx[6];
+    			if (dirty[0] & /*ownerNFTArr*/ 16) {
+    				each_value = /*ownerNFTArr*/ ctx[4];
     				validate_each_argument(each_value);
     				let i;
 
@@ -45865,7 +45733,7 @@ var app = (function () {
     					} else {
     						each_blocks[i] = create_each_block(child_ctx);
     						each_blocks[i].c();
-    						each_blocks[i].m(div15, null);
+    						each_blocks[i].m(div17, null);
     					}
     				}
 
@@ -45876,21 +45744,13 @@ var app = (function () {
     				each_blocks.length = each_value.length;
     			}
     		},
-    		i: function intro(local) {
-    			if (current) return;
-    			transition_in(beselect.$$.fragment, local);
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			transition_out(beselect.$$.fragment, local);
-    			current = false;
-    		},
+    		i: noop$2,
+    		o: noop$2,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(div13);
-    			destroy_component(beselect);
+    			if (detaching) detach_dev(div15);
     			if_block.d();
     			if (detaching) detach_dev(t19);
-    			if (detaching) detach_dev(div16);
+    			if (detaching) detach_dev(div18);
     			destroy_each(each_blocks, detaching);
     			mounted = false;
     			dispose();
@@ -45911,16 +45771,16 @@ var app = (function () {
     function instance$1($$self, $$props, $$invalidate) {
     	let $userBalances;
     	let $auth;
-    	let $canisters;
     	let $plugWallet;
+    	let $canisters;
     	validate_store(userBalances, 'userBalances');
-    	component_subscribe($$self, userBalances, $$value => $$invalidate(24, $userBalances = $$value));
+    	component_subscribe($$self, userBalances, $$value => $$invalidate(20, $userBalances = $$value));
     	validate_store(auth$1, 'auth');
-    	component_subscribe($$self, auth$1, $$value => $$invalidate(25, $auth = $$value));
-    	validate_store(canisters, 'canisters');
-    	component_subscribe($$self, canisters, $$value => $$invalidate(26, $canisters = $$value));
+    	component_subscribe($$self, auth$1, $$value => $$invalidate(21, $auth = $$value));
     	validate_store(plugWallet, 'plugWallet');
-    	component_subscribe($$self, plugWallet, $$value => $$invalidate(27, $plugWallet = $$value));
+    	component_subscribe($$self, plugWallet, $$value => $$invalidate(22, $plugWallet = $$value));
+    	validate_store(canisters, 'canisters');
+    	component_subscribe($$self, canisters, $$value => $$invalidate(23, $canisters = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Mint', slots, []);
 
@@ -46020,16 +45880,17 @@ var app = (function () {
     		agent$1.fetchRootKey();
     		backendActor = createCanisterActor(agent$1, idlFactory$1, "bd3sg-teaaa-aaaaa-qaaba-cai");
     		ledgerActor = createCanisterActor(agent$1, idlFactory, "ryjl3-tyaaa-aaaaa-aaaba-cai");
-    		$$invalidate(3, priceArr = await backendActor.getPrices());
-    		$$invalidate(4, remaing = await backendActor.getRemaing());
-    		$$invalidate(5, symbolDip721 = await backendActor.symbolDip721());
+    		priceArr = await backendActor.getPrices();
+    		const remaingArr = await backendActor.getRemaing();
+    		$$invalidate(2, remaing = remaingArr[0]);
+    		$$invalidate(3, symbolDip721 = await backendActor.symbolDip721());
     		fetchingAddress = false;
     	});
 
     	async function getData() {
-    		$$invalidate(3, priceArr = await backendActor.getPrices());
-    		$$invalidate(4, remaing = await backendActor.getRemaing());
-    		$$invalidate(5, symbolDip721 = await backendActor.symbolDip721());
+    		priceArr = await backendActor.getPrices();
+    		$$invalidate(2, remaing = await backendActor.getRemaing());
+    		$$invalidate(3, symbolDip721 = await backendActor.symbolDip721());
 
     		const approved = await ledgerActor.account_balance({
     			account: hexToBytes(principalToAccountDefaultIdentifier(iiPrincipal))
@@ -46061,12 +45922,21 @@ var app = (function () {
     			}
     		}
 
-    		$$invalidate(6, ownerNFTArr = tempArr);
+    		$$invalidate(4, ownerNFTArr = tempArr);
     	}
 
     	async function placeOrder() {
     		if ($auth.loggedIn) {
     			try {
+    				if (remaing <= 0) {
+    					showNotice({
+    						toast: true,
+    						message: 'No remaining credit limit!',
+    						duration: 3000,
+    						type: "warning"
+    					});
+    				}
+
     				if (accountBalance < choosePrice) {
     					showNotice({
     						toast: true,
@@ -46089,10 +45959,11 @@ var app = (function () {
 
     				let depositAddressBlob = await backendActor.getDepositAddress();
     				$$invalidate(1, btnDisable = true);
+    				const fee = 0;
 
     				const transferResult = await ledgerActor.transfer({
     					memo: BigInt(0x1),
-    					amount: { e8s: parseInt(choosePrice) + 10000 },
+    					amount: { e8s: parseInt(choosePrice) + fee },
     					fee: { e8s: 10000 },
     					to: depositAddressBlob,
     					from_subaccount: [],
@@ -46133,6 +46004,8 @@ var app = (function () {
 
     						getData();
     					} else {
+    						console.log("transfer failed2", result.Err);
+
     						messageBox({
     							type: "warning",
     							title: 'Buy Failed',
@@ -46140,6 +46013,8 @@ var app = (function () {
     						});
     					}
     				} else {
+    					console.log("transfer failed1");
+
     					messageBox({
     						type: "warning",
     						title: 'Buy Failed',
@@ -46158,137 +46033,6 @@ var app = (function () {
     				message: 'Please login'
     			});
     		}
-    	}
-
-    	async function depositT(principal) {
-    		// explicitly set these here to prevent
-    		// withdraw form from showing
-    		withdrawing = false;
-
-    		withdrawAmount = 0;
-    		currentToken = undefined;
-
-    		// END withdraw
-    		depositing = true;
-
-    		currentToken = principal;
-
-    		const canister = $canisters.find(canister => {
-    			return canister.canisterId === principal.toString();
-    		});
-
-    		if (canister && canister.canisterName === 'ICP') {
-    			// await ledgerActor.transfer(...)
-
-    			// transfer ICP correct subaccount on DEX
-    			await ledgerActor.transfer({
-    				memo: BigInt(0x1),
-    				amount: { e8s: depositAmount },
-    				fee: { e8s: 10000 },
-    				to: depositAddressBlob,
-    				from_subaccount: [],
-    				created_at_time: []
-    			});
-
-    			const result = await backendActor.deposit(principal);
-
-    			if (result.Ok) {
-    				const dexBalance = await backendActor.getBalance(principal);
-    				let ledgerBalance = 0;
-    				let response;
-
-    				if (authType === "II") {
-    					// Update user ICP balance
-    					response = await ledgerActor.account_balance({
-    						account: hexToBytes(principalToAccountDefaultIdentifier($auth.principal))
-    					});
-    				} // TODO: Support Plug wallett
-    				// response = await ledgerActor.account_balance({account: XXX});
-
-    				if (response.e8s) {
-    					ledgerBalance = response.e8s;
-    				}
-
-    				setBalances(canister.canisterName, ledgerBalance, dexBalance);
-    			}
-    		}
-
-    		// else if(canister && canister.canisterName === 'AkitaDIP20') {
-    		//     await akitaActor.approve(Principal.fromText("bd3sg-teaaa-aaaaa-qaaba-cai"), depositAmount);
-    		//     const result = await backendActor.deposit(principal);
-    		//     if(result.Ok) {
-    		//         const dexBalance = await backendActor.getBalance(principal);
-    		//         const akitaBalance = await akitaActor.balanceOf($auth.principal);
-    		//         setBalances(canister.canisterName, akitaBalance, dexBalance);
-    		//     }
-    		// }
-    		// else if(canister && canister.canisterName === 'GoldenDIP20') {
-    		//     await goldenActor.approve(Principal.fromText("bd3sg-teaaa-aaaaa-qaaba-cai"), depositAmount);
-    		//     const result = await backendActor.deposit(principal);
-    		//     if(result.Ok) {
-    		//         const dexBalance = await backendActor.getBalance(principal);
-    		//         const goldenBalance = await goldenActor.balanceOf($auth.principal);
-    		//         setBalances(canister.canisterName, goldenBalance, dexBalance);
-    		//     }
-    		// }
-    		depositing = false;
-
-    		currentToken = undefined;
-    	}
-
-    	async function withdrawT(principal) {
-    		withdrawingAmount = true;
-    		currentToken = principal;
-    		const withdrawPrincipal = Principal$1.fromText(withdrawAddress);
-
-    		const canister = $canisters.find(canister => {
-    			return canister.canisterId === principal.toString();
-    		});
-
-    		if (canister && canister.canisterName === 'ICP') {
-    			const result = await backendActor.withdraw(currentToken, withdrawAmount, withdrawPrincipal);
-
-    			if (result.Ok) {
-    				const dexBalance = await backendActor.getBalance(principal);
-    				let ledgerBalance = 0;
-    				let response;
-
-    				if (authType === "II") {
-    					// When using II, display the balance in the target account
-    					response = await ledgerActor.account_balance({
-    						account: hexToBytes(principalToAccountDefaultIdentifier($auth.principal))
-    					});
-    				} // TODO: Support Plug wallet
-    				// response = await ledgerActor.account_balance({account: XXX});
-
-    				if (response.e8s) {
-    					ledgerBalance = response.e8s;
-    				}
-
-    				setBalances(canister.canisterName, ledgerBalance, dexBalance);
-    			}
-    		} else if (canister && canister.canisterName === 'AkitaDIP20') {
-    			const result = await backendActor.withdraw(currentToken, withdrawAmount, withdrawPrincipal);
-
-    			if (result.Ok) {
-    				const dexBalance = await backendActor.getBalance(principal);
-    				const akitaBalance = await akitaActor.balanceOf($auth.principal);
-    				setBalances(canister.canisterName, akitaBalance, dexBalance);
-    			}
-    		} else if (canister && canister.canisterName === 'GoldenDIP20') {
-    			const result = await backendActor.withdraw(currentToken, withdrawAmount, withdrawPrincipal);
-
-    			if (result.Ok) {
-    				const dexBalance = await backendActor.getBalance(principal);
-    				const goldenBalance = await goldenActor.balanceOf($auth.principal);
-    				setBalances(canister.canisterName, goldenBalance, dexBalance);
-    			}
-    		}
-
-    		withdrawAmount = 0;
-    		withdrawAddress = '';
-    		currentToken = undefined;
-    		withdrawingAmount = false;
     	}
 
     	function setBalances(canisterName, canisterBalance, dexBalance) {
@@ -46350,11 +46094,6 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<Mint> was created with unknown prop '${key}'`);
     	});
 
-    	function beselect_value_binding(value) {
-    		choosePrice = value;
-    		$$invalidate(2, choosePrice);
-    	}
-
     	$$self.$capture_state = () => ({
     		onMount,
     		FontAwesomeIcon,
@@ -46407,8 +46146,6 @@ var app = (function () {
     		getData,
     		getNftArr,
     		placeOrder,
-    		depositT,
-    		withdrawT,
     		setBalances,
     		beginWithdrawProcess,
     		cancelWithdrawProcess,
@@ -46416,8 +46153,8 @@ var app = (function () {
     		copyPrincipal,
     		$userBalances,
     		$auth,
-    		$canisters,
-    		$plugWallet
+    		$plugWallet,
+    		$canisters
     	});
 
     	$$self.$inject_state = $$props => {
@@ -46436,12 +46173,12 @@ var app = (function () {
     		if ('didCopyPrincipal' in $$props) didCopyPrincipal = $$props.didCopyPrincipal;
     		if ('withdrawingAmount' in $$props) withdrawingAmount = $$props.withdrawingAmount;
     		if ('fetchingAddress' in $$props) fetchingAddress = $$props.fetchingAddress;
-    		if ('choosePrice' in $$props) $$invalidate(2, choosePrice = $$props.choosePrice);
-    		if ('priceArr' in $$props) $$invalidate(3, priceArr = $$props.priceArr);
-    		if ('remaing' in $$props) $$invalidate(4, remaing = $$props.remaing);
-    		if ('symbolDip721' in $$props) $$invalidate(5, symbolDip721 = $$props.symbolDip721);
+    		if ('choosePrice' in $$props) choosePrice = $$props.choosePrice;
+    		if ('priceArr' in $$props) priceArr = $$props.priceArr;
+    		if ('remaing' in $$props) $$invalidate(2, remaing = $$props.remaing);
+    		if ('symbolDip721' in $$props) $$invalidate(3, symbolDip721 = $$props.symbolDip721);
     		if ('ownerNfs' in $$props) ownerNfs = $$props.ownerNfs;
-    		if ('ownerNFTArr' in $$props) $$invalidate(6, ownerNFTArr = $$props.ownerNFTArr);
+    		if ('ownerNFTArr' in $$props) $$invalidate(4, ownerNFTArr = $$props.ownerNFTArr);
     		if ('currentToken' in $$props) currentToken = $$props.currentToken;
     		if ('withdrawAmount' in $$props) withdrawAmount = $$props.withdrawAmount;
     		if ('depositAmount' in $$props) depositAmount = $$props.depositAmount;
@@ -46452,17 +46189,7 @@ var app = (function () {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [
-    		accountBalance,
-    		btnDisable,
-    		choosePrice,
-    		priceArr,
-    		remaing,
-    		symbolDip721,
-    		ownerNFTArr,
-    		placeOrder,
-    		beselect_value_binding
-    	];
+    	return [accountBalance, btnDisable, remaing, symbolDip721, ownerNFTArr, placeOrder];
     }
 
     class Mint extends SvelteComponentDev {
@@ -46623,21 +46350,21 @@ var app = (function () {
     			add_location(div2, file, 27, 9, 837);
     			attr_dev(div3, "class", "bg");
     			add_location(div3, file, 24, 5, 727);
-    			attr_dev(div4, "class", "main-container svelte-1hdyknm");
+    			attr_dev(div4, "class", "main-container svelte-1hvp7sk");
     			add_location(div4, file, 32, 8, 929);
     			if (!src_url_equal(img.src, img_src_value = "images/logo.png")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "DFINITY logo");
-    			attr_dev(img, "class", "svelte-1hdyknm");
+    			attr_dev(img, "class", "svelte-1hvp7sk");
     			add_location(img, file, 45, 12, 1208);
-    			attr_dev(div5, "class", "right svelte-1hdyknm");
+    			attr_dev(div5, "class", "right svelte-1hvp7sk");
     			add_location(div5, file, 46, 12, 1268);
-    			attr_dev(div6, "class", "footer svelte-1hdyknm");
+    			attr_dev(div6, "class", "footer svelte-1hvp7sk");
     			add_location(div6, file, 44, 8, 1175);
-    			attr_dev(div7, "class", "page svelte-1hdyknm");
+    			attr_dev(div7, "class", "page svelte-1hvp7sk");
     			add_location(div7, file, 29, 4, 886);
     			set_style(main, "position", "relative");
     			set_style(main, "z-index", "2");
-    			attr_dev(main, "class", "svelte-1hdyknm");
+    			attr_dev(main, "class", "svelte-1hvp7sk");
     			add_location(main, file, 23, 0, 677);
     		},
     		l: function claim(nodes) {

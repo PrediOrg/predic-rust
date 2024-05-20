@@ -111,8 +111,8 @@
         backendActor = createCanisterActor(agent, backendIDL, process.env.PREDIC_CANISTER_ID);
         ledgerActor = createCanisterActor(agent, ledgerIDL, process.env.LEDGER_CANISTER_ID);
         priceArr = await backendActor.getPrices();
-        remaing = await backendActor.getRemaing();
-
+        const remaingArr = await backendActor.getRemaing();
+        remaing = remaingArr[0]
         symbolDip721 = await backendActor.symbolDip721();
         fetchingAddress = false;
     });
@@ -155,6 +155,15 @@
 
         if ($auth.loggedIn) {
             try {
+                if(remaing<=0){
+
+                    showNotice({
+                        toast: true,
+                        message: 'No remaining credit limit!',
+                        duration: 3000,
+                        type: "warning"
+                    });
+                }
                 if (accountBalance < choosePrice) {
                     showNotice({
                         toast: true,
@@ -174,17 +183,15 @@
                 }
                 let depositAddressBlob = await backendActor.getDepositAddress();
                 btnDisable = true
-
+                const fee = 0;
                 const transferResult = await ledgerActor.transfer({
                     memo: BigInt(0x1),
-                    amount: {e8s: (parseInt(choosePrice) + 10000)},
+                    amount: {e8s: (parseInt(choosePrice) + fee)},
                     fee: {e8s: 10000},
                     to: depositAddressBlob,
                     from_subaccount: [],
                     created_at_time: [],
                 })
-
-
                 btnDisable = false
                 if (transferResult.Ok) {
                     btnDisable = true
@@ -195,12 +202,10 @@
                     if (choosePrice == priceArr[2]) {
                         chooseIndex = 2
                     }
-
                     setTimeout(async () => {
                         getData()
                     }, 3000)
                     const result = await backendActor.buy(chooseIndex);
-
                     btnDisable = false
                     if (result.Ok) {
                         showNotice({
@@ -211,14 +216,15 @@
                         });
                         getData()
                     } else {
+                        console.log("transfer failed2",result.Err)
                         messageBox({
                             type: "warning",
                             title: 'Buy Failed',
                             message: Object.keys(result.Err)[0]
                         })
                     }
-
                 } else {
+                    console.log("transfer failed1")
                     messageBox({
                         type: "warning",
                         title: 'Buy Failed',
@@ -242,131 +248,6 @@
         }
 
 
-    };
-
-    async function depositT(principal) {
-        // explicitly set these here to prevent
-        // withdraw form from showing
-        withdrawing = false;
-        withdrawAmount = 0;
-        currentToken = undefined;
-        // END withdraw
-
-        depositing = true;
-        currentToken = principal;
-
-        const canister = $canisters.find((canister) => {
-            return canister.canisterId === principal.toString();
-        })
-        if (canister && canister.canisterName === 'ICP') {
-            if (authType === "Plug") {
-                // TODO: Support Plug wallet
-                // await ledgerActor.transfer(...)
-            }
-            // transfer ICP correct subaccount on DEX
-            await ledgerActor.transfer({
-                memo: BigInt(0x1),
-                amount: {e8s: depositAmount},
-                fee: {e8s: 10000},
-                to: depositAddressBlob,
-                from_subaccount: [],
-                created_at_time: [],
-            });
-
-            const result = await backendActor.deposit(principal);
-            if (result.Ok) {
-                const dexBalance = await backendActor.getBalance(principal);
-
-                let ledgerBalance = 0;
-                let response;
-                if (authType === "II") {
-                    // Update user ICP balance
-                    response = await ledgerActor.account_balance({account: hexToBytes(principalToAccountDefaultIdentifier($auth.principal))});
-                } else if (authType === "Plug") {
-                    // TODO: Support Plug wallett
-                    // response = await ledgerActor.account_balance({account: XXX});
-                }
-                if (response.e8s) {
-                    ledgerBalance = response.e8s
-                }
-                setBalances(canister.canisterName, ledgerBalance, dexBalance);
-            }
-        }
-        // else if(canister && canister.canisterName === 'AkitaDIP20') {
-        //     await akitaActor.approve(Principal.fromText(process.env.PREDIC_CANISTER_ID), depositAmount);
-
-        //     const result = await backendActor.deposit(principal);
-        //     if(result.Ok) {
-        //         const dexBalance = await backendActor.getBalance(principal);
-        //         const akitaBalance = await akitaActor.balanceOf($auth.principal);
-
-        //         setBalances(canister.canisterName, akitaBalance, dexBalance);
-        //     }
-        // }
-        // else if(canister && canister.canisterName === 'GoldenDIP20') {
-        //     await goldenActor.approve(Principal.fromText(process.env.PREDIC_CANISTER_ID), depositAmount);
-
-        //     const result = await backendActor.deposit(principal);
-        //     if(result.Ok) {
-        //         const dexBalance = await backendActor.getBalance(principal);
-        //         const goldenBalance = await goldenActor.balanceOf($auth.principal);
-
-        //         setBalances(canister.canisterName, goldenBalance, dexBalance);
-        //     }
-        // }
-
-        depositing = false;
-        currentToken = undefined;
-    }
-
-    async function withdrawT(principal) {
-        withdrawingAmount = true;
-        currentToken = principal;
-        const withdrawPrincipal = Principal.fromText(withdrawAddress);
-
-        const canister = $canisters.find((canister) => {
-            return canister.canisterId === principal.toString();
-        })
-        if (canister && canister.canisterName === 'ICP') {
-            const result = await backendActor.withdraw(currentToken, withdrawAmount, withdrawPrincipal)
-            if (result.Ok) {
-                const dexBalance = await backendActor.getBalance(principal);
-                let ledgerBalance = 0;
-                let response;
-                if (authType === "II") {
-                    // When using II, display the balance in the target account
-                    response = await ledgerActor.account_balance({account: hexToBytes(principalToAccountDefaultIdentifier($auth.principal))});
-                } else if (authType === "Plug") {
-                    // TODO: Support Plug wallet
-                    // response = await ledgerActor.account_balance({account: XXX});
-                }
-                if (response.e8s) {
-                    ledgerBalance = response.e8s
-                }
-                setBalances(canister.canisterName, ledgerBalance, dexBalance);
-            }
-        } else if (canister && canister.canisterName === 'AkitaDIP20') {
-            const result = await backendActor.withdraw(currentToken, withdrawAmount, withdrawPrincipal)
-            if (result.Ok) {
-                const dexBalance = await backendActor.getBalance(principal);
-                const akitaBalance = await akitaActor.balanceOf($auth.principal);
-
-                setBalances(canister.canisterName, akitaBalance, dexBalance);
-            }
-        } else if (canister && canister.canisterName === 'GoldenDIP20') {
-            const result = await backendActor.withdraw(currentToken, withdrawAmount, withdrawPrincipal)
-            if (result.Ok) {
-                const dexBalance = await backendActor.getBalance(principal);
-                const goldenBalance = await goldenActor.balanceOf($auth.principal);
-
-                setBalances(canister.canisterName, goldenBalance, dexBalance);
-            }
-        }
-
-        withdrawAmount = 0;
-        withdrawAddress = '';
-        currentToken = undefined;
-        withdrawingAmount = false;
     };
 
     function setBalances(canisterName, canisterBalance, dexBalance) {
@@ -420,7 +301,7 @@
     </div>
     <div class="mint-content">
         <div class="nft-info-box">
-            <img class="nft-img" src="images/nft_logo.png"/>
+            <img class="nft-img" src="images/nft_logo.png" alt="Predic"/>
             <div class="nft-content">
                 <div class="nft-name">
                     PPL
@@ -437,27 +318,36 @@
                 <div class="account-balance">
                     <div class="name">Your {symbolDip721} balance</div>
                     <div class="value">
-                        {accountBalance.toString() / 1000000}
+                        {accountBalance.toString() / 1e8}
                     </div>
                 </div>
             </div>
         </div>
         <div class="nft-price">
-            <div class="name" style="margin-bottom: 10px">
-                Choose Price {symbolDip721 ? "(" + symbolDip721 + ")" : symbolDip721}
+            <div class="flex-box" style="display: flex;justify-content: space-between;align-items: center">
+                <div class="name" >
+                    NFT Price
+                </div>
+                <div class="price" style="font-size: 26px;">
+                    10 ICP
+                </div>
             </div>
+<!--            <div class="name" style="margin-bottom: 10px">-->
+<!--                Choose Price {symbolDip721 ? "(" + symbolDip721 + ")" : symbolDip721}-->
+<!--            </div>-->
             <!--                    <select class="input-style" bind:value={choosePrice}>-->
             <!--                        {#each priceArr as price}-->
             <!--                            <option value={price}>-->
-            <!--                                {price.toString()/1000000}-->
+            <!--                                {price.toString()/1e8}-->
             <!--                            </option>-->
             <!--                        {/each}-->
             <!--                    </select>-->
-            <BeSelect class="choose-price" placeholder="Choose Price" bind:value={choosePrice} maxHeight='180px'>
-                {#each priceArr as price}
-                    <BeOption value={price} label={price.toString()/1000000}/>
-                {/each}
-            </BeSelect>
+
+<!--            <BeSelect class="choose-price" placeholder="Choose Price" bind:value={choosePrice} maxHeight='180px'>-->
+<!--                {#each priceArr as price}-->
+<!--                    <BeOption value={price} label={price.toString()/1e8}/>-->
+<!--                {/each}-->
+<!--            </BeSelect>-->
         </div>
         <button class="mint-btn" disabled={btnDisable} on:click={placeOrder}>
             {#if btnDisable}
@@ -616,7 +506,9 @@
     .account-balance .value {
         margin-top: 10px;
     }
+    .nft-price{
 
+    }
     .mint-btn {
         width: 96%;
         margin-left: 2%;
@@ -653,4 +545,46 @@
         position: relative;
         z-index: 1;
     }
+    @media screen and (max-width: 1000px) {
+        .mint-container,.mint-content{
+            width: 100%!important;
+            padding:20px;
+        }
+        .nft-content{
+            padding: 0!important;
+        }
+        .nft-info-box{
+            display: block!important;
+        }
+        .nft-img{
+            width: 100%!important;
+        }
+        .mint-btn{
+            width: 100%!important;
+        }
+        .nft-name{
+            display: none;
+        }
+        .account-balance{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .my-nfts .nft-item {
+            width: calc(50% - 20px);
+            margin-left: 20px;
+            margin-bottom: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+            background: #191032;
+            box-shadow: 0px 2px 3px 0px rgba(41, 72, 152, 0.01), 0px 9px 7px 0px rgba(41, 72, 152, 0.02), 0px 22px 14px 0px rgba(41, 72, 152, 0.03), 0px 42px 28px 0px rgba(41, 72, 152, 0.03), 0px 71px 51px 0px rgba(41, 72, 152, 0.04), 0px 109px 87px 0px rgba(41, 72, 152, 0.05);
+            border-radius: 11px 11px 11px 11px;
+            font-size: 20px;
+        }
+
+        .my-nfts .nft-item:nth-child(2n+1) {
+            margin-left: 0;
+        }
+    }
+
 </style>

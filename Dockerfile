@@ -8,15 +8,15 @@ ENV RUSTUP_HOME=/opt/rustup
 ENV CARGO_HOME=/opt/cargo
 ENV RUST_VERSION=1.78.0
 ENV DFX_VERSION=0.19.0
-ENV http_proxy=http://192.168.3.17:9999
-ENV https_proxy=http://192.168.3.17:9999
-ENV all_proxy=http://192.168.3.17:10000
+# ENV http_proxy=http://192.168.3.17:9999
+# ENV https_proxy=http://192.168.3.17:9999
+# ENV all_proxy=http://192.168.3.17:10000
 # RUN sed -i 's/security\.ubuntu\.com/mirrors.aliyun.com/g; s/archive\.ubuntu\.com/mirrors.aliyun.com/g' /etc/apt/sources.list
 
 # Install a basic environment needed for our build tools
 RUN apt -yq update && \
     apt -yq install --no-install-recommends curl ca-certificates \
-    build-essential pkg-config libssl-dev llvm-dev liblmdb-dev clang cmake rsync libunwind8
+    build-essential pkg-config libssl-dev llvm-dev liblmdb-dev clang cmake libunwind8 netcat git psmisc vim
 
 # Install Node.js using nvm
 ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin:${PATH}"
@@ -36,5 +36,9 @@ RUN rustup target add wasm32-unknown-unknown
 RUN cargo install ic-wasm
 RUN cargo install candid-extractor
 
-COPY . /canister
+RUN mkdir /cansiter
 WORKDIR /canister
+
+# RUN cargo install cargo-audit
+ENV PATH="/root/.local/share/dfx/bin/:${PATH}"
+EXPOSE 4943

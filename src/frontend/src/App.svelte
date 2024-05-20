@@ -102,9 +102,24 @@
 
     }
 
-    .ic-badge-link {
-        cursor: pointer;
+    @media screen and (max-width: 1000px){
+
+        .footer img {
+            height: 30px;
+        }
+
+        .footer{
+            width: 100%!important;
+        }
+        .footer .right {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            font-size: 14px;
+        }
+
     }
+
 
     @media (max-width: 640px) {
         main {

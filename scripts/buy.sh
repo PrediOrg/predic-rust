@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-#测试web页面的depositeAddress
-ICP_DEPOSIT_ADDRESS=""
-ROOT_PRINCIPAL="principal \"\""
-ICP_DEPOSIT_ADDR_USER1=$(python3 -c 'print("vec{" + ";".join([str(b) for b in bytes.fromhex("'$II_ACCOUNT_ID_HEX'")]) + "}")')
 #测试默认账户的depositeAddress
 ICP_DEPOSIT_ADDR_USER1=$(node scripts/blobToHex.js $(dfx canister call predic getDepositAddress))
 ROOT_PRINCIPAL="principal \"$(dfx identity get-principal)\""
