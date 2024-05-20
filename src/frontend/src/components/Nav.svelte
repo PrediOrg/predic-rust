@@ -130,7 +130,7 @@
 
 <div id="nav-container">
     <a
-      href="#"
+      href="#top"
       rel="noopener noreferrer"
       class="logo"
     >
@@ -211,16 +211,16 @@
 
 
 
-    .plug-logo {
+    /* .plug-logo {
         height: 16px;
-    }
+    } */
 
-    .top-round-rainbow {
+    /* .top-round-rainbow {
         background-image: repeating-linear-gradient(to right,
             #FFE701,#FC9770,#FB72A5,#C172DA);
         background-size: 100% 3px;
         background-repeat:repeat;
-    }
+    } */
     button:after{
         content:"";
         width: 100%;
