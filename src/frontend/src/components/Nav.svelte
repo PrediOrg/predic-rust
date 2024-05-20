@@ -96,7 +96,7 @@
             navigator.clipboard.writeText(text);
                 showNotice({
                     toast: true,
-                    message: iiPrincipal+' Copy success!',
+                    message: iiPrincipal+' Copied!',
                     duration: 3000,
                     type:"success"
                 });
@@ -130,8 +130,9 @@
 
 <div id="nav-container">
     <a
-      href="#"
+      href="https://www.predi.org"
       rel="noopener noreferrer"
+      target="_blank"
       class="logo"
     >
 

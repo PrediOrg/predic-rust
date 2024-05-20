@@ -152,18 +152,18 @@
     }
 
     async function placeOrder() {
-        if (accountBalance < choosePrice) {
-            showNotice({
-                toast: true,
-                message: 'Balance not enough!',
-                duration: 3000,
-                type: "error"
-            });
-            return
-        }
+
         if ($auth.loggedIn) {
             try {
-
+                if (accountBalance < choosePrice) {
+                    showNotice({
+                        toast: true,
+                        message: 'Insufficient balance!',
+                        duration: 3000,
+                        type: "warning"
+                    });
+                    return
+                }
                 if (!choosePrice) {
                     showNotice({
                         toast: true,
@@ -416,14 +416,14 @@
 
 <div class="mint-container">
     <div class="title">
-        NFT License
+        License NFT
     </div>
     <div class="mint-content">
         <div class="nft-info-box">
             <img class="nft-img" src="images/nft_logo.png"/>
             <div class="nft-content">
                 <div class="nft-name">
-                    PREDIC2
+                    PPL
                 </div>
 
 

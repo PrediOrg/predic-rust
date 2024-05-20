@@ -34886,7 +34886,7 @@ var app = (function () {
     const { console: console_1$3 } = globals;
     const file$4 = "src/components/Nav.svelte";
 
-    // (152:12) {:else}
+    // (153:12) {:else}
     function create_else_block$4(ctx) {
     	let button;
     	let span;
@@ -34898,9 +34898,9 @@ var app = (function () {
     			button = element("button");
     			span = element("span");
     			span.textContent = "Login";
-    			add_location(span, file$4, 153, 20, 5714);
+    			add_location(span, file$4, 154, 20, 5750);
     			attr_dev(button, "class", "svelte-1imvso");
-    			add_location(button, file$4, 152, 16, 5668);
+    			add_location(button, file$4, 153, 16, 5704);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button, anchor);
@@ -34925,14 +34925,14 @@ var app = (function () {
     		block,
     		id: create_else_block$4.name,
     		type: "else",
-    		source: "(152:12) {:else}",
+    		source: "(153:12) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (144:12) {#if $auth.loggedIn}
+    // (145:12) {#if $auth.loggedIn}
     function create_if_block$4(ctx) {
     	let button0;
     	let span0;
@@ -34961,13 +34961,13 @@ var app = (function () {
     			button1 = element("button");
     			span1 = element("span");
     			span1.textContent = "Log out";
-    			add_location(span0, file$4, 145, 16, 5333);
+    			add_location(span0, file$4, 146, 16, 5369);
     			set_style(button0, "margin-right", "20px");
     			attr_dev(button0, "class", "svelte-1imvso");
-    			add_location(button0, file$4, 144, 16, 5238);
-    			add_location(span1, file$4, 149, 20, 5585);
+    			add_location(button0, file$4, 145, 16, 5274);
+    			add_location(span1, file$4, 150, 20, 5621);
     			attr_dev(button1, "class", "svelte-1imvso");
-    			add_location(button1, file$4, 148, 16, 5537);
+    			add_location(button1, file$4, 149, 16, 5573);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button0, anchor);
@@ -35028,7 +35028,7 @@ var app = (function () {
     		block,
     		id: create_if_block$4.name,
     		type: "if",
-    		source: "(144:12) {#if $auth.loggedIn}",
+    		source: "(145:12) {#if $auth.loggedIn}",
     		ctx
     	});
 
@@ -35069,18 +35069,19 @@ var app = (function () {
     			if (!src_url_equal(img.src, img_src_value = "images/logo.png")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "DFINITY logo");
     			attr_dev(img, "class", "svelte-1imvso");
-    			add_location(img, file$4, 137, 6, 5109);
-    			attr_dev(a, "href", "#");
+    			add_location(img, file$4, 138, 6, 5145);
+    			attr_dev(a, "href", "https://www.predi.org");
     			attr_dev(a, "rel", "noopener noreferrer");
+    			attr_dev(a, "target", "_blank");
     			attr_dev(a, "class", "logo svelte-1imvso");
-    			add_location(a, file$4, 131, 4, 5027);
+    			add_location(a, file$4, 131, 4, 5021);
     			attr_dev(li, "class", "svelte-1imvso");
-    			add_location(li, file$4, 142, 6, 5184);
+    			add_location(li, file$4, 143, 6, 5220);
     			attr_dev(ul, "class", "svelte-1imvso");
-    			add_location(ul, file$4, 141, 4, 5173);
+    			add_location(ul, file$4, 142, 4, 5209);
     			attr_dev(div, "id", "nav-container");
     			attr_dev(div, "class", "svelte-1imvso");
-    			add_location(div, file$4, 130, 0, 4998);
+    			add_location(div, file$4, 130, 0, 4992);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -35254,7 +35255,7 @@ var app = (function () {
 
     			showNotice({
     				toast: true,
-    				message: iiPrincipal + ' Copy success!',
+    				message: iiPrincipal + ' Copied!',
     				duration: 3000,
     				type: "success"
     			});
@@ -45449,7 +45450,7 @@ var app = (function () {
     			span = element("span");
     			span.textContent = "Mint";
     			attr_dev(span, "class", "svelte-kmx4nm");
-    			add_location(span, file$1, 467, 17, 17623);
+    			add_location(span, file$1, 467, 17, 17695);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
@@ -45479,7 +45480,7 @@ var app = (function () {
     			span = element("span");
     			span.textContent = "Loading";
     			attr_dev(span, "class", "svelte-kmx4nm");
-    			add_location(span, file$1, 463, 17, 17526);
+    			add_location(span, file$1, 463, 17, 17598);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
@@ -45535,16 +45536,16 @@ var app = (function () {
     			attr_dev(img, "class", "nft-logo svelte-kmx4nm");
     			if (!src_url_equal(img.src, img_src_value = "images/nft_logo.png")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "");
-    			add_location(img, file$1, 482, 16, 17919);
+    			add_location(img, file$1, 482, 16, 17991);
     			attr_dev(div0, "class", "nft-id");
-    			add_location(div0, file$1, 484, 20, 18070);
+    			add_location(div0, file$1, 484, 20, 18142);
     			attr_dev(div1, "class", "nft-id");
-    			add_location(div1, file$1, 487, 20, 18180);
+    			add_location(div1, file$1, 487, 20, 18252);
     			set_style(div2, "display", "flex");
     			set_style(div2, "justify-content", "space-between");
-    			add_location(div2, file$1, 483, 16, 17991);
+    			add_location(div2, file$1, 483, 16, 18063);
     			attr_dev(div3, "class", "nft-item svelte-kmx4nm");
-    			add_location(div3, file$1, 481, 12, 17880);
+    			add_location(div3, file$1, 481, 12, 17952);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div3, anchor);
@@ -45669,7 +45670,7 @@ var app = (function () {
     		c: function create() {
     			div13 = element("div");
     			div0 = element("div");
-    			div0.textContent = "NFT License";
+    			div0.textContent = "License NFT";
     			t1 = space();
     			div12 = element("div");
     			div9 = element("div");
@@ -45677,7 +45678,7 @@ var app = (function () {
     			t2 = space();
     			div8 = element("div");
     			div1 = element("div");
-    			div1.textContent = "PREDIC2";
+    			div1.textContent = "PPL";
     			t4 = space();
     			div4 = element("div");
     			div2 = element("div");
@@ -45716,46 +45717,46 @@ var app = (function () {
     			}
 
     			attr_dev(div0, "class", "title svelte-kmx4nm");
-    			add_location(div0, file$1, 417, 4, 15600);
+    			add_location(div0, file$1, 417, 4, 15676);
     			attr_dev(img, "class", "nft-img svelte-kmx4nm");
     			if (!src_url_equal(img.src, img_src_value = "images/nft_logo.png")) attr_dev(img, "src", img_src_value);
-    			add_location(img, file$1, 422, 12, 15729);
+    			add_location(img, file$1, 422, 12, 15805);
     			attr_dev(div1, "class", "nft-name svelte-kmx4nm");
-    			add_location(div1, file$1, 424, 16, 15832);
+    			add_location(div1, file$1, 424, 16, 15908);
     			attr_dev(div2, "class", "name svelte-kmx4nm");
-    			add_location(div2, file$1, 430, 20, 15974);
+    			add_location(div2, file$1, 430, 20, 16046);
     			attr_dev(div3, "class", "value svelte-kmx4nm");
-    			add_location(div3, file$1, 431, 20, 16032);
+    			add_location(div3, file$1, 431, 20, 16104);
     			attr_dev(div4, "class", "account-balance svelte-kmx4nm");
-    			add_location(div4, file$1, 429, 16, 15924);
+    			add_location(div4, file$1, 429, 16, 15996);
     			attr_dev(div5, "class", "name svelte-kmx4nm");
-    			add_location(div5, file$1, 437, 20, 16203);
+    			add_location(div5, file$1, 437, 20, 16275);
     			attr_dev(div6, "class", "value svelte-kmx4nm");
-    			add_location(div6, file$1, 438, 20, 16275);
+    			add_location(div6, file$1, 438, 20, 16347);
     			attr_dev(div7, "class", "account-balance svelte-kmx4nm");
-    			add_location(div7, file$1, 436, 16, 16153);
+    			add_location(div7, file$1, 436, 16, 16225);
     			attr_dev(div8, "class", "nft-content svelte-kmx4nm");
-    			add_location(div8, file$1, 423, 12, 15790);
+    			add_location(div8, file$1, 423, 12, 15866);
     			attr_dev(div9, "class", "nft-info-box svelte-kmx4nm");
-    			add_location(div9, file$1, 421, 8, 15690);
+    			add_location(div9, file$1, 421, 8, 15766);
     			attr_dev(div10, "class", "name svelte-kmx4nm");
     			set_style(div10, "margin-bottom", "10px");
-    			add_location(div10, file$1, 445, 12, 16485);
+    			add_location(div10, file$1, 445, 12, 16557);
     			attr_dev(div11, "class", "nft-price svelte-kmx4nm");
-    			add_location(div11, file$1, 444, 8, 16449);
+    			add_location(div11, file$1, 444, 8, 16521);
     			attr_dev(button, "class", "mint-btn svelte-kmx4nm");
     			button.disabled = /*btnDisable*/ ctx[1];
-    			add_location(button, file$1, 461, 8, 17410);
+    			add_location(button, file$1, 461, 8, 17482);
     			attr_dev(div12, "class", "mint-content svelte-kmx4nm");
-    			add_location(div12, file$1, 420, 4, 15655);
+    			add_location(div12, file$1, 420, 4, 15731);
     			attr_dev(div13, "class", "mint-container svelte-kmx4nm");
-    			add_location(div13, file$1, 416, 0, 15567);
+    			add_location(div13, file$1, 416, 0, 15643);
     			attr_dev(div14, "class", "title svelte-kmx4nm");
-    			add_location(div14, file$1, 476, 4, 17757);
+    			add_location(div14, file$1, 476, 4, 17829);
     			attr_dev(div15, "class", "my-nfts svelte-kmx4nm");
-    			add_location(div15, file$1, 479, 4, 17807);
+    			add_location(div15, file$1, 479, 4, 17879);
     			attr_dev(div16, "class", "nfts svelte-kmx4nm");
-    			add_location(div16, file$1, 475, 0, 17734);
+    			add_location(div16, file$1, 475, 0, 17806);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -46064,19 +46065,19 @@ var app = (function () {
     	}
 
     	async function placeOrder() {
-    		if (accountBalance < choosePrice) {
-    			showNotice({
-    				toast: true,
-    				message: 'Balance not enough!',
-    				duration: 3000,
-    				type: "error"
-    			});
-
-    			return;
-    		}
-
     		if ($auth.loggedIn) {
     			try {
+    				if (accountBalance < choosePrice) {
+    					showNotice({
+    						toast: true,
+    						message: 'Insufficient balance!',
+    						duration: 3000,
+    						type: "warning"
+    					});
+
+    					return;
+    				}
+
     				if (!choosePrice) {
     					showNotice({
     						toast: true,
