@@ -43,7 +43,7 @@
     let choosePrice;
     let priceArr = [];
     let remaing;
-    let symbolDip721;
+    let symbol = "ICP";
     let ownerNfs = [];
     let ownerNFTArr = [];
     // UI Variables
@@ -113,7 +113,6 @@
         priceArr = await backendActor.getPrices();
         const remaingArr = await backendActor.getRemaing();
         remaing = remaingArr[0]
-        symbolDip721 = await backendActor.symbolDip721();
         fetchingAddress = false;
     });
 
@@ -121,7 +120,7 @@
         priceArr = await backendActor.getPrices();
         remaing = await backendActor.getRemaing();
 
-        symbolDip721 = await backendActor.symbolDip721();
+        // symbol = await ledgerActor.symbol();
         const approved = await ledgerActor.account_balance({account: hexToBytes(principalToAccountDefaultIdentifier(iiPrincipal))});
         if (approved.e8s) {
             accountBalance = approved.e8s
@@ -316,7 +315,7 @@
                 </div>
 
                 <div class="account-balance">
-                    <div class="name">Your {symbolDip721} balance</div>
+                    <div class="name">Your {symbol} balance</div>
                     <div class="value">
                         {accountBalance.toString() / 1e8}
                     </div>
@@ -328,7 +327,7 @@
                 <div class="name" >
                     NFT Price
                 </div>
-                <div class="price" style="font-size: 26px;">
+                <div class="price" style="font-size: 23px;">
                     10 ICP
                 </div>
             </div>

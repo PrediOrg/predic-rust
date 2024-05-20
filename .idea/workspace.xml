@@ -5,46 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e55db1cc-2e8d-43a8-9375-dab32443add0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/canister.Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/charge.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dfx.json" beforeDir="false" afterPath="$PROJECT_DIR$/dfx.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dfx.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend_update.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/library/internet_identity.did" beforeDir="false" afterPath="$PROJECT_DIR$/library/internet_identity.did" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/library/internet_identity_dev.wasm.gz" beforeDir="false" afterPath="$PROJECT_DIR$/library/internet_identity_dev.wasm.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/library/ledger-canister.wasm.gz" beforeDir="false" afterPath="$PROJECT_DIR$/library/ledger-canister.wasm.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/library/ledger.did" beforeDir="false" afterPath="$PROJECT_DIR$/library/ledger.did" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/predic.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/predic_update.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rust-toolchain.toml" beforeDir="false" afterPath="$PROJECT_DIR$/rust-toolchain.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/blobToHex.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/blobToHex.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/principal_to_default_account_id.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/principal_to_default_account_id.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dip721/predic.did" beforeDir="false" afterPath="$PROJECT_DIR$/src/dip721/predic.did" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dip721/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/dip721/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/src/App.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/src/App.svelte" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/src/components/Mint.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/src/components/Mint.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/src/components/Nav.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/src/components/Nav.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend_assets/build/bundle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend_assets/build/bundle.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend_assets/build/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend_assets/build/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend_assets/build/main.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend_assets/build/main.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend_assets/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend_assets/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/start.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/transfer.sh" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +57,7 @@
       <updated>1715320392685</updated>
       <workItem from="1715320393784" duration="12000" />
       <workItem from="1715870734740" duration="10735000" />
-      <workItem from="1716168645053" duration="7378000" />
+      <workItem from="1716168645053" duration="9111000" />
     </task>
     <servers />
   </component>
