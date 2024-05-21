@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-PRINCIPAL="dusfl-kjzll-b5zyz-y5isb-wzzbr-35r7s-g24xv-ewm2r-5abgi-2sd6h-zqe"
+PRINCIPAL="yunve-kihtx-ti4a4-7i46k-jtoms-tzbx6-voiz5-53den-j63bw-yw6nv-aqe"
 ROOT_PRINCIPAL="principal \"$PRINCIPAL\""
 # script to retrieve default subaccount of II in hex format
 II_ACCOUNT_ID_HEX=$(python3 ./scripts/principal_to_default_account_id.py $PRINCIPAL)
