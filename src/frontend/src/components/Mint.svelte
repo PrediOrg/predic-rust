@@ -170,6 +170,7 @@
                     });
                     return
                 }
+
                 if (accountBalance < choosePrice) {
                     showNotice({
                         toast: true,
@@ -248,6 +249,7 @@
         } else {
             messageBox({
                 toast: true,
+                title:"Login",
                 type: "warning",
                 message: 'Please login'
             })

@@ -43,7 +43,7 @@
         <div class="footer">
             <img src="images/logo.png" alt="DFINITY logo"/>
             <div class="right">
-                Crato liquidity protocol.co
+                Crato Liquidity Protocol
             </div>
         </div>
     </div>
