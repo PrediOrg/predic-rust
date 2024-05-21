@@ -42,7 +42,7 @@
 
     let choosePrice;
     let priceArr = [];
-    let remaing;
+    let remaing = 0;
     let symbol = "ICP";
     let ownerNfs = [];
     let ownerNFTArr = [];
@@ -154,7 +154,7 @@
 
         if ($auth.loggedIn) {
             try {
-                if(remaing<=0){
+                if (remaing <= 0) {
 
                     showNotice({
                         toast: true,
@@ -215,7 +215,7 @@
                         });
                         getData()
                     } else {
-                        console.log("transfer failed2",result.Err)
+                        console.log("transfer failed2", result.Err)
                         messageBox({
                             type: "warning",
                             title: 'Buy Failed',
@@ -241,7 +241,6 @@
             messageBox({
                 toast: true,
                 type: "warning",
-                title: 'Please login',
                 message: 'Please login'
             })
         }
@@ -324,16 +323,16 @@
         </div>
         <div class="nft-price">
             <div class="flex-box" style="display: flex;justify-content: space-between;align-items: center">
-                <div class="name" >
+                <div class="name">
                     NFT Price
                 </div>
                 <div class="price" style="font-size: 23px;">
                     10 ICP
                 </div>
             </div>
-<!--            <div class="name" style="margin-bottom: 10px">-->
-<!--                Choose Price {symbolDip721 ? "(" + symbolDip721 + ")" : symbolDip721}-->
-<!--            </div>-->
+            <!--            <div class="name" style="margin-bottom: 10px">-->
+            <!--                Choose Price {symbolDip721 ? "(" + symbolDip721 + ")" : symbolDip721}-->
+            <!--            </div>-->
             <!--                    <select class="input-style" bind:value={choosePrice}>-->
             <!--                        {#each priceArr as price}-->
             <!--                            <option value={price}>-->
@@ -342,11 +341,12 @@
             <!--                        {/each}-->
             <!--                    </select>-->
 
-<!--            <BeSelect class="choose-price" placeholder="Choose Price" bind:value={choosePrice} maxHeight='180px'>-->
-<!--                {#each priceArr as price}-->
-<!--                    <BeOption value={price} label={price.toString()/1e8}/>-->
-<!--                {/each}-->
-<!--            </BeSelect>-->
+            <!--            <BeSelect class="choose-price" placeholder="Choose Price" bind:value={choosePrice} maxHeight='180px'>-->
+            <!--                {#each priceArr as price}-->
+            <!--                    <BeOption value={price} label={price.toString()/1e8}/>-->
+            <!--                {/each}-->
+            <!--            </BeSelect>-->
+
         </div>
         <button class="mint-btn" disabled={btnDisable} on:click={placeOrder}>
             {#if btnDisable}
@@ -375,7 +375,7 @@
                         NFT #{nftItem.id}
                     </div>
                     <div class="nft-id">
-                        Level {nftItem.level+1}
+                        Level {nftItem.level + 1}
                     </div>
                 </div>
             </div>
@@ -505,9 +505,11 @@
     .account-balance .value {
         margin-top: 10px;
     }
-    .nft-price{
+
+    .nft-price {
 
     }
+
     .mint-btn {
         width: 96%;
         margin-left: 2%;
@@ -544,27 +546,34 @@
         position: relative;
         z-index: 1;
     }
+
     @media screen and (max-width: 1000px) {
-        .mint-container,.mint-content{
-            width: 100%!important;
-            padding:20px;
+        .mint-container, .mint-content {
+            width: 100% !important;
+            padding: 20px;
         }
-        .nft-content{
-            padding: 0!important;
+
+        .nft-content {
+            padding: 0 !important;
         }
-        .nft-info-box{
-            display: block!important;
+
+        .nft-info-box {
+            display: block !important;
         }
-        .nft-img{
-            width: 100%!important;
+
+        .nft-img {
+            width: 100% !important;
         }
-        .mint-btn{
-            width: 100%!important;
+
+        .mint-btn {
+            width: 100% !important;
         }
-        .nft-name{
+
+        .nft-name {
             display: none;
         }
-        .account-balance{
+
+        .account-balance {
             display: flex;
             justify-content: space-between;
         }

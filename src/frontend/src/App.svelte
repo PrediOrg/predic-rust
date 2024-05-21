@@ -1,6 +1,5 @@
 <script>
     import Nav from './components/Nav.svelte';
-    import Orders from './components/Orders.svelte';
     import {library} from '@fortawesome/fontawesome-svg-core';
     import {
         faMinus,
@@ -12,7 +11,6 @@
         faArrowLeft
     } from '@fortawesome/free-solid-svg-icons';
     import {auth, plugWallet} from './store/auth';
-    import BalanceInfo from './components/BalanceInfo.svelte';
     import Mint from './components/Mint.svelte';
 
     // Add fontawesome icons
@@ -73,13 +71,6 @@
         padding: 1em;
     }
 
-    h1 {
-        text-transform: uppercase;
-        font-size: 3em;
-        font-weight: 400;
-        line-height: 1.09;
-    }
-
     .footer {
         width: 1000px;
         padding: 20px;
@@ -121,14 +112,11 @@
     }
 
 
+
     @media (max-width: 640px) {
         main {
             max-width: 800px;
             margin: 0 auto;
-        }
-
-        h1 {
-            font-size: 2em;
         }
     }
 </style>
