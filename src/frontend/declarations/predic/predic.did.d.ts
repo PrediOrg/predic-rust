@@ -51,19 +51,12 @@ export type Result_3 = { 'Ok' : BigUint64Array | bigint[] } |
   { 'Err' : Error };
 export type Result_4 = { 'Ok' : null } |
   { 'Err' : Error };
-export type Result_5 = { 'Ok' : bigint } |
-  { 'Err' : string };
-export interface Tokens { 'e8s' : bigint }
-export interface TransferArgs {
-  'to_principal' : Principal,
-  'to_subaccount' : [] | [Uint8Array | number[]],
-  'amount' : Tokens,
-}
 export interface _SERVICE {
   'approveDip721' : ActorMethod<[Principal, bigint], Result>,
   'balanceOfDip721' : ActorMethod<[Principal], bigint>,
   'burnDip721' : ActorMethod<[bigint], Result>,
   'buy' : ActorMethod<[number], Result_1>,
+  'buy2' : ActorMethod<[], Result_1>,
   'getApprovedDip721' : ActorMethod<[bigint], Result_2>,
   'getDepositAddress' : ActorMethod<[], Uint8Array | number[]>,
   'getPrices' : ActorMethod<[], BigUint64Array | bigint[]>,
@@ -98,7 +91,6 @@ export interface _SERVICE {
     [Principal, Principal, bigint, Uint8Array | number[]],
     Result
   >,
-  'withdraw' : ActorMethod<[TransferArgs], Result_5>,
 }
 export declare const idlFactory: IDL.InterfaceFactory;
 export declare const init: (args: { IDL: typeof IDL }) => IDL.Type[];

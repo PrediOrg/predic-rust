@@ -42,8 +42,8 @@
 
     let choosePrice;
     let priceArr = [];
-    let remaing;
-    let symbolDip721;
+    let remaing = 0;
+    let symbol = "ICP";
     let ownerNfs = [];
     let ownerNFTArr = [];
     // UI Variables
@@ -111,9 +111,8 @@
         backendActor = createCanisterActor(agent, backendIDL, process.env.PREDIC_CANISTER_ID);
         ledgerActor = createCanisterActor(agent, ledgerIDL, process.env.LEDGER_CANISTER_ID);
         priceArr = await backendActor.getPrices();
-        remaing = await backendActor.getRemaing();
-
-        symbolDip721 = await backendActor.symbolDip721();
+        const remaingArr = await backendActor.getRemaing();
+        remaing = remaingArr[0]
         fetchingAddress = false;
     });
 
@@ -121,7 +120,7 @@
         priceArr = await backendActor.getPrices();
         remaing = await backendActor.getRemaing();
 
-        symbolDip721 = await backendActor.symbolDip721();
+        // symbol = await ledgerActor.symbol();
         const approved = await ledgerActor.account_balance({account: hexToBytes(principalToAccountDefaultIdentifier(iiPrincipal))});
         if (approved.e8s) {
             accountBalance = approved.e8s
@@ -152,18 +151,27 @@
     }
 
     async function placeOrder() {
-        if (accountBalance < choosePrice) {
-            showNotice({
-                toast: true,
-                message: 'Balance not enough!',
-                duration: 3000,
-                type: "error"
-            });
-            return
-        }
+
         if ($auth.loggedIn) {
             try {
+                if (remaing <= 0) {
 
+                    showNotice({
+                        toast: true,
+                        message: 'No remaining credit limit!',
+                        duration: 3000,
+                        type: "warning"
+                    });
+                }
+                if (accountBalance < choosePrice) {
+                    showNotice({
+                        toast: true,
+                        message: 'Insufficient balance!',
+                        duration: 3000,
+                        type: "warning"
+                    });
+                    return
+                }
                 if (!choosePrice) {
                     showNotice({
                         toast: true,
@@ -233,7 +241,6 @@
             messageBox({
                 toast: true,
                 type: "warning",
-                title: 'Please login',
                 message: 'Please login'
             })
         }
@@ -288,14 +295,14 @@
 
 <div class="mint-container">
     <div class="title">
-        NFT License
+        License NFT
     </div>
     <div class="mint-content">
         <div class="nft-info-box">
             <img class="nft-img" src="images/nft_logo.png" alt="Predic"/>
             <div class="nft-content">
                 <div class="nft-name">
-                    PREDIC
+                    PPL
                 </div>
 
 
@@ -307,7 +314,7 @@
                 </div>
 
                 <div class="account-balance">
-                    <div class="name">Your {symbolDip721} balance</div>
+                    <div class="name">Your {symbol} balance</div>
                     <div class="value">
                         {accountBalance.toString() / 1e8}
                     </div>
@@ -315,9 +322,17 @@
             </div>
         </div>
         <div class="nft-price">
-            <div class="name" style="margin-bottom: 10px">
-                Choose Price {symbolDip721 ? "(" + symbolDip721 + ")" : symbolDip721}
+            <div class="flex-box" style="display: flex;justify-content: space-between;align-items: center">
+                <div class="name">
+                    NFT Price
+                </div>
+                <div class="price" style="font-size: 23px;">
+                    10 ICP
+                </div>
             </div>
+            <!--            <div class="name" style="margin-bottom: 10px">-->
+            <!--                Choose Price {symbolDip721 ? "(" + symbolDip721 + ")" : symbolDip721}-->
+            <!--            </div>-->
             <!--                    <select class="input-style" bind:value={choosePrice}>-->
             <!--                        {#each priceArr as price}-->
             <!--                            <option value={price}>-->
@@ -325,11 +340,13 @@
             <!--                            </option>-->
             <!--                        {/each}-->
             <!--                    </select>-->
-            <BeSelect class="choose-price" placeholder="Choose Price" bind:value={choosePrice} maxHeight='180px'>
-                {#each priceArr as price}
-                    <BeOption value={price} label={price.toString()/1e8}/>
-                {/each}
-            </BeSelect>
+
+            <!--            <BeSelect class="choose-price" placeholder="Choose Price" bind:value={choosePrice} maxHeight='180px'>-->
+            <!--                {#each priceArr as price}-->
+            <!--                    <BeOption value={price} label={price.toString()/1e8}/>-->
+            <!--                {/each}-->
+            <!--            </BeSelect>-->
+
         </div>
         <button class="mint-btn" disabled={btnDisable} on:click={placeOrder}>
             {#if btnDisable}
@@ -358,7 +375,7 @@
                         NFT #{nftItem.id}
                     </div>
                     <div class="nft-id">
-                        Level {nftItem.level+1}
+                        Level {nftItem.level + 1}
                     </div>
                 </div>
             </div>
@@ -489,6 +506,10 @@
         margin-top: 10px;
     }
 
+    .nft-price {
+
+    }
+
     .mint-btn {
         width: 96%;
         margin-left: 2%;
@@ -525,4 +546,53 @@
         position: relative;
         z-index: 1;
     }
+
+    @media screen and (max-width: 1000px) {
+        .mint-container, .mint-content {
+            width: 100% !important;
+            padding: 20px;
+        }
+
+        .nft-content {
+            padding: 0 !important;
+        }
+
+        .nft-info-box {
+            display: block !important;
+        }
+
+        .nft-img {
+            width: 100% !important;
+        }
+
+        .mint-btn {
+            width: 100% !important;
+        }
+
+        .nft-name {
+            display: none;
+        }
+
+        .account-balance {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .my-nfts .nft-item {
+            width: calc(50% - 20px);
+            margin-left: 20px;
+            margin-bottom: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+            background: #191032;
+            box-shadow: 0px 2px 3px 0px rgba(41, 72, 152, 0.01), 0px 9px 7px 0px rgba(41, 72, 152, 0.02), 0px 22px 14px 0px rgba(41, 72, 152, 0.03), 0px 42px 28px 0px rgba(41, 72, 152, 0.03), 0px 71px 51px 0px rgba(41, 72, 152, 0.04), 0px 109px 87px 0px rgba(41, 72, 152, 0.05);
+            border-radius: 11px 11px 11px 11px;
+            font-size: 20px;
+        }
+
+        .my-nfts .nft-item:nth-child(2n+1) {
+            margin-left: 0;
+        }
+    }
+
 </style>
