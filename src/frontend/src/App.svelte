@@ -112,7 +112,6 @@
     }
 
 
-
     @media (max-width: 640px) {
         main {
             max-width: 800px;

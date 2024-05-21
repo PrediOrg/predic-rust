@@ -1,5 +1,6 @@
 set -e
 <<<<<<< HEAD
+<<<<<<< HEAD
 # dfx start --host 0.0.0.0:4943 --background --clean > dfx.log 2>&1 &
 # sleep 10
 dfx --identity=line canister create predic --network ic
@@ -25,6 +26,8 @@ popd
 dfx build frontend
 dfx --identity=line canister install frontend --network ic
 =======
+=======
+>>>>>>> fec167d6f3853e7e70ecf73aff4345b59a6244f2
 # ledger_id="$(dfx canister id ledger)"
 # dfx deploy predic --network ic --with-cycles 8000000000000 --argument "record{
 #     name=\"Prediction NFT\";
@@ -42,6 +45,9 @@ NODE_ENV="production" npm run build
 popd
 
 dfx  deploy frontend --network ic --with-cycles 1000000000000
+<<<<<<< HEAD
+>>>>>>> fec167d6f3853e7e70ecf73aff4345b59a6244f2
+=======
 >>>>>>> fec167d6f3853e7e70ecf73aff4345b59a6244f2
 
 echo "===== VISIT DEFI FRONTEND ====="

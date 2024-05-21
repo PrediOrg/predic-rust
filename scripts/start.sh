@@ -1,5 +1,6 @@
 set -e
 <<<<<<< HEAD
+<<<<<<< HEAD
 # # dfx start --host 0.0.0.0:4943 --background --clean > dfx.log 2>&1 &
 # # sleep 10
 # rm -f .env
@@ -38,6 +39,8 @@ set -e
 
 # II_FETCH_ROOT_KEY=1 dfx deploy internet_identity --no-wallet --argument '(null)'
 =======
+=======
+>>>>>>> fec167d6f3853e7e70ecf73aff4345b59a6244f2
 # dfx start --host 0.0.0.0:4943 --background --clean > dfx.log 2>&1 &
 # sleep 10
 rm -f .env
@@ -75,6 +78,9 @@ echo "===========SETUP DONE========="
 
 
 II_FETCH_ROOT_KEY=1 dfx deploy internet_identity --no-wallet --argument '(null)'
+<<<<<<< HEAD
+>>>>>>> fec167d6f3853e7e70ecf73aff4345b59a6244f2
+=======
 >>>>>>> fec167d6f3853e7e70ecf73aff4345b59a6244f2
 bash scripts/predic.sh
 bash scripts/frontend.sh

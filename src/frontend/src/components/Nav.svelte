@@ -155,7 +155,6 @@
             rel="noopener noreferrer"
             target="_blank"
             class="logo"
-
     >
 
         <img src="images/logo.png" alt="DFINITY logo"/>
@@ -279,6 +278,7 @@
     /* .plug-logo {
         height: 16px;
     } */
+
 
     /* .top-round-rainbow {
         background-image: repeating-linear-gradient(to right,

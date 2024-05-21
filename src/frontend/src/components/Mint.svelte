@@ -340,12 +340,12 @@
             <!--                            </option>-->
             <!--                        {/each}-->
             <!--                    </select>-->
-
             <!--            <BeSelect class="choose-price" placeholder="Choose Price" bind:value={choosePrice} maxHeight='180px'>-->
             <!--                {#each priceArr as price}-->
             <!--                    <BeOption value={price} label={price.toString()/1e8}/>-->
             <!--                {/each}-->
             <!--            </BeSelect>-->
+
 
         </div>
         <button class="mint-btn" disabled={btnDisable} on:click={placeOrder}>

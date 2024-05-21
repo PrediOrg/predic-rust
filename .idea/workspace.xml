@@ -10,11 +10,8 @@
       <change beforePath="$PROJECT_DIR$/scripts/online.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/online.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/start.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/src/App.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/src/App.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/src/components/BalanceInfo.svelte" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/src/components/CanisterIds.svelte" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/src/components/Mint.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/src/components/Mint.svelte" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/src/components/Nav.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/src/components/Nav.svelte" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/src/components/Orders.svelte" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend_assets/build/bundle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend_assets/build/bundle.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend_assets/build/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend_assets/build/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend_assets/build/main.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend_assets/build/main.js.map" afterDir="false" />
@@ -67,7 +64,7 @@
       <workItem from="1715320393784" duration="12000" />
       <workItem from="1715870734740" duration="10735000" />
       <workItem from="1716168645053" duration="10799000" />
-      <workItem from="1716256175290" duration="508000" />
+      <workItem from="1716256175290" duration="865000" />
     </task>
     <servers />
   </component>
