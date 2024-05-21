@@ -118,7 +118,8 @@
 
     async function getData() {
         priceArr = await backendActor.getPrices();
-        remaing = await backendActor.getRemaing();
+        const remaingArr = await backendActor.getRemaing();
+        remaing = remaingArr[0]
 
         // symbol = await ledgerActor.symbol();
         const approved = await ledgerActor.account_balance({account: hexToBytes(principalToAccountDefaultIdentifier(iiPrincipal))});
@@ -172,14 +173,15 @@
                     });
                     return
                 }
-                if (!choosePrice) {
-                    showNotice({
-                        toast: true,
-                        message: 'Please choose nft price!',
-                        duration: 3000,
-                        type: "error"
-                    });
-                }
+                // if (!choosePrice) {
+                //     showNotice({
+                //         toast: true,
+                //         message: 'Please choose nft price!',
+                //         duration: 3000,
+                //         type: "error"
+                //     });
+                // }
+                choosePrice = priceArr[0].toString()
                 let depositAddressBlob = await backendActor.getDepositAddress();
                 btnDisable = true
                 const fee = 0;
@@ -370,6 +372,9 @@
         {#each ownerNFTArr as nftItem}
             <div class="nft-item">
                 <img class="nft-logo" src="images/nft_logo.png" alt="">
+                <div class="id-tip">
+                    #{nftItem.id}
+                </div>
                 <div style="display: flex;justify-content: space-between">
                     <div class="nft-id">
                         NFT #{nftItem.id}
@@ -423,6 +428,18 @@
         box-shadow: 0px 2px 3px 0px rgba(41, 72, 152, 0.01), 0px 9px 7px 0px rgba(41, 72, 152, 0.02), 0px 22px 14px 0px rgba(41, 72, 152, 0.03), 0px 42px 28px 0px rgba(41, 72, 152, 0.03), 0px 71px 51px 0px rgba(41, 72, 152, 0.04), 0px 109px 87px 0px rgba(41, 72, 152, 0.05);
         border-radius: 11px 11px 11px 11px;
         font-size: 20px;
+        position: relative;
+    }
+    .id-tip{
+        width: 100px;
+        text-align: center;
+        position: absolute;
+        left:calc(50% - 50px);
+        top: 22%;
+        font-size: 26px;
+        font-style: normal;
+        font-weight: bold;
+        color: #fff;
     }
 
     .my-nfts .nft-item:nth-child(5n+1) {
@@ -592,6 +609,9 @@
 
         .my-nfts .nft-item:nth-child(2n+1) {
             margin-left: 0;
+        }
+        .nfts {
+            width: 100%!important;
         }
     }
 
