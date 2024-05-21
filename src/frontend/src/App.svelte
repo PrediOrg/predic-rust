@@ -61,7 +61,6 @@
     }
 
     .main-container {
-        align-items: left;
         min-height: 70vh;
 
     }
@@ -110,7 +109,6 @@
         }
 
     }
-
 
     @media (max-width: 640px) {
         main {

@@ -215,7 +215,6 @@
                         });
                         getData()
                     } else {
-                        console.log("transfer failed2", result.Err)
                         messageBox({
                             type: "warning",
                             title: 'Buy Failed',
@@ -345,6 +344,7 @@
             <!--                    <BeOption value={price} label={price.toString()/1e8}/>-->
             <!--                {/each}-->
             <!--            </BeSelect>-->
+
 
 
         </div>

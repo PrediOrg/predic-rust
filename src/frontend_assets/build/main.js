@@ -34769,7 +34769,7 @@ var app = (function () {
     const { console: console_1$1 } = globals;
     const file$2 = "src/components/Nav.svelte";
 
-    // (186:12) {:else}
+    // (187:12) {:else}
     function create_else_block$2(ctx) {
     	let button;
     	let span;
@@ -34781,9 +34781,9 @@ var app = (function () {
     			button = element("button");
     			span = element("span");
     			span.textContent = "Login";
-    			add_location(span, file$2, 187, 20, 6486);
-    			attr_dev(button, "class", "svelte-doy277");
-    			add_location(button, file$2, 186, 16, 6440);
+    			add_location(span, file$2, 188, 20, 6487);
+    			attr_dev(button, "class", "svelte-67q8zc");
+    			add_location(button, file$2, 187, 16, 6441);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button, anchor);
@@ -34808,14 +34808,14 @@ var app = (function () {
     		block,
     		id: create_else_block$2.name,
     		type: "else",
-    		source: "(186:12) {:else}",
+    		source: "(187:12) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (177:12) {#if $auth.loggedIn}
+    // (178:12) {#if $auth.loggedIn}
     function create_if_block$2(ctx) {
     	let button0;
     	let span0;
@@ -34846,13 +34846,13 @@ var app = (function () {
     			button1 = element("button");
     			span1 = element("span");
     			span1.textContent = "Log out";
-    			add_location(span0, file$2, 178, 20, 6055);
+    			add_location(span0, file$2, 179, 20, 6056);
     			set_style(button0, "margin-right", "20px");
-    			attr_dev(button0, "class", "svelte-doy277");
-    			add_location(button0, file$2, 177, 16, 5956);
-    			add_location(span1, file$2, 183, 20, 6357);
-    			attr_dev(button1, "class", "logout svelte-doy277");
-    			add_location(button1, file$2, 182, 16, 6295);
+    			attr_dev(button0, "class", "svelte-67q8zc");
+    			add_location(button0, file$2, 178, 16, 5957);
+    			add_location(span1, file$2, 184, 20, 6358);
+    			attr_dev(button1, "class", "logout svelte-67q8zc");
+    			add_location(button1, file$2, 183, 16, 6296);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button0, anchor);
@@ -34914,7 +34914,7 @@ var app = (function () {
     		block,
     		id: create_if_block$2.name,
     		type: "if",
-    		source: "(177:12) {#if $auth.loggedIn}",
+    		source: "(178:12) {#if $auth.loggedIn}",
     		ctx
     	});
 
@@ -34973,26 +34973,26 @@ var app = (function () {
     			if_block.c();
     			if (!src_url_equal(img.src, img_src_value = "images/logo.png")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "DFINITY logo");
-    			attr_dev(img, "class", "svelte-doy277");
-    			add_location(img, file$2, 159, 8, 5495);
+    			attr_dev(img, "class", "svelte-67q8zc");
+    			add_location(img, file$2, 160, 8, 5496);
     			attr_dev(a, "href", "https://www.predi.org");
     			attr_dev(a, "rel", "noopener noreferrer");
     			attr_dev(a, "target", "_blank");
-    			attr_dev(a, "class", "logo svelte-doy277");
+    			attr_dev(a, "class", "logo svelte-67q8zc");
     			add_location(a, file$2, 152, 4, 5345);
-    			attr_dev(div0, "class", "nav-item active svelte-doy277");
-    			add_location(div0, file$2, 164, 8, 5589);
-    			attr_dev(div1, "class", "nav-item svelte-doy277");
-    			add_location(div1, file$2, 167, 8, 5670);
-    			attr_dev(div2, "class", "nav-item svelte-doy277");
-    			add_location(div2, file$2, 170, 8, 5766);
-    			attr_dev(div3, "class", "nav-list svelte-doy277");
-    			add_location(div3, file$2, 163, 4, 5558);
-    			add_location(div4, file$2, 175, 8, 5901);
-    			attr_dev(div5, "class", "btn-box svelte-doy277");
-    			add_location(div5, file$2, 174, 4, 5871);
+    			attr_dev(div0, "class", "nav-item active svelte-67q8zc");
+    			add_location(div0, file$2, 165, 8, 5590);
+    			attr_dev(div1, "class", "nav-item svelte-67q8zc");
+    			add_location(div1, file$2, 168, 8, 5671);
+    			attr_dev(div2, "class", "nav-item svelte-67q8zc");
+    			add_location(div2, file$2, 171, 8, 5767);
+    			attr_dev(div3, "class", "nav-list svelte-67q8zc");
+    			add_location(div3, file$2, 164, 4, 5559);
+    			add_location(div4, file$2, 176, 8, 5902);
+    			attr_dev(div5, "class", "btn-box svelte-67q8zc");
+    			add_location(div5, file$2, 175, 4, 5872);
     			attr_dev(div6, "id", "nav-container");
-    			attr_dev(div6, "class", "svelte-doy277");
+    			attr_dev(div6, "class", "svelte-67q8zc");
     			add_location(div6, file$2, 151, 0, 5316);
     		},
     		l: function claim(nodes) {
@@ -41916,7 +41916,7 @@ var app = (function () {
     			span = element("span");
     			span.textContent = "Mint";
     			attr_dev(span, "class", "svelte-1c8ffpx");
-    			add_location(span, file$1, 356, 17, 13100);
+    			add_location(span, file$1, 356, 17, 13033);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
@@ -41946,7 +41946,7 @@ var app = (function () {
     			span = element("span");
     			span.textContent = "Loading";
     			attr_dev(span, "class", "svelte-1c8ffpx");
-    			add_location(span, file$1, 352, 17, 13003);
+    			add_location(span, file$1, 352, 17, 12936);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
@@ -42002,16 +42002,16 @@ var app = (function () {
     			attr_dev(img, "class", "nft-logo svelte-1c8ffpx");
     			if (!src_url_equal(img.src, img_src_value = "images/nft_logo.png")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "");
-    			add_location(img, file$1, 371, 16, 13396);
+    			add_location(img, file$1, 371, 16, 13329);
     			attr_dev(div0, "class", "nft-id");
-    			add_location(div0, file$1, 373, 20, 13547);
+    			add_location(div0, file$1, 373, 20, 13480);
     			attr_dev(div1, "class", "nft-id");
-    			add_location(div1, file$1, 376, 20, 13657);
+    			add_location(div1, file$1, 376, 20, 13590);
     			set_style(div2, "display", "flex");
     			set_style(div2, "justify-content", "space-between");
-    			add_location(div2, file$1, 372, 16, 13468);
+    			add_location(div2, file$1, 372, 16, 13401);
     			attr_dev(div3, "class", "nft-item svelte-1c8ffpx");
-    			add_location(div3, file$1, 370, 12, 13357);
+    			add_location(div3, file$1, 370, 12, 13290);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div3, anchor);
@@ -42152,54 +42152,54 @@ var app = (function () {
     			}
 
     			attr_dev(div0, "class", "title svelte-1c8ffpx");
-    			add_location(div0, file$1, 296, 4, 10606);
+    			add_location(div0, file$1, 295, 4, 10538);
     			attr_dev(img, "class", "nft-img svelte-1c8ffpx");
     			if (!src_url_equal(img.src, img_src_value = "images/nft_logo.png")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "Predic");
-    			add_location(img, file$1, 301, 12, 10735);
+    			add_location(img, file$1, 300, 12, 10667);
     			attr_dev(div1, "class", "nft-name svelte-1c8ffpx");
-    			add_location(div1, file$1, 303, 16, 10851);
+    			add_location(div1, file$1, 302, 16, 10783);
     			attr_dev(div2, "class", "name svelte-1c8ffpx");
-    			add_location(div2, file$1, 309, 20, 10989);
+    			add_location(div2, file$1, 308, 20, 10921);
     			attr_dev(div3, "class", "value svelte-1c8ffpx");
-    			add_location(div3, file$1, 310, 20, 11047);
+    			add_location(div3, file$1, 309, 20, 10979);
     			attr_dev(div4, "class", "account-balance svelte-1c8ffpx");
-    			add_location(div4, file$1, 308, 16, 10939);
+    			add_location(div4, file$1, 307, 16, 10871);
     			attr_dev(div5, "class", "name svelte-1c8ffpx");
-    			add_location(div5, file$1, 316, 20, 11218);
+    			add_location(div5, file$1, 315, 20, 11150);
     			attr_dev(div6, "class", "value svelte-1c8ffpx");
-    			add_location(div6, file$1, 317, 20, 11284);
+    			add_location(div6, file$1, 316, 20, 11216);
     			attr_dev(div7, "class", "account-balance svelte-1c8ffpx");
-    			add_location(div7, file$1, 315, 16, 11168);
+    			add_location(div7, file$1, 314, 16, 11100);
     			attr_dev(div8, "class", "nft-content svelte-1c8ffpx");
-    			add_location(div8, file$1, 302, 12, 10809);
+    			add_location(div8, file$1, 301, 12, 10741);
     			attr_dev(div9, "class", "nft-info-box svelte-1c8ffpx");
-    			add_location(div9, file$1, 300, 8, 10696);
+    			add_location(div9, file$1, 299, 8, 10628);
     			attr_dev(div10, "class", "name svelte-1c8ffpx");
-    			add_location(div10, file$1, 325, 16, 11602);
+    			add_location(div10, file$1, 324, 16, 11534);
     			attr_dev(div11, "class", "price");
     			set_style(div11, "font-size", "23px");
-    			add_location(div11, file$1, 328, 16, 11690);
+    			add_location(div11, file$1, 327, 16, 11622);
     			attr_dev(div12, "class", "flex-box");
     			set_style(div12, "display", "flex");
     			set_style(div12, "justify-content", "space-between");
     			set_style(div12, "align-items", "center");
-    			add_location(div12, file$1, 324, 12, 11490);
+    			add_location(div12, file$1, 323, 12, 11422);
     			attr_dev(div13, "class", "nft-price svelte-1c8ffpx");
-    			add_location(div13, file$1, 323, 8, 11454);
+    			add_location(div13, file$1, 322, 8, 11386);
     			attr_dev(button, "class", "mint-btn svelte-1c8ffpx");
     			button.disabled = /*btnDisable*/ ctx[1];
-    			add_location(button, file$1, 350, 8, 12887);
+    			add_location(button, file$1, 350, 8, 12820);
     			attr_dev(div14, "class", "mint-content svelte-1c8ffpx");
-    			add_location(div14, file$1, 299, 4, 10661);
+    			add_location(div14, file$1, 298, 4, 10593);
     			attr_dev(div15, "class", "mint-container svelte-1c8ffpx");
-    			add_location(div15, file$1, 295, 0, 10573);
+    			add_location(div15, file$1, 294, 0, 10505);
     			attr_dev(div16, "class", "title svelte-1c8ffpx");
-    			add_location(div16, file$1, 365, 4, 13234);
+    			add_location(div16, file$1, 365, 4, 13167);
     			attr_dev(div17, "class", "my-nfts svelte-1c8ffpx");
-    			add_location(div17, file$1, 368, 4, 13284);
+    			add_location(div17, file$1, 368, 4, 13217);
     			attr_dev(div18, "class", "nfts svelte-1c8ffpx");
-    			add_location(div18, file$1, 364, 0, 13211);
+    			add_location(div18, file$1, 364, 0, 13144);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -42553,8 +42553,6 @@ var app = (function () {
 
     						getData();
     					} else {
-    						console.log("transfer failed2", result.Err);
-
     						messageBox({
     							type: "warning",
     							title: 'Buy Failed',
@@ -42898,21 +42896,21 @@ var app = (function () {
     			add_location(div2, file, 25, 9, 721);
     			attr_dev(div3, "class", "bg");
     			add_location(div3, file, 22, 5, 611);
-    			attr_dev(div4, "class", "main-container svelte-fhw8k0");
+    			attr_dev(div4, "class", "main-container svelte-yy7goi");
     			add_location(div4, file, 30, 8, 813);
     			if (!src_url_equal(img.src, img_src_value = "images/logo.png")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "DFINITY logo");
-    			attr_dev(img, "class", "svelte-fhw8k0");
+    			attr_dev(img, "class", "svelte-yy7goi");
     			add_location(img, file, 43, 12, 1092);
-    			attr_dev(div5, "class", "right svelte-fhw8k0");
+    			attr_dev(div5, "class", "right svelte-yy7goi");
     			add_location(div5, file, 44, 12, 1152);
-    			attr_dev(div6, "class", "footer svelte-fhw8k0");
+    			attr_dev(div6, "class", "footer svelte-yy7goi");
     			add_location(div6, file, 42, 8, 1059);
-    			attr_dev(div7, "class", "page svelte-fhw8k0");
+    			attr_dev(div7, "class", "page svelte-yy7goi");
     			add_location(div7, file, 27, 4, 770);
     			set_style(main, "position", "relative");
     			set_style(main, "z-index", "2");
-    			attr_dev(main, "class", "svelte-fhw8k0");
+    			attr_dev(main, "class", "svelte-yy7goi");
     			add_location(main, file, 21, 0, 561);
     		},
     		l: function claim(nodes) {
