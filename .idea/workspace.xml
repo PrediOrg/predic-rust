@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e55db1cc-2e8d-43a8-9375-dab32443add0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontend/src/components/Mint.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/src/components/Mint.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/declarations/predic/predic.did" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/declarations/predic/predic.did" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/declarations/predic/predic.did.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/declarations/predic/predic.did.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/declarations/predic/predic.did.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/declarations/predic/predic.did.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend_assets/build/bundle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend_assets/build/bundle.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend_assets/build/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend_assets/build/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend_assets/build/main.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend_assets/build/main.js.map" afterDir="false" />
     </list>
@@ -29,8 +31,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/yannongfeng/桌面/predic-rust-main/predic-rust-main",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/yannongfeng/桌面/predic-rust-main/predic-rust-main/src/frontend_assets/build",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
