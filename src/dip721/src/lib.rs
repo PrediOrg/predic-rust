@@ -642,6 +642,19 @@ fn set_name(name: String) -> Result<()> {
     })
 }
 
+#[update(name = "setPrices")]
+fn set_prices(buy_prices: [u64; 3]) -> Result<()> {
+    STATE.with(|state| {
+        let mut state = state.borrow_mut();
+        if state.custodians.contains(&api::caller()) {
+            state.buy_prices = buy_prices;
+            Ok(())
+        } else {
+            Err(Error::Unauthorized)
+        }
+    })
+}
+
 #[update(name = "setBuyPrice")]
 fn set_buy_price(buy_prices: [u64; 3]) -> Result<()> {
     STATE.with(|state| {

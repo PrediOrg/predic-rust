@@ -65,6 +65,7 @@ service : (InitArgs) -> {
   nameDip721 : () -> (text) query;
   ownerNfs : (principal) -> (Result_3) query;
   ownerOfDip721 : (nat64) -> (Result_2) query;
+  retreve : () -> (Result);
   safeTransferFromDip721 : (principal, principal, nat64) -> (Result);
   safeTransferFromNotifyDip721 : (principal, principal, nat64, blob) -> (
       Result,
@@ -74,6 +75,7 @@ service : (InitArgs) -> {
   setCustodian : (principal, bool) -> (Result_4);
   setLogo : (opt LogoResult) -> (Result_4);
   setName : (text) -> (Result_4);
+  setPrices : (vec nat64) -> (Result_4);
   setRemaing : (vec nat64) -> (Result_4);
   setSymbol : (text) -> (Result_4);
   supportedInterfacesDip721 : () -> (vec InterfaceId) query;
