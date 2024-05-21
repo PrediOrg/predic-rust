@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-root="${pwd}/src/dip721/"
+root="$(pwd)/src/dip721/"
 did_file="${root}predic.did"
 dfx build predic
 dfx generate predic
