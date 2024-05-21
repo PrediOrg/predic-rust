@@ -7,7 +7,8 @@ services:
     tty: true
     volumes:
       - .:/canister/predit
-      - /Users/tao/sources/icp/examples/rust:/canister/examples
+      - .config:/root/.config
+      # - /Users/tao/sources/icp/examples/rust:/canister/examples
     ports:
       - "4943:4943"
       - "5555:5555"

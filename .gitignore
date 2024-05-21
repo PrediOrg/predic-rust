@@ -4,3 +4,5 @@ node_modules
 dfx.log
 .dfx
 *.pem
+.idea
+.config
