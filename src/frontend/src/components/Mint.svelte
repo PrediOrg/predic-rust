@@ -163,6 +163,7 @@
                         duration: 3000,
                         type: "warning"
                     });
+                    return
                 }
                 if (accountBalance < choosePrice) {
                     showNotice({
