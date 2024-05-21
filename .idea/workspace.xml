@@ -5,9 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e55db1cc-2e8d-43a8-9375-dab32443add0" name="Changes" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/src/frontend/declarations/predic/predic.did" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/declarations/predic/predic.did" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/declarations/predic/predic.did.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/declarations/predic/predic.did.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend/declarations/predic/predic.did.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/declarations/predic/predic.did.js" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/online.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/online.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/src/App.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/src/App.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/src/components/Mint.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/src/components/Mint.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontend/src/components/Nav.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend/src/components/Nav.svelte" afterDir="false" />
+>>>>>>> master
       <change beforePath="$PROJECT_DIR$/src/frontend_assets/build/bundle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend_assets/build/bundle.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend_assets/build/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend_assets/build/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontend_assets/build/main.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontend_assets/build/main.js.map" afterDir="false" />
@@ -28,6 +38,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -40,8 +51,22 @@
     "nodejs_package_manager_path": "npm",
     "ts.external.directory.path": "/home/yannongfeng/桌面/WebStorm-2024.1.2/WebStorm-241.15989.105/plugins/javascript-plugin/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
+=======
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/yannongfeng/桌面/predic-rust-main/predic-rust-main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/yannongfeng/桌面/WebStorm-2024.1.2/WebStorm-241.15989.105/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+>>>>>>> master
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -58,7 +83,9 @@
       <option name="presentableId" value="Default" />
       <updated>1715320392685</updated>
       <workItem from="1715320393784" duration="12000" />
-      <workItem from="1715870734740" duration="8162000" />
+      <workItem from="1715870734740" duration="10735000" />
+      <workItem from="1716168645053" duration="10799000" />
+      <workItem from="1716256175290" duration="1132000" />
     </task>
     <servers />
   </component>

@@ -61,7 +61,6 @@
     }
 
     .main-container {
-        align-items: left;
         min-height: 70vh;
 
     }
@@ -90,6 +89,24 @@
         font-weight: 500;
         font-size: 24px;
         color: #999999;
+
+    }
+
+    @media screen and (max-width: 1000px){
+
+        .footer img {
+            height: 30px;
+        }
+
+        .footer{
+            width: 100%!important;
+        }
+        .footer .right {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            font-size: 14px;
+        }
 
     }
 
