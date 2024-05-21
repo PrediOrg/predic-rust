@@ -114,13 +114,18 @@
         const remaingArr = await backendActor.getRemaing();
         remaing = remaingArr[0]
         fetchingAddress = false;
+        if(priceArr.length>0){
+            choosePrice = priceArr[0].toString()
+        }
     });
 
     async function getData() {
         priceArr = await backendActor.getPrices();
         const remaingArr = await backendActor.getRemaing();
         remaing = remaingArr[0]
-
+        if(priceArr.length>0){
+            choosePrice = priceArr[0].toString()
+        }
         // symbol = await ledgerActor.symbol();
         const approved = await ledgerActor.account_balance({account: hexToBytes(principalToAccountDefaultIdentifier(iiPrincipal))});
         if (approved.e8s) {
@@ -330,7 +335,7 @@
                     NFT Price
                 </div>
                 <div class="price" style="font-size: 23px;">
-                    10 ICP
+                    {parseInt(choosePrice)/1e8} ICP
                 </div>
             </div>
             <!--            <div class="name" style="margin-bottom: 10px">-->
@@ -380,9 +385,9 @@
                     <div class="nft-id">
                         NFT #{nftItem.id}
                     </div>
-                    <div class="nft-id">
-                        Level {nftItem.level + 1}
-                    </div>
+<!--                    <div class="nft-id">-->
+<!--                        Level {nftItem.level + 1}-->
+<!--                    </div>-->
                 </div>
             </div>
         {/each}

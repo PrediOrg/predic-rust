@@ -70,6 +70,7 @@ export const idlFactory = ({ IDL }) => {
     'nameDip721' : IDL.Func([], [IDL.Text], ['query']),
     'ownerNfs' : IDL.Func([IDL.Principal], [Result_3], ['query']),
     'ownerOfDip721' : IDL.Func([IDL.Nat64], [Result_2], ['query']),
+    'retreve' : IDL.Func([], [Result], []),
     'safeTransferFromDip721' : IDL.Func(
         [IDL.Principal, IDL.Principal, IDL.Nat64],
         [Result],
@@ -89,6 +90,7 @@ export const idlFactory = ({ IDL }) => {
     'setCustodian' : IDL.Func([IDL.Principal, IDL.Bool], [Result_4], []),
     'setLogo' : IDL.Func([IDL.Opt(LogoResult)], [Result_4], []),
     'setName' : IDL.Func([IDL.Text], [Result_4], []),
+    'setPrices' : IDL.Func([IDL.Vec(IDL.Nat64)], [Result_4], []),
     'setRemaing' : IDL.Func([IDL.Vec(IDL.Nat64)], [Result_4], []),
     'setSymbol' : IDL.Func([IDL.Text], [Result_4], []),
     'supportedInterfacesDip721' : IDL.Func(

@@ -75,6 +75,7 @@ export interface _SERVICE {
   'nameDip721' : ActorMethod<[], string>,
   'ownerNfs' : ActorMethod<[Principal], Result_3>,
   'ownerOfDip721' : ActorMethod<[bigint], Result_2>,
+  'retreve' : ActorMethod<[], Result>,
   'safeTransferFromDip721' : ActorMethod<
     [Principal, Principal, bigint],
     Result
@@ -88,6 +89,7 @@ export interface _SERVICE {
   'setCustodian' : ActorMethod<[Principal, boolean], Result_4>,
   'setLogo' : ActorMethod<[[] | [LogoResult]], Result_4>,
   'setName' : ActorMethod<[string], Result_4>,
+  'setPrices' : ActorMethod<[BigUint64Array | bigint[]], Result_4>,
   'setRemaing' : ActorMethod<[BigUint64Array | bigint[]], Result_4>,
   'setSymbol' : ActorMethod<[string], Result_4>,
   'supportedInterfacesDip721' : ActorMethod<[], Array<InterfaceId>>,
