@@ -227,7 +227,7 @@
                         console.log("transfer failed2",result.Err)
                         messageBox({
                             type: "warning",
-                            title: 'Buy Failed',
+                            title: 'Failed',
                             message: Object.keys(result.Err)[0]
                         })
                     }
@@ -235,7 +235,7 @@
                     console.log("transfer failed1")
                     messageBox({
                         type: "warning",
-                        title: 'Buy Failed',
+                        title: 'Failed',
                         message: Object.keys(transferResult.Err)[0]
                     })
                 }

@@ -41,9 +41,9 @@
         </div>
 
         <div class="footer">
-            <img src="images/logo.png" alt="DFINITY logo"/>
+            <img style="margin-left: 40%;" src="images/logo.png" alt="DFINITY logo"/>
             <div class="right">
-                Crato Liquidity Protocol
+                
             </div>
         </div>
     </div>
